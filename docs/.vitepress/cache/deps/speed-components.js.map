@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/components/index.ts"],
+  "sourcesContent": ["/*\r\n * @Author: ykx\r\n * @Date: 2023-02-06 18:06:47\r\n * @LastEditTime: 2024-03-19 11:39:25\r\n * @LastEditors: Anxure\r\n * @Description:\r\n */\r\nimport type { App, Component } from 'vue'\r\nimport FullModal from './FullModal/index.vue'\r\nconst components: Component[] = [FullModal]\r\n\r\nconst install = (app: App) => {\r\n  components.forEach(component => {\r\n    app.component(component.name as string, component as any)\r\n  })\r\n}\r\nexport { default as FullModal } from './FullModal/index.vue';\r\n\r\nexport default {\r\n  install,\r\n}\r\n"],
+  "mappings": ";;;AAQA,OAAO,eAAe;AAQtB,SAAoB,WAAXA,gBAA4B;AAPrC,IAAM,aAA0B,CAAC,SAAS;AAE1C,IAAM,UAAU,CAAC,QAAa;AAC5B,aAAW,QAAQ,eAAa;AAC9B,QAAI,UAAU,UAAU,MAAgB,SAAgB;AAAA,EAC1D,CAAC;AACH;AAGA,IAAO,qBAAQ;AAAA,EACb;AACF;",
+  "names": ["default"]
+}
