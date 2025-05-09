@@ -5,7 +5,7 @@
     </div>
     <div class="demo-code-control" @click="toggleCode">
       <a-icon :type="expanded ? 'up' : 'down'" />
-      <span class="control-text">{{ expanded ? '收起代码' : '查看代码' }}</span>
+      <span class="control-text">{{ expanded ? "收起代码" : "查看代码" }}</span>
     </div>
     <div v-show="expanded" class="demo-code">
       <div class="code-actions">
@@ -16,14 +16,23 @@
           复制代码
         </a-button>
       </div>
-      <slot name="code" />
+      <highlightjs :code="code" language="vue" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { message } from 'ant-design-vue';
+import { ref } from "vue";
+import { message } from "ant-design-vue";
+import "highlight.js/lib/common";
+import "highlight.js/styles/stackoverflow-light.css";
+import hljsVuePlugin from "@highlightjs/vue-plugin";
+
+const Highlightjs = hljsVuePlugin.component;
+
+const props = defineProps<{
+  code: string;
+}>();
 
 const expanded = ref(false);
 
@@ -32,13 +41,12 @@ const toggleCode = () => {
 };
 
 const copyCode = async () => {
-  const code = document.querySelector('.demo-code pre')?.textContent;
-  if (code) {
+  if (props.code) {
     try {
-      await navigator.clipboard.writeText(code);
-      message.success('代码已复制到剪贴板');
+      await navigator.clipboard.writeText(props.code);
+      message.success("代码已复制到剪贴板");
     } catch (err) {
-      message.error('复制失败');
+      message.error("复制失败");
     }
   }
 };
@@ -94,4 +102,22 @@ const copyCode = async () => {
   justify-content: flex-end;
   margin-bottom: 8px;
 }
-</style> 
+
+:deep(.hljs) {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+:deep(.hljs code) {
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+:deep(pre) {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+</style>

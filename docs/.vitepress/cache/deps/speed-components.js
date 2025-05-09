@@ -1,4 +1,4 @@
-import "./chunk-G3PMV62Z.js";
+import "./chunk-B4Q33VKO.js";
 
 // src/components/index.ts
 import FullModal from "/Users/ykx/work/gitee/speed-components/src/components/FullModal/Index.vue";

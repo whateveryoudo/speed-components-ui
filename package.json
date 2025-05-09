@@ -35,6 +35,8 @@
   },
   "devDependencies": {
     "@ant-design/icons-vue": "^7.0.0",
+    "@types/highlight.js": "^10.1.0",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^20.11.0",
     "@vitejs/plugin-vue": "^5.0.0",
     "@vue/compiler-sfc": "^3.4.0",
@@ -46,8 +48,10 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.0",
     "eslint-plugin-vue": "^9.21.0",
+    "highlight.js": "^11.11.1",
     "husky": "^9.0.0",
     "less": "^4.2.0",
+    "markdown-it": "^14.1.0",
     "prettier": "^3.2.0",
     "typescript": "^5.3.0",
     "vite": "^5.0.0",
@@ -55,5 +59,8 @@
     "vitepress": "^1.0.0",
     "vitest": "^1.2.0",
     "vue-tsc": "^1.8.0"
+  },
+  "dependencies": {
+    "@highlightjs/vue-plugin": "^2.1.0"
   }
 }

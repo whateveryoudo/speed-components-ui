@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress';
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
-
+import { demoPlugin } from './plugins/demo';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig({
@@ -28,8 +28,7 @@ export default defineConfig({
         {
           text: '组件',
           items: [
-            { text: 'Button 按钮', link: '/components/button' },
-            { text: 'FullModal 全局弹框', link: '/components/full-modal' },
+            { text: 'FullModal 全局弹框', link: '/components/full-modal/index' },
           ],
         },
       ],
@@ -66,6 +65,9 @@ export default defineConfig({
     optimizeDeps: {
       include: ['speed-components'],
     },
+    plugins: [
+      demoPlugin()
+    ]
   }
   
 }); 
