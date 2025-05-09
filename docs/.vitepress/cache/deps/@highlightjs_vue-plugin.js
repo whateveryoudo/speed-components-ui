@@ -1,15 +1,20 @@
 import {
-  core_default
-} from "./chunk-YTLUWS5O.js";
-import "./chunk-TKSNOTSL.js";
-import {
   computed,
   defineComponent,
   h,
   ref,
   watch
 } from "./chunk-QXP276DV.js";
-import "./chunk-B4Q33VKO.js";
+import {
+  require_core
+} from "./chunk-4WYE2GUT.js";
+import {
+  __toESM
+} from "./chunk-G3PMV62Z.js";
+
+// node_modules/.pnpm/highlight.js@11.11.1/node_modules/highlight.js/es/core.js
+var import_core = __toESM(require_core());
+var core_default = import_core.default;
 
 // node_modules/.pnpm/@highlightjs+vue-plugin@2.1.0_highlight.js@11.11.1_vue@3.5.13_typescript@5.8.3_/node_modules/@highlightjs/vue-plugin/dist/highlightjs-vue.esm.min.js
 var r = defineComponent({ props: { code: { type: String, required: true }, language: { type: String, default: "" }, autodetect: { type: Boolean, default: true }, ignoreIllegals: { type: Boolean, default: true } }, setup: function(e) {

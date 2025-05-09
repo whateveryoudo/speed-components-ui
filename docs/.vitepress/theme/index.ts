@@ -5,6 +5,7 @@ import * as Icons from '@ant-design/icons-vue';
 import Demo from './components/Demo.vue';
 import SpeedComs from '@/components'
 import 'ant-design-vue/dist/reset.css';
+import 'uno.css';
 import './style.css';
 
 export default {

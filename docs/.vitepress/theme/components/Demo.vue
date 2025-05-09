@@ -3,19 +3,20 @@
     <div class="demo-content">
       <slot />
     </div>
-    <div class="demo-code-control" @click="toggleCode">
-      <a-icon :type="expanded ? 'up' : 'down'" />
-      <span class="control-text">{{ expanded ? "收起代码" : "查看代码" }}</span>
+    <div class="demo-code-control">
+      <a-space :size="16">
+        <span class="control-item" @click="copyCode">
+          <CopyOutlined />
+          <span class="ml-1">复制代码</span>
+        </span>
+        <span class="control-item" @click="toggleCode">
+          <CaretUpOutlined v-if="expanded" />
+          <CaretDownOutlined v-else />
+          <span class="ml-1">{{ expanded ? "收起代码" : "查看代码" }}</span>
+        </span>
+      </a-space>
     </div>
     <div v-show="expanded" class="demo-code">
-      <div class="code-actions">
-        <a-button type="text" size="small" @click="copyCode">
-          <template #icon>
-            <a-icon type="copy" />
-          </template>
-          复制代码
-        </a-button>
-      </div>
       <highlightjs :code="code" language="vue" />
     </div>
   </div>
@@ -81,7 +82,7 @@ const copyCode = async () => {
   transition: all 0.3s;
 }
 
-.demo-code-control:hover {
+.demo-code-control .control-item:hover {
   color: #1677ff;
   background-color: #f9fafc;
 }
