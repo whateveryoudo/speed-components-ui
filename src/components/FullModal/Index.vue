@@ -7,7 +7,10 @@
  * @FilePath: \speed-components\src\components\FullModal\index.vue
 -->
 <script lang="ts" setup>
-import { watch, ref } from "vue";
+import { watch, ref, type CSSProperties, watchEffect, computed } from "vue";
+import type { ButtonProps } from "ant-design-vue";
+import { useDraggable } from '@vueuse/core';
+import { FullscreenOutlined, FullscreenExitOutlined, CloseOutlined } from "@ant-design/icons-vue";
 // eslint-disable-next-line no-undef
 defineOptions({
   name: "SFullModal",
@@ -17,74 +20,137 @@ const props = withDefaults(
     visible: boolean;
     height?: number | string | "auto";
     needConfirmClose?: boolean; // 追加是否需要二次确认关闭
-    headerBorder?: boolean;
-    footerBorder?: boolean;
     maxHeight?: string;
     minHeight?: string;
     overflowY?: string;
     width?: number | string;
     title?: string;
-    tips?: string;
     allowFullScreen?: boolean;
-    showFormCreateBtn?: boolean;
     cancelText?: string;
     okText?: string;
-    okProps?: any;
+    okButtonProps?: ButtonProps;
+    cancelButtonProps?: ButtonProps;
+    okType?: string;
     closable?: boolean;
-    footer?: boolean;
     confirmLoading?: boolean;
     showCancelBtn?: boolean;
-    closeWhenOk?: boolean; // ok 事件触发时立刻关闭弹框
     maskClosable?: boolean;
-    outFullScreen?: boolean; // 可能外部需要这个变量
+    footer?: boolean
+    draggable?: boolean;
+    fullScreen?: boolean; // 可能外部需要这个变量
   }>(),
   {
     title: "弹框标题",
     needConfirmClose: false,
-    headerBorder: false,
-    footerBorder: false,
     overflowY: "auto",
     height: "auto",
     maxHeight: "70vh",
     minHeight: "100px",
     width: 450,
-    tips: "",
     cancelText: "取消",
     okText: "确定",
-    footer: true,
+    okType: "primary",
     allowFullScreen: false,
-    showFormCreateBtn: false,
     confirmLoading: false,
     closable: true,
-    closeWhenOk: false,
     showCancelBtn: true,
     maskClosable: false,
-    outFullScreen: false,
+    fullScreen: false,
+    footer: true,
+    draggable: false,
   }
 );
 
 const emits = defineEmits<{
   (e: "update:visible", value: typeof props.visible): void;
-  (e: "update:outFullScreen", value: boolean): void;
+  (e: "update:fullScreen", value: boolean): void;
   (e: "ok"): void;
   (e: "cancel"): void;
   (e: "create"): void;
 }>();
+const isFullScreen = ref(false);
+const startX = ref<number>(0);
+const startY = ref<number>(0);
+const startedDrag = ref(false);
+const transformX = ref(0);
+const transformY = ref(0);
+const preTransformX = ref(0);
+const preTransformY = ref(0);
+const modalTitleRef = ref<HTMLElement>(null);
+const { x, y, isDragging } = useDraggable(modalTitleRef, {
+  disabled: !props.draggable
+});
+const dragRect = ref({ left: 0, right: 0, top: 0, bottom: 0 });
+watch([x, y], () => {
+  // 这里拦截全屏拖拽
+  console.log(isFullScreen.value);
+  if (isFullScreen.value) {
+    return;
+  }
+  if (!startedDrag.value) {
+    startX.value = x.value;
+    startY.value = y.value;
+    const bodyRect = document.body.getBoundingClientRect();
+    const titleRect = modalTitleRef.value.getBoundingClientRect();
+    dragRect.value.right = bodyRect.width - titleRect.width;
+    dragRect.value.bottom = bodyRect.height - titleRect.height;
+    preTransformX.value = transformX.value;
+    preTransformY.value = transformY.value;
+  }
+  startedDrag.value = true;
+});
+watch(isDragging, () => {
+  if (!isDragging) {
+    startedDrag.value = false;
+  }
+});
+
+watchEffect(() => {
+  if (isFullScreen.value) {
+    return;
+  }
+  if (startedDrag.value) {
+    transformX.value =
+      preTransformX.value +
+      Math.min(Math.max(dragRect.value.left, x.value), dragRect.value.right) -
+      startX.value;
+    transformY.value =
+      preTransformY.value +
+      Math.min(Math.max(dragRect.value.top, y.value), dragRect.value.bottom) -
+      startY.value;
+  }
+});
+const transformStyle = computed<CSSProperties>(() => {
+  return {
+    transform: `translate(${transformX.value}px, ${transformY.value}px)`,
+  };
+});
+
 const toggleFullScreen = () => {
   isFullScreen.value = !isFullScreen.value;
-  emits("update:outFullScreen", isFullScreen.value);
+  emits("update:fullScreen", isFullScreen.value);
+};
+const resetTransform = () => {
+  transformX.value = 0;
+  transformY.value = 0;
 };
 watch(
   () => props.visible,
   () => {
     if (!props.visible) {
       isFullScreen.value = false;
-      emits("update:outFullScreen", false);
+      emits("update:fullScreen", false);
     }
   }
 );
+// 监听全屏切换，重置位置
+watch(
+  () => isFullScreen.value,
+  () => {
+    resetTransform();
+  }
+);
 
-const isFullScreen = ref(false);
 const handleClose = () => {
   // 这里兼容两种都传入的操作
   if (props.needConfirmClose) {
@@ -94,10 +160,14 @@ const handleClose = () => {
     emits("update:visible", false);
   }
 };
+// 监听外部的传入
 watch(
-  () => props.outFullScreen,
+  () => props.fullScreen,
   (val: boolean) => {
-    isFullScreen.value = val;
+    if (val !== undefined) {
+      isFullScreen.value = val;
+      resetTransform();
+    }
   },
   {
     immediate: true,
@@ -106,93 +176,73 @@ watch(
 </script>
 <!-- overflowY高度一样也出现了滚动条？？ -->
 <template>
-  <a-modal
-    :wrap-class-name="`full-base-modal ${
-      allowFullScreen ? 'allow-full-screen' : ''
-    }  ${footerBorder ? 'footer-border' : ''} ${
-      headerBorder ? 'header-border' : ''
-    } ${isFullScreen ? 'modal-fullscreen' : ''}`"
-    :style="isFullScreen ? { top: 0, paddingBottom: 0 } : { top: '100px' }"
-    :body-style="{
-      minHeight,
-      maxHeight: `${isFullScreen ? 'calc(100vh - 100px)' : maxHeight}`,
-      height: `${
-        isFullScreen
-          ? 'auto'
-          : typeof height === 'number'
-            ? height + 'px'
-            : height
-      }`,
-      overflowY: isFullScreen ? 'auto' : overflowY || 'auto',
-    }"
-    :visible="props.visible"
-    :keyboard="false"
-    destroy-on-close
-    :closable="closable"
-    :width="width"
-    :mask-closable="maskClosable"
-    v-bind="!footer ? { footer: null, ...$attrs } : $attrs"
-    @update:visible="emits('update:visible', !props.visible)"
-  >
+  <a-modal :wrap-class-name="`full-base-modal ${isFullScreen ? 'full-screen' : ''}`" :body-style="{
+    minHeight,
+    maxHeight: isFullScreen ? '100vh' : maxHeight,
+    height: typeof height === 'number'
+      ? height + 'px'
+      : height
+    ,
+    overflowY: isFullScreen ? 'auto' : overflowY || 'auto',
+  }" :open="props.visible" :keyboard="false" destroy-on-close :closable="false" :width="width"
+    :mask-closable="maskClosable" @update:open="emits('update:visible', !props.visible)" v-bind="$attrs">
     <slot />
-    <!-- 要添加stop -->
-    <template #closeIcon>
-      <slot name="qrcode" />
-      <i
-        v-if="allowFullScreen"
-        :title="isFullScreen ? '退出全屏' : '全屏显示'"
-        class="iconfont"
-        :class="[isFullScreen ? 'icon-shouqiquanping' : 'icon-quanping']"
-        @click.stop="toggleFullScreen"
-      />
-      <i class="iconfont icon-close" @click.stop="handleClose" />
+    <template #modalRender="{ originVNode }">
+      <div :style="transformStyle">
+        <component :is="originVNode" />
+      </div>
     </template>
-
-    <template #title v-if="title">
+    <!-- 这里完全使用title来控制顶部[这里支持3种:1.完全传入title自定义渲染，ps:关闭按钮也需要自行实现；2.title-left控制左侧渲染 3. title-right 控制右侧渲染] -->
+    <template #title>
       <slot name="title">
-        <span style="position: relative; left: -5px">
-          {{ title }}
-        </span>
-        <i v-if="tips" class="tips">{{ tips }}</i>
+        <div ref="modalTitleRef"
+          :class="['w-full flex justify-between align-center', { 'cursor-move': props.draggable }]">
+          <slot name="title-left">
+            <span class="title-left">
+              {{ title }}
+            </span>
+          </slot>
+          <!-- 右侧自定义按钮 -->
+          <slot name="title-right">
+            <a-space class="title-right">
+              <a-button type="text" v-if="allowFullScreen">
+                <FullscreenExitOutlined v-if="isFullScreen" @click.stop="toggleFullScreen" />
+                <FullscreenOutlined v-else @click.stop="toggleFullScreen" />
+              </a-button>
+              <a-button type="text" v-if="closable" @click.stop="handleClose">
+                <CloseOutlined />
+              </a-button>
+            </a-space>
+          </slot>
+        </div>
       </slot>
     </template>
     <!-- 这里没提供footer插槽了，如需自定义底部，设置footer为false -->
 
     <template #footer>
-      <div
-        v-if="footer"
-        :class="['footer-wrapper', $slots.footerLeft && 'has-left']"
-      >
-        <slot name="footer-left">
-          <a-button v-if="showFormCreateBtn" @click="emits('create')">
-            <template #icon>
-              <PlusOutlined style="font-size: 16px" />
-            </template>
-            新建表单
-          </a-button>
-        </slot>
-        <span>
+      <slot name="footer">
+        <a-flex align="center" :justify="$slots.footerLeft ? 'space-between' : 'flex-end'" v-if="footer">
+          <slot name="footer-left">
+          </slot>
           <!-- 支持右侧自定义按钮集合 -->
           <slot name="footer-right">
-            <a-button v-if="showCancelBtn" @click="handleClose">
-              {{ cancelText }}
-            </a-button>
+            <a-space>
+              <a-button v-if="showCancelBtn" v-bind="cancelButtonProps" @click="handleClose">
+                {{ cancelText }}
+              </a-button>
 
-            <a-button
-              :loading="confirmLoading"
-              v-bind="okProps ? okProps : { type: 'primary' }"
-              @click="
+              <a-button :loading="confirmLoading" v-bind="okButtonProps ? okButtonProps : { type: okType }" @click="
                 () => {
                   emits('ok');
-                  closeWhenOk && emits('update:visible', false);
                 }
-              "
-            >
-              {{ okText }}
-            </a-button>
+              ">
+                {{ okText }}
+              </a-button>
+            </a-space>
+
           </slot>
-        </span>
-      </div>
+        </a-flex>
+      </slot>
     </template>
   </a-modal>
 </template>
@@ -200,100 +250,37 @@ watch(
 <style lang="less">
 .full-base-modal {
   .ant-modal-header {
-    padding: 0 22px;
-    padding-top: 15px;
-    padding-right: 50px; // 多向右走点
-    .ant-modal-title {
-      font-weight: bold;
-      position: relative;
-      width: auto;
-      // display: inline-block;
-      .tips {
-        margin-left: 12px;
-        position: relative;
-        top: -1px;
-        font-weight: normal;
-        font-style: normal;
-        font-size: 12px;
-        color: #838892;
+    .title-right {
+      .ant-btn {
+        padding: 0;
+        width: 22px;
+        height: 22px;
+        line-height: 1;
+        border-radius: 3px;
       }
     }
   }
-  .ant-modal .ant-modal-content {
-    padding-bottom: 0;
-  }
-  .ant-modal-close-x {
-    text-align: right;
-    // width: 200px;
-    width: auto;
 
-    .iconfont {
-      padding: 3px;
-      border-radius: 3px;
-      font-size: 18px;
-      color: #666;
-      transition: all 0.3s ease;
-      margin-right: 10px;
-      &:hover {
-        background-color: rgba(240, 241, 242);
-        color: #333;
-      }
+  // 全屏模式
+  &.full-screen {
+    .ant-modal {
+      width: 100% !important;
+      max-width: 100%;
+      top: 0;
+      padding-bottom: 0;
+      margin: 0;
     }
-  }
-  .ant-modal-body {
-    padding: 16px 16px 10px 16px;
-    position: relative;
-  }
-  .ant-modal-footer {
-    border-top: none;
-    padding: 10px 16px;
-    padding-top: 5px;
-    .footer-wrapper {
-      &.has-left {
-        justify-content: space-between;
-      }
+
+    .ant-modal-content {
       display: flex;
-      width: 100%;
-      justify-content: flex-end;
-      align-items: flex-end;
+      flex-direction: column;
+      height: calc(100vh);
+    }
 
-      > span {
-        &:first-of-type {
-          width: auto;
-        }
-        &:last-of-type {
-          flex: 1;
-        }
-        text-align: right;
-        // .ant-btn {
-        //   border: 1px solid @main-color;
-        //   color: @main-color;
-        //   &.ant-btn-primary {
-        //     color: #fff;
-        //     background-color: @main-color;
-        //   }
-        // }
-      }
+    .ant-modal-body {
+      flex: 1;
     }
   }
-}
-.allow-full-screen .ant-modal-header {
-  padding-right: 80px;
-}
-.modal-fullscreen {
-  .ant-modal {
-    max-width: 100%;
-    top: 0;
-  }
 
-  .ant-modal-content {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding-bottom: 0;
-  }
-  .ant-modal-body {
-    flex: 1;
-  }
 }
 </style>

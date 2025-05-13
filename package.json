@@ -62,6 +62,7 @@
     "vue-tsc": "^1.8.0"
   },
   "dependencies": {
-    "@highlightjs/vue-plugin": "^2.1.0"
+    "@highlightjs/vue-plugin": "^2.1.0",
+    "@vueuse/core": "^13.1.0"
   }
 }

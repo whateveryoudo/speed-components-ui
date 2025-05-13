@@ -1,12 +1,23 @@
 # FullModal 全屏弹窗
 
 全屏弹窗组件，支持全屏拖拽。
-
-## 基础用法
 <script setup>
     import Basic from './Basic.vue'
+    import CustomRender from './CustomRender.vue'
+    import Drag from './Drag.vue'
 </script>
+### 基础用法
 <Basic />
+
+### 自定义渲染(slot使用)
+
+<CustomRender />
+
+### 拖拽支持
+沿用了官网的示例，这里仅需要配置 draggable 即可。
+
+<Drag />
+
 
 ## API
 
