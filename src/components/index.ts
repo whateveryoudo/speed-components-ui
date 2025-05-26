@@ -72,5 +72,6 @@ export { default as IconFont } from './IconFont/index'
 
 export default {
   install,
-  setConfig
+  setConfig,
+  version: '0.1.0'
 }

@@ -28,7 +28,7 @@ yarn add speed-components
 
 ```ts
 import { createApp } from "vue";
-import SpeedComponents from "speed-components";
+import SpeedComponents from "speed-components/components";
 import "speed-components/dist/style.css";
 import App from "./App.vue";
 // 范例请求，需替换为实际请求

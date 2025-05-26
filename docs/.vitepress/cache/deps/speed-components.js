@@ -4,6 +4,8 @@ import {
 import {
   computed,
   defineComponent,
+  inject,
+  ref,
   unref
 } from "./chunk-QXP276DV.js";
 import "./chunk-G3PMV62Z.js";
@@ -14,7 +16,6 @@ import CollapseHz from "/Users/ykx/work/gitee/speed-components/src/components/Co
 import FilePreviewItem from "/Users/ykx/work/gitee/speed-components/src/components/FilePreviewItem/index.vue";
 
 // src/components/IconFont/index.tsx
-var scriptUrls = [import.meta.env.VITE_ICONFONT_URL];
 var IconFont_default = defineComponent({
   name: "SIconFont",
   props: {
@@ -53,6 +54,11 @@ var IconFont_default = defineComponent({
     }
   },
   setup(props, { attrs }) {
+    var _a;
+    const config = inject("speed-components-config", ref({
+      iconfontUrl: ""
+    }));
+    let scriptUrls = [(_a = config == null ? void 0 : config.value) == null ? void 0 : _a.iconfontUrl];
     const wrapStyleObj = computed(() => {
       const { size, color } = props;
       const fontSize = typeof size === "string" ? parseInt(size) : size;
@@ -105,19 +111,41 @@ import { default as default2 } from "/Users/ykx/work/gitee/speed-components/src/
 import { default as default3 } from "/Users/ykx/work/gitee/speed-components/src/components/CollapseHz/index.vue";
 import { default as default4 } from "/Users/ykx/work/gitee/speed-components/src/components/FilePreviewItem/index.vue";
 var components = [FullModal, CollapseHz, FilePreviewItem, IconFont_default];
-var install = (app) => {
-  components.forEach((component) => {
-    app.component(component.name, component);
-  });
+var defaultConfig = {
+  registerGlobal: true,
+  iconfontUrl: import.meta.env.VITE_ICONFONT_URL,
+  apis: {}
+};
+var configRef = ref({ ...defaultConfig });
+var currentConfig = computed(() => configRef.value);
+var setConfig = (config) => {
+  configRef.value = {
+    ...configRef.value,
+    ...config
+  };
+};
+var install = (app, config) => {
+  if (config) {
+    setConfig(config);
+  }
+  if (currentConfig.value.registerGlobal) {
+    components.forEach((component) => {
+      app.component(component.name, component);
+    });
+  }
+  app.provide("speed-components-config", currentConfig);
 };
 var components_default = {
-  install
+  install,
+  setConfig,
+  version: "0.1.0"
 };
 export {
   default3 as CollapseHz,
   default4 as FilePreviewItem,
   default2 as FullModal,
   IconFont_default as IconFont,
-  components_default as default
+  components_default as default,
+  setConfig
 };
 //# sourceMappingURL=speed-components.js.map
