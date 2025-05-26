@@ -7,15 +7,8 @@
  * @FilePath: \easycube-apps\packages\components\src\globalComponents\IconFont\index.tsx
  */
 
-import { type PropType, defineComponent, computed, unref } from 'vue';
+import { type PropType, defineComponent, computed, unref, inject, ref } from 'vue';
 import { createFromIconfontCN } from '@ant-design/icons-vue';
-// 在admin 和pc下 的env都要设置为最新的url
-const onlineUrl = (import.meta as any).env.VITE_ICONFONT_URL;
-const VITE_BASIC_PATH = (import.meta as any).env.VITE_BASIC_PATH || '/';
-const scriptUrl = (import.meta as any).env.PROD
-  ? VITE_BASIC_PATH + 'iconfont/iconfont.js'
-  : onlineUrl;
-let scriptUrls: string[] = [scriptUrl]; // 区分下，本地调用显示地址，生产调用本地地址
 export default defineComponent({
   name: 'SIconFont',
   props: {
@@ -52,7 +45,11 @@ export default defineComponent({
       default: () => {},
     },
   },
-  setup(props, { attrs }) {
+  setup(props, { attrs, }) {
+    const config = inject('speed-components-config', ref({
+      iconfontUrl: ''
+    }));
+    let scriptUrls = [config?.value?.iconfontUrl];
     const wrapStyleObj = computed(() => {
       const { size, color } = props;
       const fontSize = typeof size === 'string' ? parseInt(size) : size;
@@ -81,7 +78,6 @@ export default defineComponent({
         scriptUrl: scriptUrls,
       });
     }
-
     return () => {
       const { type, prefix, imgModule, imgStyle } = props;
       return imgModule ? (

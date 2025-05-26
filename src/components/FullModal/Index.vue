@@ -17,12 +17,12 @@ defineOptions({
 });
 const props = withDefaults(
   defineProps<{
-    visible: boolean;
+    visible?: boolean;
+    open?: boolean;
     height?: number | string | "auto";
-    needConfirmClose?: boolean; // 追加是否需要二次确认关闭
+    needConfirmClose?: boolean;
     maxHeight?: string;
     minHeight?: string;
-    overflowY?: string;
     width?: number | string;
     title?: string;
     allowFullScreen?: boolean;
@@ -37,12 +37,11 @@ const props = withDefaults(
     maskClosable?: boolean;
     footer?: boolean
     draggable?: boolean;
-    fullScreen?: boolean; // 可能外部需要这个变量
+    fullScreen?: boolean;
   }>(),
   {
     title: "弹框标题",
     needConfirmClose: false,
-    overflowY: "auto",
     height: "auto",
     maxHeight: "70vh",
     minHeight: "100px",
@@ -61,13 +60,18 @@ const props = withDefaults(
   }
 );
 
+const isOpen = computed(() => {
+  return props.open !== undefined ? props.open : props.visible;
+});
+
 const emits = defineEmits<{
-  (e: "update:visible", value: typeof props.visible): void;
+  (e: "update:visible", value: boolean): void;
+  (e: "update:open", value: boolean): void;
   (e: "update:fullScreen", value: boolean): void;
-  (e: "ok"): void;
-  (e: "cancel"): void;
-  (e: "create"): void;
+  (e: "ok", event: Event): void;
+  (e: "cancel", event: Event): void;
 }>();
+
 const isFullScreen = ref(false);
 const startX = ref<number>(0);
 const startY = ref<number>(0);
@@ -135,9 +139,9 @@ const resetTransform = () => {
   transformY.value = 0;
 };
 watch(
-  () => props.visible,
+  () => isOpen,
   () => {
-    if (!props.visible) {
+    if (!isOpen) {
       isFullScreen.value = false;
       emits("update:fullScreen", false);
     }
@@ -151,13 +155,20 @@ watch(
   }
 );
 
-const handleClose = () => {
-  // 这里兼容两种都传入的操作
-  if (props.needConfirmClose) {
-    emits("cancel"); // 你可以自定定义关闭方法
+const updateVisible = (value: boolean) => {
+  if (props.open !== undefined) {
+    emits("update:open", value);
   } else {
-    emits("cancel");
-    emits("update:visible", false);
+    emits("update:visible", value);
+  }
+};
+
+const handleClose = (e: Event) => {
+  if (props.needConfirmClose) {
+    emits("cancel", e);
+  } else {
+    emits("cancel", e);
+    updateVisible(false);
   }
 };
 // 监听外部的传入
@@ -183,9 +194,9 @@ watch(
       ? height + 'px'
       : height
     ,
-    overflowY: isFullScreen ? 'auto' : overflowY || 'auto',
-  }" :open="props.visible" :keyboard="false" destroy-on-close :closable="false" :width="width"
-    :mask-closable="maskClosable" @update:open="emits('update:visible', !props.visible)" v-bind="$attrs">
+    overflowY: 'auto',
+  }" :open="isOpen" :keyboard="false" destroy-on-close :closable="false" :width="width"
+    :mask-closable="maskClosable" @update:open="updateVisible" v-bind="$attrs">
     <slot />
     <template #modalRender="{ originVNode }">
       <div :style="transformStyle">
@@ -221,7 +232,7 @@ watch(
 
     <template #footer>
       <slot name="footer">
-        <a-flex align="center" :justify="$slots.footerLeft ? 'space-between' : 'flex-end'" v-if="footer">
+        <a-flex align="center" :justify="$slots['footer-left'] ? 'space-between' : 'flex-end'" v-if="footer">
           <slot name="footer-left">
           </slot>
           <!-- 支持右侧自定义按钮集合 -->
@@ -232,8 +243,8 @@ watch(
               </a-button>
 
               <a-button :loading="confirmLoading" v-bind="okButtonProps ? okButtonProps : { type: okType }" @click="
-                () => {
-                  emits('ok');
+                ($event: Event) => {
+                  emits('ok', $event);
                 }
               ">
                 {{ okText }}

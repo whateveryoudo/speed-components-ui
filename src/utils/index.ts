@@ -9,7 +9,6 @@ import type { Schema } from '@/types';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import 'dayjs/locale/zh-cn';
-import router from '@/router'
 dayjs.extend(customParseFormat);
 
 import { cloneDeep } from 'lodash-es';
@@ -375,47 +374,4 @@ export const checkAgent = () => {
     return userAgent.indexOf(keyword) !== -1;
   });
   return isMobile;
-};
-
-// 兼容的url打开（微服务和单体）
-export const openUrl = (options: {
-  routeInfo: string | { path: string; query: Record<string, any> };
-  openBlank?: boolean;
-  type?: 'jump-self' | 'jump-main';
-}) => {
-  if (!options) {
-    throw new Error('缺少必要配置项');
-  }
-  const isWuJie = window.__POWERED_BY_WUJIE__;
-  const parentProps = window.$wujie?.props;
-  const { routeInfo, type = 'jump-self', openBlank = true } = options;
-  let tempRouteInfo: Record<string, any> = {};
-  if (typeof routeInfo === 'string') {
-    tempRouteInfo.path = routeInfo;
-  } else {
-    tempRouteInfo = routeInfo;
-  }
-  if (isWuJie && parentProps?.jump) {
-    // 这里区分下类型
-    if (type === 'jump-self') {
-      parentProps.jump({
-        type,
-        href: router.resolve(tempRouteInfo).href,
-        openBlank,
-      });
-    } else {
-      parentProps.jump({
-        type,
-        to: tempRouteInfo,
-        openBlank,
-      });
-    }
-  } else {
-    if (openBlank) {
-      const { href } = router.resolve(tempRouteInfo);
-      window.open(href, '_blank');
-    } else {
-      router.push(tempRouteInfo);
-    }
-  }
 };

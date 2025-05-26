@@ -43,7 +43,7 @@
 <script setup lang="ts">
   import { ref, watch } from 'vue';
   import { cloneDeep } from 'lodash-es';
-  import { isNumEmpty } from '@/utils/util';
+  import { isNumEmpty } from '@/utils';
   // eslint-disable-next-line no-undef
   defineOptions({
     name: 'SRangeNum',

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { ref, watch, computed } from 'vue';
   import { Boot, type DomEditor, type IToolbarConfig } from '@wangeditor/editor';
-  import { getRandomId } from '@/utils/util';
+  import { getRandomId } from '@/utils';
   import { useRoute, useRouter } from 'vue-router';
   const props = withDefaults(
     defineProps<{

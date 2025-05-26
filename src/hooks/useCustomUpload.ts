@@ -2,12 +2,17 @@
 import type { UploadProps } from 'ant-design-vue';
 import { ref, type Ref, type ComputedRef } from 'vue';
 import { message } from 'ant-design-vue';
-import { fileUpload, del } from '@/api/attachment';
 import { getRandomId } from '@/utils';
 type IUploadOption = {
   maxCount?: number;
   maxSize?: number;
   acceptTypes?: string[];
+  // 一些外部传入的api接口
+  apis?: {
+    fileUpload: (formData: FormData) => Promise<any>;
+    del: (fieldId: string) => Promise<any>;
+  };
+  data?: Record<string, any> | ((file: File) => Record<string, any>); // 上传所需参数或返回上传参数的方法
   transformResult?: (res: any) => any; // 上传结果转换
   afterUpload?: (files: any[]) => void; // 上传完成后执行得操作
   afterDelete?: (files: any[]) => void; // 删除完成后执行得操作
@@ -53,10 +58,27 @@ export function useCustomUpload(options?: Ref<IUploadOption> | ComputedRef<IUplo
   // 手动上传图片(这里批量实际是多次调用单次上传)
   const customRequest = async (option: any) => {
     // 用不上回调，这里是自己写的渲染
+    if (!options?.value?.apis) {
+      console.warn('未配置上传接口');
+      return;
+    }
+    let formData = new FormData();
+    if (options?.value?.data) {
+      if (!(typeof options.value.data === 'function' || typeof options.value.data === 'object')) {
+        console.warn('data类型错误,请传入object或function');
+        return;
+      }
+      if (typeof options.value.data === 'object') {
+        Object.keys(options.value.data).forEach((key) => {
+          formData.append(key, options.value.data[key]);
+        });
+      } else {
+        formData = options.value.data(option.file) as FormData;
+      }
+    } else {
+      formData.append('files', option.file); // 默认追加一个files字段
+    }
     const { file } = option;
-    const formData = new FormData();
-    console.log(file);
-    formData.append('files', file);
     console.log('formData-imgUpload=', formData);
     uploadLoading.value = true;
     // 创建一个中间项
@@ -67,7 +89,7 @@ export function useCustomUpload(options?: Ref<IUploadOption> | ComputedRef<IUplo
       status: 'uploading',
     });
     try {
-      const res = await fileUpload(formData);
+      const res = await options.value.apis.fileUpload(formData);
       uploadLoading.value = false;
       if (res.success) {
         const filterData = res.data.map((item: any) => {
@@ -111,8 +133,18 @@ export function useCustomUpload(options?: Ref<IUploadOption> | ComputedRef<IUplo
   };
   // 图片删除
   const handleDelFile = async (id: string) => {
+    if (!options?.value?.apis) {
+      console.warn('未配置删除接口');
+      // 仅更新files
+      const delIndex = files.value.findIndex((item: any) => item.id === id);
+      files.value.splice(delIndex, 1);
+      if (options?.value?.afterDelete && typeof options.value.afterDelete === 'function') {
+        options.value.afterDelete(files.value);
+      }
+      return;
+    }
     uploadLoading.value = true;
-    const res = await del(id);
+    const res = await options.value.apis.del(id);
     uploadLoading.value = false;
     if (res && res.success) {
       const delIndex = files.value.findIndex((item: any) => item.id === id);

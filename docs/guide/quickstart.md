@@ -4,32 +4,52 @@
 
 ## 安装
 
-使用 npm 或 yarn 安装：
+使用 npm 、 pnpm 或 yarn 安装：
 
 ```bash
 # npm
 npm install speed-components
 
+# pnpm
+
+pnpm add speed-components
+
 # yarn
 yarn add speed-components
 ```
 
-## 完整引入
+## 在 main.ts 中引入组件库：
 
-在 main.ts 中引入组件库：
+::: warning 初始化全局配置（app.use的第二个参数）
+**iconfontUrl** - iconfont在线地址，实际使用替换为自己的;[没有外网本地如何加载?]()<br>
+**registerGlobal** - 是否注册为全局组件，默认为true(如果按需，或者自己手动导入需设置为false)<br>
+**apis** - 请求方法配置，部分组件会携带一些请求
+:::
 
 ```ts
-import { createApp } from 'vue';
-import SpeedComponents from 'speed-components';
-import 'speed-components/dist/style.css';
-import App from './App.vue';
+import { createApp } from "vue";
+import SpeedComponents from "speed-components";
+import "speed-components/dist/style.css";
+import App from "./App.vue";
+// 范例请求，需替换为实际请求
+import { fileUpload, fileDel, fileDownload } from "@/api/file";
 
 const app = createApp(App);
-app.use(SpeedComponents);
-app.mount('#app');
+const globalConfig = {
+  iconfontUrl: "//at.alicdn.com/t/c/font_3871804_pab634p3if.js", // 替换为你的iconfont地址
+  registerGlobal: true,
+  apis: {
+    /***** 函数定义请参考 组件/hooks下 useCustomUpload *******/
+    fileUpload: fileUpload,
+    fileDel: fileDel,
+    fileDownload: fileDownload,
+  },
+};
+app.use(SpeedComponents, globalConfig);
+app.mount("#app");
 ```
 
-## 按需引入
+## 按需引入(需手动关闭registerGlobal)
 
 使用 Vite 的项目，推荐使用 `unplugin-vue-components` 进行按需引入：
 
@@ -42,9 +62,9 @@ npm install unplugin-vue-components -D
 2. 在 vite.config.ts 中配置：
 
 ```ts
-import { defineConfig } from 'vite';
-import Components from 'unplugin-vue-components/vite';
-import { SpeedComponentsResolver } from 'speed-components/resolver';
+import { defineConfig } from "vite";
+import Components from "unplugin-vue-components/vite";
+import { SpeedComponentsResolver } from "speed-components/resolver";
 
 export default defineConfig({
   plugins: [
@@ -59,29 +79,7 @@ export default defineConfig({
 
 ```vue
 <template>
-  <speed-button type="primary">按钮</speed-button>
-</template>
-```
-
-## 使用示例
-
-### 基础按钮
-
-```vue
-<template>
-  <speed-button type="primary">主要按钮</speed-button>
-  <speed-button>默认按钮</speed-button>
-  <speed-button type="dashed">虚线按钮</speed-button>
-</template>
-```
-
-### 不同尺寸
-
-```vue
-<template>
-  <speed-button size="large">大按钮</speed-button>
-  <speed-button>中按钮</speed-button>
-  <speed-button size="small">小按钮</speed-button>
+  <s-full-modal v-model:open="open">弹出弹框</s-button>
 </template>
 ```
 
@@ -90,4 +88,4 @@ export default defineConfig({
 1. 确保项目中已安装 Vue 3 和 Ant Design Vue 4
 2. 按需引入时，不需要手动引入样式
 3. 完整引入时，需要手动引入样式文件
-4. 建议使用 TypeScript 以获得更好的开发体验 
+4. 建议使用 TypeScript 以获得更好的开发体验

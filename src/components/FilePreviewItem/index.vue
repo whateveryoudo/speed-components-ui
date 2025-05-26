@@ -2,13 +2,12 @@
 <template>
   <div
     v-if="['list', 'list-simple'].includes(mode)"
-    :class="['file-preview-item-list-wrapper', mode === 'list-simple' && 'simple']"
+    :class="[
+      'file-preview-item-list-wrapper',
+      mode === 'list-simple' && 'simple',
+    ]"
   >
-    <img
-      ref="imgRef"
-      :src="showPlacePic()"
-      alt=""
-    />
+    <img ref="imgRef" :src="showPlacePic()" alt="" />
     <div class="info-wrapper">
       <p
         class="overflow-hidden-one title"
@@ -18,22 +17,17 @@
         {{ fileName }}
       </p>
       <p
-        v-if="mode !== 'list-simple' && (fileSize !== undefined || fileSize !== null)"
+        v-if="
+          mode !== 'list-simple' &&
+          (fileSize !== undefined || fileSize !== null)
+        "
         class="overflow-hidden-one text-gray"
       >
         {{ formatFileSize(Number(fileSize)) }}
       </p>
-      <a-space
-        class="right-actions"
-        :size="5"
-      >
+      <a-space class="right-actions" :size="5">
         <template v-if="mode !== 'list-simple'">
-          <a
-            class="text-primary"
-            @click.stop="handlePreview"
-          >
-            预览
-          </a>
+          <a class="text-primary" @click.stop="handlePreview"> 预览 </a>
           <a
             v-if="showDownLoad"
             class="text-primary"
@@ -60,22 +54,11 @@
     </div>
   </div>
 
-  <a-tooltip
-    v-else
-    :title="fileName"
-    placement="top"
-  >
+  <a-tooltip v-else :title="fileName" placement="top">
     <div class="file-preview-item-wrapper">
-      <img
-        ref="imgRef"
-        :src="showPlacePic()"
-        alt=""
-      />
+      <img ref="imgRef" :src="showPlacePic()" alt="" />
       <span class="actions-wrapper">
-        <EyeOutlined
-          title="预览"
-          @click.stop="handlePreview"
-        />
+        <EyeOutlined title="预览" @click.stop="handlePreview" />
         <!-- 仅有附件支持下载 -->
         <DownloadOutlined
           v-if="showDownLoad"
@@ -99,227 +82,242 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue';
-  import { getPreviewUrl } from '@/utils/getUrl';
-  import { formatFileSize } from '@/utils';
-  import 'viewerjs/dist/viewer.css';
-  import { downloadFullBlob, getPreviewFileUrl } from '@/api';
-  import { handleExceptDown } from '@/hooks/useDownload';
-  import Viewer from 'viewerjs';
-  import excelImg from '@/assets/image/excel.png';
-  import fileImg from '@/assets/image/file.png';
-  import musicImg from '@/assets/image/music.png';
-  import pptImg from '@/assets/image/ppt.png';
-  import videoImg from '@/assets/image/video.png';
-  import wordImg from '@/assets/image/word.png';
-  import zipImg from '@/assets/image/zip.png';
+import { ref, computed } from "vue";
+import { formatFileSize } from "@/utils";
+import "viewerjs/dist/viewer.css";
+import { handleExceptDown } from "@/hooks/useDownload";
+import Viewer from "viewerjs";
+import excelImg from "@/assets/image/excel.png";
+import fileImg from "@/assets/image/file.png";
+import musicImg from "@/assets/image/music.png";
+import pptImg from "@/assets/image/ppt.png";
+import videoImg from "@/assets/image/video.png";
+import wordImg from "@/assets/image/word.png";
+import zipImg from "@/assets/image/zip.png";
 
-  export type IFileItem = {
-    id: string;
-    previewUrl?: string;
-    fileName: string;
-    fileType: string;
-    fileSize?: string;
-  };
-  const imgRef = ref();
-  const viewerInstance = ref();
-  const props = withDefaults(
-    defineProps<{
-      mode?: 'card' | 'list' | 'list-simple';
-      id: IFileItem['id'];
-      canIdel?: boolean;
-      className?: string;
-      previewUrl?: IFileItem['previewUrl'];
-      fileType: IFileItem['fileType'];
-      fileSize: IFileItem['fileSize'];
-      fileName: IFileItem['fileName'];
-    }>(),
-    {
-      mode: 'card',
-      canIdel: true, // 是否允许删除附件
-    },
-  );
-  const emits = defineEmits(['on-delete']);
-  const showDownLoad = computed(() => {
-    if (!props.fileName) {
-      throw new Error('缺少必要属性fileName');
-    }
-    const rge = /\.\w+$/;
-    const fileSuffix = props.fileName.match(rge)?.[0] ?? '';
-    if (fileSuffix) {
-      return !['.png', '.jpg', '.gif', '.jpeg'].includes(fileSuffix);
-    }
-    return false;
-  });
-  // 图片占位映射
-  const placeholderPicMap = {
-    '.xlsx,.xls': excelImg,
-    '.doc,.docx': wordImg,
-    '.mp3': musicImg,
-    '.ppt': pptImg,
-    '.mp4,.avi,.wmv,.mpeg': videoImg,
-    '.zip,.rar': zipImg,
-  };
-  /*eslint no-undef: "off"*/
-  defineOptions({
-    name: 'SFilePreviewItem',
-  });
-  // 占位图显示
-  const showPlacePic = () => {
-    if (!props.fileName) {
-      throw new Error('缺少必要属性fileName');
-    }
-    const rge = /\.\w+$/;
-    let target: any = fileImg;
-    const fileSuffix = props.fileName.match(rge)?.[0] ?? '';
-    if (fileSuffix) {
-      // 图片走插件预览(如何禁止img点击触发？？)
-      if (['.png', '.jpg', '.gif', '.jpeg'].includes(fileSuffix)) {
-        return getPreviewUrl(props.id);
-      } else {
-        Object.keys(placeholderPicMap).forEach((key: string) => {
-          if (key.includes(fileSuffix)) {
-            target = placeholderPicMap[key];
-          }
-        });
-      }
-    }
-    return target;
-  };
-  // 附件预览
-  const handlePreview = async () => {
-    if (!props.fileName) {
-      throw new Error('缺少必要属性fileName');
-    }
-    const rge = /\.\w+$/;
-    const fileSuffix = props.fileName.match(rge)?.[0] ?? '';
-    if (fileSuffix) {
-      // 图片走插件预览(如何禁止img点击触发？？)
-      if (['.png', '.jpg', '.gif', '.jpeg'].includes(fileSuffix)) {
-        if (viewerInstance.value) {
-          viewerInstance.value.view(0);
-        } else {
-          viewerInstance.value = new Viewer(imgRef.value, {
-            className: props.className,
-            // 内联展示
-            inline: false,
-          });
-          viewerInstance.value.view(0);
+export type IFileItem = {
+  id: string;
+  previewUrl?: string;
+  fileName: string;
+  fileType: string;
+  fileSize?: string;
+};
+const imgRef = ref();
+const viewerInstance = ref();
+const props = withDefaults(
+  defineProps<{
+    mode?: "card" | "list" | "list-simple";
+    id: IFileItem["id"];
+    downloadFullBlob?: (fileId: string) => Promise<BlobPart>; // 下载请求，返回流结果
+    getPreviewUrl?: (fileId: string) => string; // 图片预览路径
+    onPreview?: (fileId: string) => void; // 预览函数
+    canIdel?: boolean;
+    className?: string;
+    previewUrl?: IFileItem["previewUrl"];
+    fileType: IFileItem["fileType"];
+    fileSize: IFileItem["fileSize"];
+    fileName: IFileItem["fileName"];
+  }>(),
+  {
+    mode: "card",
+    canIdel: true, // 是否允许删除附件
+  }
+);
+const emits = defineEmits(["on-delete"]);
+const showDownLoad = computed(() => {
+  if (!props.fileName) {
+    throw new Error("缺少必要属性fileName");
+  }
+  const rge = /\.\w+$/;
+  const fileSuffix = props.fileName.match(rge)?.[0] ?? "";
+  if (fileSuffix) {
+    return ![".png", ".jpg", ".gif", ".jpeg"].includes(fileSuffix);
+  }
+  return false;
+});
+// 图片占位映射
+const placeholderPicMap = {
+  ".xlsx,.xls": excelImg,
+  ".doc,.docx": wordImg,
+  ".mp3": musicImg,
+  ".ppt": pptImg,
+  ".mp4,.avi,.wmv,.mpeg": videoImg,
+  ".zip,.rar": zipImg,
+};
+/*eslint no-undef: "off"*/
+defineOptions({
+  name: "SFilePreviewItem",
+});
+// 占位图显示
+const showPlacePic = () => {
+  if (!props.fileName) {
+    throw new Error("缺少必要属性fileName");
+  }
+  const rge = /\.\w+$/;
+  let target: any = fileImg;
+  const fileSuffix = props.fileName.match(rge)?.[0] ?? "";
+  if (fileSuffix) {
+    // 图片走插件预览(如何禁止img点击触发？？)
+    if ([".png", ".jpg", ".gif", ".jpeg"].includes(fileSuffix)) {
+      if (!props.getPreviewUrl || typeof props.getPreviewUrl !== "function") {
+        console.warn("缺少获取预览路径方法，将采用 previewUrl预览");
+        if (!props.previewUrl) {
+          throw new Error("缺少预览路径");
         }
+        return props.previewUrl || "";
+      }
+      return props.getPreviewUrl(props.id);
+    } else {
+      Object.keys(placeholderPicMap).forEach((key: string) => {
+        if (key.includes(fileSuffix)) {
+          target = placeholderPicMap[key as keyof typeof placeholderPicMap];
+        }
+      });
+    }
+  }
+  return target;
+};
+// 附件预览
+const handlePreview = async () => {
+  if (!props.fileName) {
+    throw new Error("缺少必要属性fileName");
+  }
+  const rge = /\.\w+$/;
+  const fileSuffix = props.fileName.match(rge)?.[0] ?? "";
+  if (fileSuffix) {
+    // 图片走插件预览(如何禁止img点击触发？？)
+    if ([".png", ".jpg", ".gif", ".jpeg"].includes(fileSuffix)) {
+      if (viewerInstance.value) {
+        viewerInstance.value.view(0);
       } else {
-        // 这里修改为接口请求
-        const { data } = await getPreviewFileUrl(props.id);
-        window.open(data);
+        viewerInstance.value = new Viewer(imgRef.value, {
+          className: props.className,
+          // 内联展示
+          inline: false,
+        });
+        viewerInstance.value.view(0);
       }
     } else {
-      // 这里修改为接口请求
-      const { data } = await getPreviewFileUrl(props.id);
-      window.open(data);
+      if (props.onPreview || typeof props.onPreview === "function") {
+        props.onPreview(props.id);
+      } else {
+        window.open(props.previewUrl);
+      }
     }
-  };
-  const clickTitlePreview = () => {
-    if (props.mode === 'list-simple') {
-      handlePreview();
+  } else {
+    if (props.onPreview || typeof props.onPreview === "function") {
+      props.onPreview(props.id);
+    } else {
+      window.open(props.previewUrl);
     }
-  };
-  // 附件下载
-  const handleDownLoad = async () => {
-    const res = await downloadFullBlob(props.id);
-    handleExceptDown(res, props.fileName, props.className);
-  };
+  }
+};
+const clickTitlePreview = () => {
+  if (props.mode === "list-simple") {
+    handlePreview();
+  }
+};
+// 附件下载
+const handleDownLoad = async () => {
+  if (!props.downloadFullBlob) {
+    throw new Error("流下载方法缺失");
+  }
+  const res = (await props.downloadFullBlob(props.id)) as any;
+  handleExceptDown(res, props.fileName, props.className);
+};
 </script>
 
 <style scoped lang="less">
-  .file-preview-item-wrapper {
-    width: 60px;
-    height: 60px;
-    border: 1px solid #d9d9d9;
-    padding: 3px;
-    position: relative;
-    border-radius: 4px;
-    background-color: #eee;
-    cursor: pointer;
-    &:hover {
-      .actions-wrapper {
-        opacity: 1;
-      }
-      .close-icon {
-        display: block;
-      }
-    }
-
-    img {
-      position: static;
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: 4px;
-    }
+.file-preview-item-wrapper {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #d9d9d9;
+  padding: 3px;
+  position: relative;
+  border-radius: 4px;
+  background-color: #eee;
+  cursor: pointer;
+  &:hover {
     .actions-wrapper {
-      position: absolute;
-      top: 50%;
-      text-align: center;
-      width: 100%;
-      transition: opacity 0.2s;
-      opacity: 0;
-      left: 0;
-      transform: translateY(-50%);
-      :deep(.anticon) {
-        transition: color 0.2s;
-        color: rgba(255, 255, 255, 0.8);
-
-        &:hover {
-          color: #fff;
-        }
-      }
+      opacity: 1;
     }
     .close-icon {
-      position: absolute;
-      right: -10px;
-      top: -5px;
-      display: none;
+      display: block;
     }
   }
-  // 列表模式
-  .file-preview-item-list-wrapper {
-    background: #f0f1f4;
-    border: none;
-    border-radius: 3px;
-    height: 52px;
-    padding: 0 5px;
-    margin: 6px 0;
-    display: flex;
-    position: relative;
-    align-items: center;
-    &.simple {
-      height: 40px;
-      img {
-        height: 30px;
-        width: 30px;
-      }
-      .right-actions {
-        top: 50%;
-      }
-      .info-wrapper .title {
-        cursor: pointer;
+
+  img {
+    position: static;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+  }
+  .actions-wrapper {
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    width: 100%;
+    transition: opacity 0.2s;
+    opacity: 0;
+    left: 0;
+    transform: translateY(-50%);
+    :deep(.anticon) {
+      transition: color 0.2s;
+      color: rgba(255, 255, 255, 0.8);
+
+      &:hover {
+        color: #fff;
       }
     }
+  }
+  .close-icon {
+    position: absolute;
+    right: -10px;
+    top: -5px;
+    display: none;
+  }
+}
+// 列表模式
+.file-preview-item-list-wrapper {
+  background: #f0f1f4;
+  border: none;
+  border-radius: 3px;
+  height: 52px;
+  padding: 0 5px;
+  margin: 6px 0;
+  display: flex;
+  position: relative;
+  align-items: center;
+  &.simple {
+    height: 40px;
     img {
-      width: 40px;
-      height: 40px;
-      margin-right: 5px;
-    }
-    .info-wrapper {
-      flex: 1;
-      padding-right: 10px;
-      min-width: 0;
+      height: 30px;
+      width: 30px;
     }
     .right-actions {
-      position: absolute;
-      top: 70%;
-      right: 5px;
-      font-size: 12px;
-      transform: translateY(-50%);
+      top: 50%;
+    }
+    .info-wrapper .title {
+      cursor: pointer;
     }
   }
+  img {
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+  }
+  .info-wrapper {
+    flex: 1;
+    padding-right: 10px;
+    min-width: 0;
+  }
+  .right-actions {
+    position: absolute;
+    top: 70%;
+    right: 5px;
+    font-size: 12px;
+    transform: translateY(-50%);
+  }
+}
 </style>

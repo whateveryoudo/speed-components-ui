@@ -49,7 +49,6 @@
 import { ref } from 'vue';
 import { QuestionCircleOutlined } from '@ant-design/icons-vue';
 
-const showModal1 = ref(false);
 const code = ref(`
 <template>
     <div>
@@ -59,13 +58,13 @@ const code = ref(`
         <a-button type="primary" @click="showModal3 = true">打开弹框(自定义底部左/右侧)</a-button>
         <a-button type="primary" @click="showModal4 = true">打开弹框(完全自定义底)</a-button>
       </div>
-      <s-full-modal v-model:visible="showModal1" allowFullScreen @cancel="handleCancel1">
+      <s-full-modal v-model:open="showModal1" allowFullScreen @cancel="handleCancel1">
         <template #title>
           <span class="bg-[red] text-[#fff]">我是自定义标题</span>
         </template>
         内容区域
       </s-full-modal>
-      <s-full-modal v-model:visible="showModal2" allowFullScreen @cancel="handleCancel2">
+      <s-full-modal v-model:open="showModal2" allowFullScreen @cancel="handleCancel2">
         <template #title-left>
           <span class="bg-[red] text-[#fff]">我是自定义标题</span>
         </template>
@@ -74,7 +73,7 @@ const code = ref(`
         </template>
         内容区域
       </s-full-modal>
-      <s-full-modal v-model:visible="showModal3" allowFullScreen title="标题" @cancel="handleCancel3">
+      <s-full-modal v-model:open="showModal3" allowFullScreen title="标题" @cancel="handleCancel3">
         <!-- 自定义底部左右侧 -->
         <template #footer-left>
           <span class="text-[12px]">左侧内容</span>
@@ -86,7 +85,7 @@ const code = ref(`
           </a-space>
         </template>
       </s-full-modal>
-      <s-full-modal v-model:visible="showModal4" title="自定义底部示例" allowFullScreen @cancel="handleCancel4">
+      <s-full-modal v-model:open="showModal4" title="自定义底部示例" allowFullScreen @cancel="handleCancel4">
         <div>这里是弹框内容</div>
         <!-- 自定义底部内容 -->
         <template #footer>
@@ -120,12 +119,18 @@ const code = ref(`
   };
 <\/script>
 `)
+const showModal1 = ref(false)
 
-
+// 定义一个名为 handleCancel1 的箭头函数
 const handleCancel1 = () => {
+  // 将 showModal1 的值设置为 false，用于关闭模态框
   showModal1.value = false;
 };
+
+
+// 用于控制模态框2的显示/隐藏状态
 const showModal2 = ref(false);
+
 
 
 const handleCancel2 = () => {

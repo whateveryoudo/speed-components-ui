@@ -8,77 +8,84 @@
 -->
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
+import { ref, watch } from "vue";
 
-  // eslint-disable-next-line no-undef
-  defineOptions({
-    name: 'SCollapseHz',
-  });
-  const props = withDefaults(
-    defineProps<{
-      outToggleFlag?: boolean;
-      expandAttrBefore: string;
-      expandAttrAfter: string;
-      transitionAttr?: string;
-      trigger?: 'default' | 'hover';
-      expandDir: 'left' | 'right';
-    }>(),
-    {
-      outToggleFlag: false,
-      trigger: 'default',
-      expandAttrBefore: 'flex: 0',
-      expandAttrAfter: 'flex: 0 0 320px',
-      transitionAttr: 'flex',
-      expandDir: 'left', // 展开方向，默认向左
-    },
-  );
-  const iconFlag = ref(true);
-  const toggleFlag = ref(false);
-  const controlPanel = ref(false); // 展开时内容延迟显示（否则会有一个宽度挤压）
-  const emits = defineEmits(['update:flag']);
-  const toggleIcon = (type: 'enter' | 'leave') => {
-    if (props.trigger === 'hover' && toggleFlag.value) {
-      iconFlag.value = type === 'enter';
-    }
-  };
-  // 展开时候添加下延迟
-  const handleSetToggle = () => {
-    if (!toggleFlag.value) {
-      toggleFlag.value = true;
-      emits('update:flag', true);
+// eslint-disable-next-line no-undef
+defineOptions({
+  name: "SCollapseHz",
+});
+const props = withDefaults(
+  defineProps<{
+    open?: boolean;
+    expandAttrBefore: string;
+    expandAttrAfter: string;
+    transitionAttr?: string;
+    triggerMode?: "default" | "hover";
+    expandDir: "left" | "right";
+  }>(),
+  {
+    open: false,
+    triggerMode: "default",
+    expandAttrBefore: "flex: 0",
+    expandAttrAfter: "flex: 0 0 320px",
+    transitionAttr: "flex",
+    expandDir: "left", // 展开方向，默认向左
+  }
+);
+const iconFlag = ref(true);
+const toggleFlag = ref(false);
+const controlPanel = ref(false); // 展开时内容延迟显示（否则会有一个宽度挤压）
+const emits = defineEmits(["update:open"]);
+const toggleIcon = (type: "enter" | "leave") => {
+  if (props.triggerMode === "hover") {
+    iconFlag.value = type === "enter";
+  }
+};
+// 展开时候添加下延迟
+const handleSetToggle = () => {
+  if (!toggleFlag.value) {
+    toggleFlag.value = true;
+    emits("update:open", true);
+    setTimeout(() => {
+      controlPanel.value = true;
+    }, 100);
+  } else {
+    toggleFlag.value = false;
+    controlPanel.value = false;
+    setTimeout(() => {
+      iconFlag.value = true; // 收起得时候显示
+    }, 100);
+
+    emits("update:open", false);
+  }
+};
+
+watch(
+  () => props.open,
+  (val: boolean) => {
+    toggleFlag.value = true;
+    if (val) {
       setTimeout(() => {
         controlPanel.value = true;
-      }, 100);
+      }, 200);
     } else {
       toggleFlag.value = false;
       controlPanel.value = false;
-      setTimeout(() => {
-        iconFlag.value = true; // 收起得时候显示
-      }, 100);
-
-      emits('update:flag', false);
     }
-  };
-  if (props.trigger === 'hover') {
-    iconFlag.value = false;
+  },
+  {
+    immediate: true,
   }
-  watch(
-    () => props.outToggleFlag,
-    (val: boolean) => {
-      toggleFlag.value = true;
-      if (val) {
-        setTimeout(() => {
-          controlPanel.value = true;
-        }, 200);
-      } else {
-        toggleFlag.value = false;
-        controlPanel.value = false;
-      }
-    },
-    {
-      immediate: true,
-    },
-  );
+);
+watch(
+  () => props.triggerMode,
+  (val?: "default" | "hover") => {
+    iconFlag.value = val === "default";
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 
 <template>
@@ -92,65 +99,58 @@
     @mouseenter="toggleIcon('enter')"
     @mouseleave="toggleIcon('leave')"
   >
-    <ATooltip
-      v-if="iconFlag"
-      :placement="expandDir"
-    >
-      <template #title>{{ toggleFlag ? '收起' : '展开' }}</template>
-      <SIconFont
-        :class="['toggle-icon', toggleFlag && 'expand', expandDir]"
-        type="icon-left_double"
-        @click="handleSetToggle"
-      />
-    </ATooltip>
+    <template v-if="iconFlag">
+      <slot name="trigger-render">
+        <ATooltip :placement="expandDir">
+          <template #title>{{ toggleFlag ? "收起" : "展开" }}</template>
+          <span :class="['toggle-icon', expandDir]" @click="handleSetToggle">
+            <DoubleRightOutlined v-if="toggleFlag" />
+            <DoubleLeftOutlined v-else />
+          </span>
+        </ATooltip>
+      </slot>
+    </template>
+    <slot v-if="controlPanel" name="expand-render" />
 
-    <slot
-      v-if="controlPanel"
-      name="expand-render"
-    />
-
-    <slot
-      v-else
-      name="collapse-render"
-    />
+    <slot v-else name="collapse-render" />
   </div>
 </template>
 
 <style scoped lang="less">
-  .collapse-horizontal-wrapper {
-    position: relative;
-    height: 100%;
-    .toggle-icon {
-      position: absolute;
-      top: 50%;
-      height: 48px;
-      transform: translateY(-50%);
-      border: 1px solid #ebecee;
-      width: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 3px;
-      cursor: pointer;
-      background-color: #fff;
-      color: #666 !important;
-      left: -11px;
-      z-index: 10;
-      &:hover {
-        background-color: #e8e8e8;
-      }
-      &.right {
-        left: auto;
-        right: -20px;
-        transform: translateY(-50%) rotateZ(180deg);
-        &.expand {
-          right: -11px;
-          transform: translateY(-50%) rotateZ(0);
-        }
-      }
+.collapse-horizontal-wrapper {
+  position: relative;
+  height: 100%;
+  .toggle-icon {
+    position: absolute;
+    top: 50%;
+    height: 48px;
+    transform: translateY(-50%);
+    border: 1px solid #ebecee;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: #fff;
+    color: #666 !important;
+    left: -11px;
+    z-index: 10;
+    &:hover {
+      background-color: #e8e8e8;
+    }
+    &.right {
+      left: auto;
+      right: -11px;
+      transform: translateY(-50%) rotateZ(180deg);
       &.expand {
-        transform: translateY(-50%) rotateZ(180deg);
+        right: -11px;
+        transform: translateY(-50%) rotateZ(0);
       }
     }
+    &.expand {
+      transform: translateY(-50%) rotateZ(180deg);
+    }
   }
+}
 </style>

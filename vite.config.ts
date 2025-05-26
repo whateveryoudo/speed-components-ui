@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 import UnoCSS from 'unocss/vite'
@@ -9,6 +10,7 @@ export default defineConfig({
   root: 'example',
   plugins: [
     vue(),
+    vueJsx(),
     dts({
       include: ['src/**/*.ts', 'src/**/*.d.ts', 'src/**/*.tsx', 'src/**/*.vue'],
     }),

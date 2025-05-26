@@ -25,21 +25,23 @@
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| v-model:visible | 是否显示弹窗 | boolean | false |
+| visible/open(v-model) | 是否显示弹窗(visible部分历史兼容) | boolean | false |
 | title | 弹窗标题 | string | - |
-| width | 弹窗宽度 | string \| number | 520 |
-| centered | 是否居中显示 | boolean | false |
-| maskClosable | 点击蒙层是否允许关闭 | boolean | true |
-| keyboard | 是否支持键盘 esc 关闭 | boolean | true |
-| destroyOnClose | 关闭时是否销毁 Modal 里的子元素 | boolean | false |
-| getContainer | 指定 Modal 挂载的 HTML 节点 | () => HTMLElement | () => document.body |
+| width | 弹窗宽度 | string \| number | 450 |
+| height | 弹窗高度 | string \| number | 'auto' |
+| max-height | 最大高度 | string | 70vh |
+| min-height | 最小高度 | string | 100px |
+| draggable | 是否可拖动 | boolean | false |
+| needConfirmClose | 是否需要二次确认(默认情况下，会触发cancel后自动关闭，如果有需求，设置后可以自定义取消逻辑) | boolean | false |
+
+### antv剩余 [props](https://www.antdv.com/components/modal-cn#api) 均能使用。
 
 ### Events
 
 | 事件名称 | 说明 | 回调参数 |
 | --- | --- | --- |
 | ok | 点击确定回调 | function(e) |
-| cancel | 点击取消回调 | function(e) |
+| cancel | 点击取消或X的回调 | function(e) |
 
 ### Slots
 
@@ -47,4 +49,8 @@
 | --- | --- |
 | default | 弹窗内容 |
 | title | 自定义标题 |
+| title-left | 左侧标题 |
+| title-right | 右侧操作(默认会显示关闭按钮) |
 | footer | 自定义底部 |
+| footer-left | 自定义底部左侧 |
+| footer-right | 自定义底部右侧 |

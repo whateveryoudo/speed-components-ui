@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress';
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { demoPlugin } from './plugins/demo';
 import UnoCSS from 'unocss/vite';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig({
@@ -11,9 +11,8 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '指南', link: '/guide/' },
-      { text: '组件', link: '/components/' },
+      { text: '组件/hooks', link: '/components/' },
       { text: '工具', link: '/utils/' },
-      { text: 'Hooks', link: '/hooks/' },
     ],
     sidebar: {
       '/guide/': [
@@ -30,6 +29,15 @@ export default defineConfig({
           text: '组件',
           items: [
             { text: 'FullModal 全局弹框', link: '/components/full-modal/index' },
+            { text: 'CollapseHz 水平展开收起', link: '/components/collapse-hz/index' },
+            { text: 'FilePreviewItem 文件预览', link: '/components/file-preview-item/index' },
+            { text: 'IconFont 图标', link: '/components/icon-font/index' },
+          ],
+        },
+        {
+          text: '一些常用hooks',
+          items: [
+            { text: 'useCustomUpload 自定义上传', link: '/components/useCustomUpload/index' },
           ],
         },
       ],
@@ -100,6 +108,7 @@ export default defineConfig({
     },
     plugins: [
       UnoCSS(),
+      vueJsx(),
     ],
   }
 }); 

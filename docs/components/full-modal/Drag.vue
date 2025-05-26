@@ -16,7 +16,7 @@ const showModal = ref(false);
 const code = `<template>
    <div>
       <a-button type="primary" @click="showModal = true">打开弹框</a-button>
-      <s-full-modal allowFullScreen draggable v-model:visible="showModal" title="标题" @ok="handleOk" @cancel="handleCancel">
+      <s-full-modal allowFullScreen draggable v-model:open="showModal" title="标题" @ok="handleOk" @cancel="handleCancel">
         内容区域
       </s-full-modal>
     </div>
