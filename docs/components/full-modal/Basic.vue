@@ -2,16 +2,15 @@
   <Demo :code="code">
     <div>
       <a-button type="primary" @click="showModal = true">打开弹框</a-button>
-      <NewFullModal allowFullScreen v-model:open="showModal" title="标题" @ok="handleOk" @cancel="handleCancel">
+      <s-full-modal allowFullScreen v-model:open="showModal" title="标题" @ok="handleOk" @cancel="handleCancel">
         内容区域
-      </NewFullModal>
+      </s-full-modal>
     </div>
   </Demo>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { FullModal  as NewFullModal} from "speed-components-ui/components";
 
 const showModal = ref(false);
 const code = `<template>

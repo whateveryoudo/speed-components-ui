@@ -1,6 +1,6 @@
 # IconFont 图标组件
 
-基于@ant-design/icons-vue的createFromIconfontCN封装的图标渲染器，支持iconfont图标（常用）、antd内置图标、自定义传入图片等功能。
+基于`@ant-design/icons-vue`的`createFromIconfontCN`封装的图标渲染器，支持iconfont图标（常用）、antd内置图标、自定义传入图片等功能。
 
 ::: tip 提示
 你可以在[全局配置](/guide/quickstart.html#在-main-ts-中引入组件库)中传入iconfontUrl

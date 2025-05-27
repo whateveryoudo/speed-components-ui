@@ -25,47 +25,7 @@
             class="minus-icon"
             @click="delOption(index)"
           />
-          <a-popover
-            v-if="checked"
-            placement="bottomLeft"
-            trigger="click"
-          >
-            <template #content>
-              <div class="color-list">
-                <div
-                  v-for="(itm, indx) in colorList"
-                  :key="indx"
-                  class="color-item"
-                  :style="
-                    element.color === itm
-                      ? { border: `1px solid ${itm}`, padding: '2px' }
-                      : { background: itm }
-                  "
-                  @click="selectColor(index, itm)"
-                >
-                  <div
-                    :style="{
-                      width: '14px',
-                      height: '14px',
-                      borderRadius: '50%',
-                      background: itm,
-                    }"
-                  />
-                </div>
-              </div>
-            </template>
-            <div
-              :style="{
-                background: element.color,
-                width: '20px',
-                height: '20px',
-                borderRadius: '50%',
-                position: 'relative',
-              }"
-            >
-              <CaretDownOutlined class="icon" />
-            </div>
-          </a-popover>
+      
           <div
             class="editor-btn overflow-hidden-one"
             :style="{
@@ -107,7 +67,6 @@
       perRow?: object;
       itemKey?: string;
       addText?: string;
-      checked?: boolean;
       colorList?: string[];
       height?: string | number;
       showAddIcon?: boolean;
@@ -117,7 +76,6 @@
       perRow: () => ({}),
       itemKey: 'id',
       addText: '添加',
-      checked: false,
       colorList: () => [],
       height: 30,
       showAddIcon: true,
@@ -139,11 +97,7 @@
     const item = tempList.splice(index, 1);
     emits('update:list', tempList, 'del', item[0]);
   }
-  const selectColor = (index: any, color: any) => {
-    const newList = cloneDeep(props.list);
-    newList[index].color = color;
-    emits('update:list', newList);
-  };
+  
 </script>
 <style scoped lang="less">
   @blk: #13161b;
@@ -160,7 +114,6 @@
     }
     :deep(.anticon) {
       color: #97a3b7;
-      width: 24px;
       cursor: pointer;
       svg {
         font-size: 16px;
@@ -223,22 +176,5 @@
     cursor: move;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTQuNSAxMy41YS41LjUgMCAxIDEgMCAxIC41LjUgMCAwIDEgMC0xWm03IDBhLjUuNSAwIDEgMSAwIDEgLjUuNSAwIDAgMSAwLTFabS03LTRhLjUuNSAwIDEgMSAwIDEgLjUuNSAwIDAgMSAwLTFabTcgMGEuNS41IDAgMSAxIDAgMSAuNS41IDAgMCAxIDAtMVptLTctNGEuNS41IDAgMSAxIDAgMSAuNS41IDAgMCAxIDAtMVptNyAwYS41LjUgMCAxIDEgMCAxIC41LjUgMCAwIDEgMC0xWm0tNy00YS41LjUgMCAxIDEgMCAxIC41LjUgMCAwIDEgMC0xWm03IDBhLjUuNSAwIDEgMSAwIDEgLjUuNSAwIDAgMSAwLTFaIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=);
   }
-  .color-list {
-    display: flex;
-    flex-wrap: wrap;
-    width: 300px;
-    .color-item {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      margin: 5px;
-    }
-  }
-  .icon {
-    font-size: 12px;
-    color: #fff !important;
-    position: absolute;
-    top: 3px;
-    left: -2px;
-  }
+ 
 </style>

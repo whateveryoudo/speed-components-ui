@@ -13,8 +13,9 @@ import {
   reactive,
   computed,
   unref,
-} from 'vue';
-import { uniqBy } from 'lodash-es';
+  watch,
+} from "vue";
+import { uniqBy } from "lodash-es";
 type OptionsType = {
   extraParams?: Record<string, any>;
   rowKey?: string;
@@ -23,15 +24,17 @@ type OptionsType = {
   fetchCallback?: (res: any) => any;
   handleMultiRes?: (res: any) => any;
   fullRowsAjax?: any;
+  emit?: any;
   [props: string]: any;
 };
 const defaultOptions = {
   extraParams: {},
   needFullSelect: false,
   hasPagination: true,
+  hasSelectedRows: [],
 };
 // 默认最大50
-export const defaultPageSizeOptions = ['10', '20', '50'];
+export const defaultPageSizeOptions = ["10", "20", "50"];
 // 表格通用
 export const useTable = (
   ajaxFn: Function | Ref<Function>,
@@ -46,8 +49,9 @@ export const useTable = (
   });
   // 唯一key
   const rowKey = computed(() => {
-    return options.value.rowKey || 'id';
+    return options.value.rowKey || "id";
   });
+  const emit = options.value.emit;
   const pagination = ref({
     current: 1,
     pageSize: 10,
@@ -70,19 +74,11 @@ export const useTable = (
     totalRows: [],
     hasSelectedRows: [],
   });
+
   // 全选条目keys
   const totalKeys = computed(() => {
     return state.totalRows.map((item: any) => item[rowKey.value]) || [];
   });
-  // 全选中选中条目(废弃,写的意义是什么？？)
-  // const totalSelectedRows = computed(() => {
-  //   // 获取全选中已选择的项
-  //   return (
-  //     state.hasSelectedRows.filter((item: any) => {
-  //       return totalKeys.value.includes(item[rowKey.value]);
-  //     }) || []
-  //   );
-  // });
   // 全选的状态项
   const totalCheckStatus = computed(() => {
     return {
@@ -112,6 +108,15 @@ export const useTable = (
     state.selectedRowKeys =
       state.selectedRows.map((item: any) => item[rowKey.value]) || [];
   };
+  // 监听外部hasSelectedRows
+  watch(
+    () => options.value.hasSelectedRows,
+    (newVal) => {
+      state.hasSelectedRows = newVal;
+      handleReChecked(); // 同步回显
+    },
+    { immediate: true }
+  );
   // 全量数据请求
   const onCheckAllChange = async (e: any) => {
     if (e.target.checked) {
@@ -125,6 +130,10 @@ export const useTable = (
       });
     }
     handleReChecked();
+    if (emit) {
+      // 触发外部更新
+      emit("update:hasSelectedRows", state.hasSelectedRows);
+    }
   };
   // 获取全量条目
   async function getTotalRows() {
@@ -165,7 +174,7 @@ export const useTable = (
     // 获取数据前的处理
     if (
       options.value.beforeFetch &&
-      typeof options.value.beforeFetch === 'function'
+      typeof options.value.beforeFetch === "function"
     ) {
       options.value.beforeFetch();
     }
@@ -197,7 +206,7 @@ export const useTable = (
         // 提交后的参数处理
         if (
           options.value.afterFetch &&
-          typeof options.value.afterFetch === 'function'
+          typeof options.value.afterFetch === "function"
         ) {
           res.data = options.value.afterFetch(res.data);
         }
@@ -214,7 +223,7 @@ export const useTable = (
         // 请求的回调
         if (
           options.value.fetchCallback &&
-          typeof options.value.fetchCallback === 'function'
+          typeof options.value.fetchCallback === "function"
         ) {
           options.value.fetchCallback(dataSource.value);
         }
@@ -241,6 +250,10 @@ export const useTable = (
     });
     // 组合勾选项
     state.hasSelectedRows = [...restCurRows, ...selectedRows];
+    if (emit) {
+      // 触发外部更新
+      emit("update:hasSelectedRows", state.hasSelectedRows);
+    }
   };
   const resetState = () => {
     state.selectedRowKeys = [];
@@ -317,7 +330,7 @@ export const useLoadMore = (
         loading.value = false;
         if (
           options.value.afterFetch &&
-          typeof options.value.afterFetch === 'function'
+          typeof options.value.afterFetch === "function"
         ) {
           res.data = options.value.afterFetch(res.data, res);
         }
@@ -325,10 +338,18 @@ export const useLoadMore = (
         const newData = list.value.concat(res.data?.records ?? res.data);
         list.value = newData;
         // 判断数据是否请求完
-        if (res.data.pages <= pageParams.page) {
-          noMore.value = true;
-        } else {
-          noMore.value = false;
+        if (res.data.pages !== undefined) {
+          if (res.data.pages <= pageParams.page) {
+            noMore.value = true;
+          } else {
+            noMore.value = false;
+          }
+        } else if (res.data.total !== undefined) {
+          if (res.data.total <= list.value.length) {
+            noMore.value = true;
+          } else {
+            noMore.value = false;
+          }
         }
       } else {
         loading.value = false;

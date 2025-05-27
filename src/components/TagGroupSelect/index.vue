@@ -106,7 +106,7 @@ const handleChange = (val: string, checked: boolean) => {
     position: relative;
     transition: all 0.2s;
     &.tag-item-checked {
-      border-color: @primary-color;
+      border-color: var(--ant-primary-color);
       &::after {
         content: '';
         position: absolute;

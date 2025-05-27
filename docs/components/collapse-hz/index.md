@@ -1,6 +1,6 @@
 # CollapseHz 横向的展开收起
 
-用于横向的展开收起（基于flex布局,你可以快速生成一个展开收起的面板)，纵向展开收起推荐 [vue-collapsed] (https://vue-collapsed.pages.dev),比起antd自带的collapsed更具定制性。; 如果你需要支持横纵项拖拽大小，推荐使用 [vue-split-pane](https://github.com/PanJiaChen/vue-split-pane?tab=readme-ov-file#readme) ；
+用于横向的展开收起（基于flex布局,你可以快速生成一个展开收起的面板)，纵向展开收起推荐 [vue-collapsed](https://vue-collapsed.pages.dev),比起antd自带的collapsed更具定制性; 如果你需要支持横纵项拖拽大小，推荐使用 [vue-split-pane](https://github.com/PanJiaChen/vue-split-pane?tab=readme-ov-file#readme) ；
 <script setup>
     import Basic from './Basic.vue'
     import CustomTrigger from './CustomTrigger.vue'

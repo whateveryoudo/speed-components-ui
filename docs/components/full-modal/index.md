@@ -34,7 +34,7 @@
 | draggable | 是否可拖动 | boolean | false |
 | needConfirmClose | 是否需要二次确认(默认情况下，会触发cancel后自动关闭，如果有需求，设置后可以自定义取消逻辑) | boolean | false |
 
-### antv剩余 [props](https://www.antdv.com/components/modal-cn#api) 均能使用。
+### antv的modal剩余 [props](https://www.antdv.com/components/modal-cn#api) 均能使用。
 
 ### Events
 

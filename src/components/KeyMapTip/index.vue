@@ -7,20 +7,28 @@
  * @FilePath: \easycube-ui\src\widgets\globalComponents\KeymapTip.vue
 -->
 <template>
-  <div class="keymap-tip-wrapper">
-    <span v-if="title">{{ title }}</span>
-    <span
-      v-if="keyMap"
-      class="key-map"
-    >{{ keyMap }}</span>
-  </div>
+  <a-tooltip v-bind="$attrs" :placement="placement">
+    <template #title>
+      <div class="keymap-tip-wrapper">
+        <span v-if="title">{{ title }}</span>
+        <span
+          v-if="keyMap"
+          class="key-map"
+        >{{ keyMap }}</span>
+      </div>
+    </template>
+    <slot></slot>
+  </a-tooltip>
 </template>
 
 <script setup lang="ts">
+
 // eslint-disable-next-line no-undef
 defineOptions({
   name: 'SKeymapTip',
+  inheritAttrs: false
 })
+
 defineProps({
   title: {
     type: String,
@@ -29,6 +37,10 @@ defineProps({
   keyMap: {
     type: String,
     default: '',
+  },
+  placement: {
+    type: String,
+    default: 'bottom',
   },
 })
 </script>

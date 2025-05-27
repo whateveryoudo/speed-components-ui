@@ -5,6 +5,10 @@ import UnoCSS from 'unocss/vite';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
+// 环境变量配置
+const VITE_APP_BASE_URL = process.env.VITE_APP_BASE_URL || '/api';
+const VITE_APP_BASE_PROXY_URL = process.env.VITE_APP_BASE_PROXY_URL || 'http://localhost:4000';
+
 export default defineConfig({
   title: 'Speed Components',
   description: '基于 Ant Design Vue 的组件库',
@@ -26,18 +30,47 @@ export default defineConfig({
       ],
       '/components/': [
         {
-          text: '组件',
+          text: '反馈',
           items: [
             { text: 'FullModal 全局弹框', link: '/components/full-modal/index' },
-            { text: 'CollapseHz 水平展开收起', link: '/components/collapse-hz/index' },
-            { text: 'FilePreviewItem 文件预览', link: '/components/file-preview-item/index' },
-            { text: 'IconFont 图标', link: '/components/icon-font/index' },
           ],
         },
+        {
+          text: '数据显示',
+          items: [
+            { text: 'SimpleTable 简单表格', link: '/components/simple-table/index' },
+            { text: 'FilePreviewItem 文件预览', link: '/components/file-preview-item/index' },
+          ],
+        },
+        {
+          text: '易用',
+          items: [
+            { text: 'CollapseHz 水平展开收起', link: '/components/collapse-hz/index' },
+            { text: 'IconFont 图标', link: '/components/icon-font/index' },
+            { text: 'KeyMapTip 快捷键提示', link: '/components/key-map-tip/index' },
+            { text: 'TextMore 文本展开收起', link: '/components/text-more/index' },
+            { text: 'TextStyleSetup 文本样式设置', link: '/components/text-style-setup/index' },
+            { text: 'QuestionTip 说明提示', link: '/components/question-tip/index' },
+          ],
+        },
+        {
+          text: '表单组件',
+          items: [
+            { text: 'RangeNum 范围数字', link: '/components/range-num/index' },
+            { text: 'TagGroupSelect 标签组选择', link: '/components/tag-group-select/index' },
+            { text: 'QueryForm 查询表单', link: '/components/query-form/index' },
+            { text: 'LazySelect 懒加载选择器', link: '/components/lazy-select/index' },
+            { text: 'SearchSelect 搜索选择器', link: '/components/search-select/index' },
+            { text: 'ToggleInput 切换输入', link: '/components/toggle-input/index' },
+            { text: 'ContentEditor 内容编辑器', link: '/components/content-editor/index' },
+          ],
+        },
+       
         {
           text: '一些常用hooks',
           items: [
             { text: 'useCustomUpload 自定义上传', link: '/components/useCustomUpload/index' },
+            { text: 'useAntdCssVars 使用antd css变量', link: '/components/useAntdCssVars/index' },
           ],
         },
       ],
@@ -61,44 +94,28 @@ export default defineConfig({
       ],
     },
   },
-  markdown: {
-    config: (md) => {
-      debugger;
-      const defaultRender = md.render;
-      md.render = (src, env) => {
-        // 匹配 Demo 组件的内容
-        const demoRegex = /<Demo>([\s\S]*?)<\/Demo>/g;
-        let match;
-        let result = src;
-
-        while ((match = demoRegex.exec(src)) !== null) {
-          const demoContent = match[1];
-          // 提取 template 和 script 部分
-          const templateMatch = demoContent.match(/<template>([\s\S]*?)<\/template>/);
-          const scriptMatch = demoContent.match(/<script[^>]*>([\s\S]*?)<\/script>/);
-
-          if (templateMatch && scriptMatch) {
-            const template = templateMatch[1].trim();
-            const script = scriptMatch[1].trim();
-            
-            // 构建完整的 Vue 组件代码
-            const componentCode = `<template>${template}</template>\n\n<script setup>${script}</script>`;
-            
-            // 替换 Demo 组件的内容
-            result = result.replace(match[0], `<Demo :code="\`${componentCode}\`">${demoContent}</Demo>`);
-          }
-        }
-
-        return defaultRender.call(md, result, env);
-      };
-    }
-  },
   vite: {
     resolve: {
       alias: {
         '@': resolve(__dirname, '../../src'),
         'speed-components': resolve(__dirname, '../../src/components'),
+        '@docs': resolve(__dirname, '../'),
       },
+    },
+    server: {
+      proxy: {
+        [VITE_APP_BASE_URL]: {
+          target: VITE_APP_BASE_PROXY_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(new RegExp(`^${VITE_APP_BASE_URL}`), ''),
+          configure: (proxy, options) => {
+            proxy.on('proxyReq', (proxyReq, req, res) => {
+              proxyReq.setHeader('Connection', 'keep-alive');
+            });
+          },
+          timeout: 30000
+        }
+      }
     },
     ssr: {
       noExternal: ['speed-components'],

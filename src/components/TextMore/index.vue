@@ -25,7 +25,7 @@
     <a-typography-paragraph v-else>
       {{ text
       }}<span
-        style="color: #1890ff; margin-left: 5px"
+        style="color: var(--ant-color-primary); margin-left: 5px;cursor:pointer"
         @click="ellipsis = true"
       >收起</span>
     </a-typography-paragraph>

@@ -1,0 +1,57 @@
+.overflow-hidden-one {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.overflow-hidden-two {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -moz-box !important;
+  -moz-line-clamp: 2;
+  -moz-box-orient: vertical;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+  overflow: hidden;
+}
+
+// 部分模拟antd控件样式(v4直接设置无效)
+.ant-input-simulate {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+  list-style: none;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-width: 0;
+  background-color: #ffffff;
+  background-image: none;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #d9d9d9;
+  border-radius: 6px;
+  transition: all 0.2s;
+  &:hover {
+    border-color: #4096ff;
+    border-inline-end-width: 1px;
+    .clear-icon {
+      display: block;
+    }
+  }
+  .clear-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    display: none;
+    transform: translateY(-50%);
+    display: none;
+  }
+  .form-item-empty-text {
+    color: #999;
+  }
+}

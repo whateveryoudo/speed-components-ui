@@ -9,22 +9,22 @@
   >
     <img ref="imgRef" :src="showPlacePic()" alt="" />
     <div class="info-wrapper">
-      <p
+      <div
         class="overflow-hidden-one title"
         :title="fileName"
         @click.stop="clickTitlePreview"
       >
         {{ fileName }}
-      </p>
-      <p
+      </div>
+      <div
         v-if="
           mode !== 'list-simple' &&
           (fileSize !== undefined || fileSize !== null)
         "
-        class="overflow-hidden-one text-gray"
+        class="overflow-hidden-one text-gray text-[12px]"
       >
         {{ formatFileSize(Number(fileSize)) }}
-      </p>
+      </div>
       <a-space class="right-actions" :size="5">
         <template v-if="mode !== 'list-simple'">
           <a class="text-primary" @click.stop="handlePreview"> 预览 </a>
@@ -82,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, inject, type Ref } from "vue";
 import { formatFileSize } from "@/utils";
 import "viewerjs/dist/viewer.css";
 import { handleExceptDown } from "@/hooks/useDownload";
@@ -94,13 +94,14 @@ import pptImg from "@/assets/image/ppt.png";
 import videoImg from "@/assets/image/video.png";
 import wordImg from "@/assets/image/word.png";
 import zipImg from "@/assets/image/zip.png";
+import { GlobalConfig } from "..";
 
 export type IFileItem = {
   id: string;
   previewUrl?: string;
   fileName: string;
   fileType: string;
-  fileSize?: string;
+  fileSize?: string | number;
 };
 const imgRef = ref();
 const viewerInstance = ref();
@@ -108,7 +109,7 @@ const props = withDefaults(
   defineProps<{
     mode?: "card" | "list" | "list-simple";
     id: IFileItem["id"];
-    downloadFullBlob?: (fileId: string) => Promise<BlobPart>; // 下载请求，返回流结果
+    fileDownload?: (fileId: string) => Promise<BlobPart>; // 下载请求，返回流结果
     getPreviewUrl?: (fileId: string) => string; // 图片预览路径
     onPreview?: (fileId: string) => void; // 预览函数
     canIdel?: boolean;
@@ -123,6 +124,7 @@ const props = withDefaults(
     canIdel: true, // 是否允许删除附件
   }
 );
+const globalConfig = inject("speed-components-config", ref({})) as Ref<GlobalConfig>;
 const emits = defineEmits(["on-delete"]);
 const showDownLoad = computed(() => {
   if (!props.fileName) {
@@ -219,10 +221,11 @@ const clickTitlePreview = () => {
 };
 // 附件下载
 const handleDownLoad = async () => {
-  if (!props.downloadFullBlob) {
-    throw new Error("流下载方法缺失");
+  const fileDownload = globalConfig?.value?.apis?.fileDownload ?? props.fileDownload;
+  if (!fileDownload || typeof fileDownload !== "function") {
+    throw new Error("文件下载方法缺失或传入的fileDownload不正确");
   }
-  const res = (await props.downloadFullBlob(props.id)) as any;
+  const res = (await fileDownload(props.id)) as any;
   handleExceptDown(res, props.fileName, props.className);
 };
 </script>
