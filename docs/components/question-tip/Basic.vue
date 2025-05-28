@@ -5,7 +5,7 @@
         <h3>基础用法</h3>
         <s-question-tip
           label="标签文本"
-          tip="这是一段提示文本"
+          tip="这是一段提示文本这是一段提示文本这是一段提示文本这是一段提示文本"
         />
       </div>
 
@@ -32,15 +32,6 @@
           label="标签文本"
           tip="这是一段提示文本"
           placement="bottom"
-        />
-      </div>
-
-      <div class="demo-item">
-        <h3>块级显示</h3>
-        <s-question-tip
-          label="标签文本"
-          tip="这是一段提示文本"
-          blocked
         />
       </div>
     </div>
@@ -99,6 +90,7 @@ const code = `<template>
     }
 
     h3 {
+      margin-top: 0px;
       margin-bottom: 16px;
       font-size: 14px;
       color: #666;

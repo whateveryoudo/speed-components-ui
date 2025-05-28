@@ -116,13 +116,4 @@ getList();
 </template>
 
 <style lang="less">
-// 消除vite-press的样式影响
-.simple-table.ant-table-wrapper {
-  table {
-    display: table; // vite-press会影响自适应宽度
-  }
-  .ant-pagination-options {
-    margin-top: 0;
-  }
-}
 </style>

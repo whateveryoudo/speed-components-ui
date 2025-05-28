@@ -8,7 +8,7 @@
 -->
 
 <template>
-  <span :style="{ display: blocked ? 'block' : 'inline-block' }">
+  <span>
     {{ label }}
     <template v-if="true">
       <a-tooltip
@@ -18,14 +18,14 @@
       >
         <template #title>
           <template v-if="Array.isArray(tip)">
-            <p
+            <div
               v-for="(str, index) in tip"
               :key="index"
             >
               {{ str }}
-            </p>
+            </div>
           </template>
-          <p v-else>{{ tip }}</p>
+          <div v-else>{{ tip }}</div>
         </template>
         <s-icon-font type="icon-question-circle" />
       </a-tooltip>
@@ -38,14 +38,14 @@
       >
         <template #content>
           <template v-if="Array.isArray(tip)">
-            <p
+            <div
               v-for="(str, index) in tip"
               :key="index"
             >
               {{ str }}
-            </p>
+            </div>
           </template>
-          <p v-else>{{ tip }}</p>
+          <div v-else>{{ tip }}</div>
         </template>
         <s-icon-font type="icon-question-circle" />
       </a-popover>
@@ -66,18 +66,18 @@ withDefaults(
     cardStyle?: any;
     tip?: string | string[];
     placement?: TooltipPlacement;
-    blocked?: boolean;
     theme?: 'dark' | 'white';
   }>(),
   {
     label: '',
     cardStyle: () => {},
     placement: 'right',
-    blocked: false,
     tip: '',
     theme: 'dark',
   }
 );
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+
+</style>

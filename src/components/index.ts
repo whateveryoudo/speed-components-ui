@@ -18,6 +18,7 @@ import RangeNum from "./RangeNum/index.vue";
 import TextMore from "./TextMore/index.vue";
 import TagGroupSelect from "./TagGroupSelect/index.vue";
 import QueryFilter from "./QueryFilter/index.vue";
+import QuestionTip from "./QuestionTip/index.vue";
 import SearchSelect from "./SearchSelect/index.vue";
 import ToggleInput from "./ToggleInput/index.vue";
 import ContentEditor from "./ContentEditor/index.vue";
@@ -39,6 +40,7 @@ const components: Component[] = [
   SearchSelect,
   ToggleInput,
   ContentEditor,
+  QuestionTip,
 ];
 
 // AJAX 方法类型
@@ -115,6 +117,7 @@ export { default as SearchSelect } from "./SearchSelect/index.vue";
 export { default as ToggleInput } from "./ToggleInput/index.vue";
 export { default as ContentEditor } from "./ContentEditor/index.vue";
 export { default as TextMore } from "./TextMore/index.vue";
+export { default as QuestionTip } from "./QuestionTip/index.vue";
 
 export default {
   install,

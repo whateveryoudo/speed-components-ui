@@ -27,7 +27,7 @@
       </div>
 
       <div class="demo-item">
-        <h3>自定义字段名</h3>
+        <h3>自定义字段名：{label: 'username', value: 'userId'}</h3>
         <s-select-search
           v-model:value="customValue"
           :fetch-func="fetchData"
@@ -111,7 +111,7 @@ const code = `<template>
       </div>
 
       <div class="demo-item">
-        <h3>自定义字段名</h3>
+        <h3>自定义字段名:label: 'username', value: 'userId'</h3>
         <s-select-search
           v-model:value="customValue"
           :fetch-func="fetchData"

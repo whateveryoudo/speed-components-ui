@@ -1,12 +1,12 @@
 # QuestionTip 快捷提示
 
 基于 antd Tooltip/Popover 封装的快捷提示组件，支持字符串、字符串数组形式的提示内容。
+<script setup>
+    import Basic from './Basic.vue'
+</script>
+## 用法示例
 
-## 基础用法
-
-:::demo
-question-tip/Basic
-:::
+<Basic/>
 
 ## API
 

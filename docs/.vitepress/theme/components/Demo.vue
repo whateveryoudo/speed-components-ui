@@ -53,7 +53,7 @@ const copyCode = async () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .demo-block {
   border: 1px solid #ebedf1;
   border-radius: 2px;
@@ -120,5 +120,20 @@ const copyCode = async () => {
   margin: 0;
   padding: 0;
   background: transparent;
+}
+/* 一些样式处理(vitepress覆盖问题) */
+.demo-content {
+  p {
+    margin-bottom: 0px;
+  }
+  li {
+    margin: 0
+  }
+  table {
+    display: table; // vite-press会影响自适应宽度
+  }
+  .ant-pagination-options {
+    margin-top: 0;
+  }
 }
 </style>
