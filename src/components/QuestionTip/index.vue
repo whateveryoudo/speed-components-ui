@@ -14,7 +14,7 @@
       <a-tooltip
         v-if="tip && theme === 'dark'"
         :placement="placement"
-        :overlayStyle="cardStyle"
+        v-bind="$attrs"
       >
         <template #title>
           <template v-if="Array.isArray(tip)">
@@ -27,14 +27,16 @@
           </template>
           <div v-else>{{ tip }}</div>
         </template>
+        <slot>
         <s-icon-font type="icon-question-circle" />
+        </slot>
       </a-tooltip>
       <!-- 白色提示 -->
       <a-popover
         v-if="tip && theme === 'white'"
         :title="false"
         :placement="placement"
-        :overlayStyle="cardStyle"
+        v-bind="$attrs"
       >
         <template #content>
           <template v-if="Array.isArray(tip)">
@@ -47,7 +49,9 @@
           </template>
           <div v-else>{{ tip }}</div>
         </template>
-        <s-icon-font type="icon-question-circle" />
+        <slot>
+          <s-icon-font type="icon-question-circle" />
+        </slot>
       </a-popover>
     </template>
   </span>
@@ -63,14 +67,12 @@ defineOptions({
 withDefaults(
   defineProps<{
     label?: string;
-    cardStyle?: any;
     tip?: string | string[];
     placement?: TooltipPlacement;
     theme?: 'dark' | 'white';
   }>(),
   {
     label: '',
-    cardStyle: () => {},
     placement: 'right',
     tip: '',
     theme: 'dark',

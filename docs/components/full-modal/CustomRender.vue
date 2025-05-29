@@ -7,13 +7,13 @@
         <a-button type="primary" @click="showModal3 = true">打开弹框(自定义底部左/右侧)</a-button>
         <a-button type="primary" @click="showModal4 = true">打开弹框(完全自定义底)</a-button>
       </div>
-      <s-full-modal v-model:visible="showModal1" allowFullScreen @cancel="handleCancel1">
+      <s-full-modal v-model:open="showModal1" allowFullScreen @cancel="handleCancel1">
         <template #title>
           <span class="bg-[red] text-[#fff]">我是自定义标题</span>
         </template>
         内容区域
       </s-full-modal>
-      <s-full-modal v-model:visible="showModal2" allowFullScreen @cancel="handleCancel2">
+      <s-full-modal v-model:open="showModal2" allowFullScreen @cancel="handleCancel2">
         <template #title-left>
           <span class="bg-[red] text-[#fff]">我是自定义标题</span>
         </template>
@@ -22,7 +22,7 @@
         </template>
         内容区域
       </s-full-modal>
-      <s-full-modal v-model:visible="showModal3" allowFullScreen title="标题" @cancel="handleCancel3">
+      <s-full-modal v-model:open="showModal3" allowFullScreen title="标题" @cancel="handleCancel3">
         <!-- 自定义底部左右侧 -->
         <template #footer-left>
           <span class="text-[12px]">左侧内容</span>
@@ -34,7 +34,7 @@
           </a-space>
         </template>
       </s-full-modal>
-      <s-full-modal v-model:visible="showModal4" title="自定义底部示例" allowFullScreen @cancel="handleCancel4">
+      <s-full-modal v-model:open="showModal4" title="自定义底部示例" allowFullScreen @cancel="handleCancel4">
         <div>这里是弹框内容</div>
         <!-- 自定义底部内容 -->
         <template #footer>

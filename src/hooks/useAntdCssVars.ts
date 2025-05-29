@@ -34,7 +34,6 @@ export const useAntdCssVars = () => {
 
     return `:root {\n  ${cssVars.join('\n  ')}\n}`;
   };
-  debugger;
   // 创建并插入 style 标签
   const style = document.createElement('style');
   style.id = 'antd-css-vars';

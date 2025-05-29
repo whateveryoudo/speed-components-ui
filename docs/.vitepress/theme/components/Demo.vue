@@ -129,10 +129,12 @@ const copyCode = async () => {
   li {
     margin: 0
   }
-  table {
+  :deep(table) {
+    margin:0;
+    // border-collapse: separate;
     display: table; // vite-press会影响自适应宽度
   }
-  .ant-pagination-options {
+  :deep(.ant-pagination-options) {
     margin-top: 0;
   }
 }

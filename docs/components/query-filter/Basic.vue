@@ -1,251 +1,341 @@
 <template>
   <Demo :code="code">
-    <div class="demo-wrapper">
-      <s-query-filter
-        :search-where="searchWhere"
-        :default-search-where="defaultSearchWhere"
-        :col="6"
-        @search="handleSearch"
-      />
-    </div>
+    <s-query-filter
+      :fields="fields"
+      :values="searchValues"
+      :col="8"
+      @search="handleSearch"
+      :search-when-change="searchWhenChange"
+    />
+    <a-flex vertical :gap="10">
+      <a-space> 搜索值： {{ searchValues }} </a-space>
+      <a-space>
+        改为切换/enter搜索
+        <a-switch v-model:checked="searchWhenChange" />
+      </a-space>
+    </a-flex>
   </Demo>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { SearchWhereItem } from '@/components/QueryFilter/type'
-
+import { ref, computed } from "vue";
+import type { IFieldType } from "@/components/QueryFilter/type";
+import { message } from "ant-design-vue";
+const searchWhenChange = ref(false);
 // 搜索配置
-const searchWhere = ref<SearchWhereItem[]>([
-  {
-    key: 'name',
-    label: '姓名',
-    val: '',
-    filterCom: 'input',
-    type: 'FormInput'
-  },
-  {
-    key: 'age',
-    label: '年龄',
-    val: '',
-    filterCom: 'inputNumber',
-    type: 'FormInputNumber'
-  },
-  {
-    key: 'status',
-    label: '状态',
-    val: '',
-    filterCom: 'select',
-    type: 'FormSelect',
-    props: {
-      relaOptFlag: 'status'
-    }
-  },
-  {
-    key: 'date',
-    label: '日期',
-    val: '',
-    filterCom: 'inputNumber',
-    type: 'FormDatePicker',
-    props: {
-      valueFormat: 'YYYY-MM-DD'
-    }
-  },
-  {
-    key: 'time',
-    label: '时间',
-    val: '',
-    filterCom: 'inputNumber',
-    type: 'FormTimePicker',
-    props: {
-      valueFormat: 'HH:mm:ss'
-    }
-  },
-  {
-    key: 'datetime',
-    label: '日期时间',
-    val: '',
-    filterCom: 'inputNumber',
-    type: 'FormDateTimePicker',
-    props: {
-      valueFormat: 'YYYY-MM-DD HH:mm:ss'
-    }
-  },
-  {
-    key: 'switch',
-    label: '开关',
-    val: '',
-    filterCom: 'select',
-    type: 'FormSwitch'
-  },
-  {
-    key: 'multiple',
-    label: '多选',
-    val: [],
-    filterCom: 'select',
-    type: 'FormSelectMultiple',
-    props: {
-      relaOptFlag: 'tags'
-    }
-  }
-])
+const fields = computed<IFieldType[]>(() => {
+  return [
+    {
+      label: "姓名",
+      fieldKey: "name",
+      fieldType: "input",
+      props: {
+        placeholder: "请输入姓名",
+      },
+    },
+    {
+      label: "状态",
+      fieldKey: "status",
+      fieldType: "select",
+      props: {
+        options: [
+          { label: "处理中", value: "1" },
+          { label: "已完成", value: "2" },
+          { label: "已取消", value: "3" },
+        ],
+      },
+    },
+    {
+      label: "年龄",
+      fieldKey: "age",
+      fieldType: "inputNumber",
+      props: {
+        placeholder: "请输入年龄",
+      },
+    },
+    {
+      label: "用户",
+      fieldKey: "user",
+      fieldType: "apiSelect",
+      props: {
+        placeholder: "请选择用户",
+        fetchOptions: {
+          params: {
+            page: 1,
+            pageSize: 10,
+          },
+          // key为必须值
+          search: {
+            key: "name",
+          },
+          // 支持自行处理结构
+          afterRes: (res: any) => {
+            return res.data.map((item: any) => ({
+              label: item.name,
+              value: item.id,
+            }));
+          },
+        },
+        fetchFunc: async (params: any) => {
+          // 模拟远程搜索(默认会处理 { data: []},这种响应)
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                data: params?.name
+                  ? [
+                      { name: "用户1", id: "1" },
+                      { name: "用户2", id: "2" },
+                      { name: "用户3", id: "3" },
+                    ].filter((item) => item.name.includes(params.name))
+                  : [
+                      { name: "用户1", id: "1" },
+                      { name: "用户2", id: "2" },
+                      { name: "用户3", id: "3" },
+                    ],
+              });
+            }, 500);
+          });
+        },
+        fieldNames: {
+          label: "label",
+          value: "value",
+        },
+      },
+    },
+    {
+      label: "日期",
+      fieldKey: "date",
+      fieldType: "date",
+    },
+    {
+      label: "时间",
+      fieldKey: "time",
+      fieldType: "time",
+      props: {
+        valueFormat: "HH:mm:ss",
+      },
+    },
+    {
+      fieldKey: "datetime",
+      label: "日期时间",
+      fieldType: "dateTime",
+      props: {
+        valueFormat: "YYYY-MM-DD HH:mm:ss",
+      },
+    },
+    {
+      fieldKey: "dateTimeRange",
+      label: "日期时间范围",
+      fieldType: "dateTimeRange",
+      props: {
+        valueFormat: "YYYY-MM-DD HH:mm:ss",
+      },
+    },
+    {
+      fieldKey: "multiple",
+      label: "多选",
+      fieldType: "select",
+      props: {
+        mode: "multiple",
+        options: [
+          { label: "选项1", value: "1" },
+          { label: "选项2", value: "2" },
+          { label: "选项3", value: "3" },
+        ],
+      },
+    },
+  ];
+});
 
 // 默认搜索条件
-const defaultSearchWhere = ref<SearchWhereItem[]>([
-  {
-    key: 'name',
-    label: '姓名',
-    val: '',
-    filterCom: 'input',
-    type: 'FormInput'
-  },
-  {
-    key: 'age',
-    label: '年龄',
-    val: '',
-    filterCom: 'inputNumber',
-    type: 'FormInputNumber'
-  },
-  {
-    key: 'status',
-    label: '状态',
-    val: '',
-    filterCom: 'select',
-    type: 'FormSelect',
-    props: {
-      relaOptFlag: 'status'
-    }
-  }
-])
+const searchValues = ref<Record<string, any>>({
+  name: "",
+  age: [],
+  status: undefined,
+  user: undefined,
+  date: "",
+  time: "",
+  datetime: "",
+  multiple: [],
+  dateTimeRange: [],
+});
 
 // 搜索回调
-const handleSearch = (values: SearchWhereItem[], isSearch: boolean) => {
-  console.log('搜索条件:', values)
-  console.log('是否点击搜索:', isSearch)
-}
+const handleSearch = (values: Record<string, any>) => {
+  console.log("搜索条件:", values);
+  searchValues.value = values;
+  // TODO: 搜索逻辑
+  message.success("触发搜素");
+};
 
 const code = `<template>
-  <s-query-filter
-    :search-where="searchWhere"
-    :default-search-where="defaultSearchWhere"
-    :col="6"
-    @search="handleSearch"
-  />
+ <s-query-filter
+      :fields="fields"
+      :values="searchValues"
+      :col="8"
+      @search="handleSearch"
+      :search-when-change="searchWhenChange"
+    />
+    <a-flex vertical :gap="10">
+      <a-space> 搜索值： {{ searchValues }} </a-space>
+      <a-space>
+        改为切换/enter搜索
+        <a-switch v-model:checked="searchWhenChange" />
+      </a-space>
+    </a-flex>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { SearchWhereItem } from '@/components/QueryFilter/type'
-
+import { ref, computed } from "vue";
+import type { IFieldType } from "@/components/QueryFilter/type";
+import { message } from "ant-design-vue";
+const searchWhenChange = ref(false);
 // 搜索配置
-const searchWhere = ref<SearchWhereItem[]>([
-  {
-    key: 'name',
-    label: '姓名',
-    val: '',
-    filterCom: 'input',
-    type: 'FormInput'
-  },
-  {
-    key: 'age',
-    label: '年龄',
-    val: '',
-    filterCom: 'inputNumber',
-    type: 'FormInputNumber'
-  },
-  {
-    key: 'status',
-    label: '状态',
-    val: '',
-    filterCom: 'select',
-    type: 'FormSelect',
-    props: {
-      relaOptFlag: 'status'
-    }
-  },
-  {
-    key: 'date',
-    label: '日期',
-    val: '',
-    filterCom: 'inputNumber',
-    type: 'FormDatePicker',
-    props: {
-      valueFormat: 'YYYY-MM-DD'
-    }
-  },
-  {
-    key: 'time',
-    label: '时间',
-    val: '',
-    filterCom: 'inputNumber',
-    type: 'FormTimePicker',
-    props: {
-      valueFormat: 'HH:mm:ss'
-    }
-  },
-  {
-    key: 'datetime',
-    label: '日期时间',
-    val: '',
-    filterCom: 'inputNumber',
-    type: 'FormDateTimePicker',
-    props: {
-      valueFormat: 'YYYY-MM-DD HH:mm:ss'
-    }
-  },
-  {
-    key: 'switch',
-    label: '开关',
-    val: '',
-    filterCom: 'select',
-    type: 'FormSwitch'
-  },
-  {
-    key: 'multiple',
-    label: '多选',
-    val: [],
-    filterCom: 'select',
-    type: 'FormSelectMultiple',
-    props: {
-      relaOptFlag: 'tags'
-    }
-  }
-])
+const fields = computed<IFieldType[]>(() => {
+  return [
+    {
+      label: "姓名",
+      fieldKey: "name",
+      fieldType: "input",
+      props: {
+        placeholder: "请输入姓名",
+      },
+    },
+    {
+      label: "状态",
+      fieldKey: "status",
+      fieldType: "select",
+      props: {
+        options: [
+          { label: "处理中", value: "1" },
+          { label: "已完成", value: "2" },
+          { label: "已取消", value: "3" },
+        ],
+      },
+    },
+    {
+      label: "年龄",
+      fieldKey: "age",
+      fieldType: "inputNumber",
+      props: {
+        placeholder: "请输入年龄",
+      },
+    },
+    {
+      label: "用户",
+      fieldKey: "user",
+      fieldType: "apiSelect",
+      props: {
+        placeholder: "请选择用户",
+        fetchOptions: {
+          params: {
+            page: 1,
+            pageSize: 10,
+          },
+          // key为必须值
+          search: {
+            key: "name",
+          },
+          // 支持自行处理结构
+          afterRes: (res: any) => {
+            return res.data.map((item: any) => ({
+              label: item.name,
+              value: item.id,
+            }));
+          },
+        },
+        fetchFunc: async (params: any) => {
+          // 模拟远程搜索(默认会处理 { data: []},这种响应)
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                data: params?.name
+                  ? [
+                      { name: "用户1", id: "1" },
+                      { name: "用户2", id: "2" },
+                      { name: "用户3", id: "3" },
+                    ].filter((item) => item.name.includes(params.name))
+                  : [
+                      { name: "用户1", id: "1" },
+                      { name: "用户2", id: "2" },
+                      { name: "用户3", id: "3" },
+                    ],
+              });
+            }, 500);
+          });
+        },
+        fieldNames: {
+          label: "label",
+          value: "value",
+        },
+      },
+    },
+    {
+      label: "日期",
+      fieldKey: "date",
+      fieldType: "date",
+    },
+    {
+      label: "时间",
+      fieldKey: "time",
+      fieldType: "time",
+      props: {
+        valueFormat: "HH:mm:ss",
+      },
+    },
+    {
+      fieldKey: "datetime",
+      label: "日期时间",
+      fieldType: "dateTime",
+      props: {
+        valueFormat: "YYYY-MM-DD HH:mm:ss",
+      },
+    },
+    {
+      fieldKey: "dateTimeRange",
+      label: "日期时间范围",
+      fieldType: "dateTimeRange",
+      props: {
+        valueFormat: "YYYY-MM-DD HH:mm:ss",
+      },
+    },
+    {
+      fieldKey: "multiple",
+      label: "多选",
+      fieldType: "select",
+      props: {
+        mode: "multiple",
+        options: [
+          { label: "选项1", value: "1" },
+          { label: "选项2", value: "2" },
+          { label: "选项3", value: "3" },
+        ],
+      },
+    },
+  ];
+});
 
 // 默认搜索条件
-const defaultSearchWhere = ref<SearchWhereItem[]>([
-  {
-    key: 'name',
-    label: '姓名',
-    val: '',
-    filterCom: 'input',
-    type: 'FormInput'
-  },
-  {
-    key: 'age',
-    label: '年龄',
-    val: '',
-    filterCom: 'inputNumber',
-    type: 'FormInputNumber'
-  },
-  {
-    key: 'status',
-    label: '状态',
-    val: '',
-    filterCom: 'select',
-    type: 'FormSelect',
-    props: {
-      relaOptFlag: 'status'
-    }
-  }
-])
+const searchValues = ref<Record<string, any>>({
+  name: "",
+  age: [],
+  status: undefined,
+  user: undefined,
+  date: "",
+  time: "",
+  datetime: "",
+  multiple: [],
+  dateTimeRange: [],
+});
 
 // 搜索回调
-const handleSearch = (values: SearchWhereItem[], isSearch: boolean) => {
-  console.log('搜索条件:', values)
-  console.log('是否点击搜索:', isSearch)
-}
-<\/script>`
+const handleSearch = (values: Record<string, any>) => {
+  console.log("搜索条件:", values);
+  searchValues.value = values;
+  // TODO: 搜索逻辑
+  message.success("触发搜素");
+};
+<\/script>`;
 </script>
 
 <style scoped lang="less">
@@ -255,4 +345,4 @@ const handleSearch = (values: SearchWhereItem[], isSearch: boolean) => {
   background: #fff;
   border-radius: 4px;
 }
-</style> 
+</style>

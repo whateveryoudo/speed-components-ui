@@ -1,7 +1,12 @@
 <!-- 基于 useTable 封装的简单表格组件 -->
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useTable } from "@/hooks";
+import QueryFilter from "../QueryFilter/index.vue";
+import {
+  constructQueryFilterByColumns,
+  fieldTypeMap,
+} from "../QueryFilter/const";
 
 interface Props {
   /** 请求函数 */
@@ -28,8 +33,10 @@ interface Props {
   rowSelection?: any;
   /** 选中的行条目 */
   hasSelectedRows?: any[];
+  /** 是否显示查询过滤 */
+  needQueryFilter?: boolean;
 }
-
+const values = ref({});
 const emit = defineEmits(["update:hasSelectedRows"]);
 
 defineOptions({
@@ -41,13 +48,14 @@ const props = withDefaults(defineProps<Props>(), {
   showPagination: true,
   showIndex: true,
   bordered: false,
+  hasPagination: true,
   size: "middle",
   rowKey: "id",
 });
 
 // 表格配置
 const tableOptions = computed(() => ({
-  extraParams: props.fetchParams,
+  extraParams: { ...props.fetchParams, ...values.value },
   rowKey: props.rowKey,
   hasPagination: props.hasPagination,
   beforeFetch: props.beforeFetch,
@@ -86,34 +94,96 @@ const finalColumns = computed(() => {
 
   return columns;
 });
+const fields = computed(() => {
+  if (props.needQueryFilter) {
+    // queryConfig - 字符串（控件类型） 配置， 完整的queryFilter配置
+    return constructQueryFilterByColumns(props.columns);
+  }
+  return [];
+});
 
+// 构建初始化查询过滤值
+
+watch(
+  () => props.needQueryFilter,
+  () => {
+    values.value = props.columns.reduce((acc, cur) => {
+      if (cur.queryConfig) {
+        if (typeof cur.queryConfig === "string") {
+          acc[cur.dataIndex] =
+            fieldTypeMap[cur.queryConfig as keyof typeof fieldTypeMap]
+              ?.defaultValue ?? "";
+        } else {
+          acc[cur.queryConfig?.fieldKey] =
+            fieldTypeMap[
+              cur.queryConfig?.fieldType as keyof typeof fieldTypeMap
+            ]?.defaultValue ?? "";
+        }
+      }
+      return acc;
+    }, {});
+  },
+  { immediate: true }
+);
 // 初始化加载数据
 getList();
+
+defineExpose({
+  getList,
+});
 </script>
 
 <template>
-  <a-table
-    class="simple-table"
-    :columns="finalColumns"
-    :data-source="dataSource"
-    :loading="loading"
-    :pagination="hasPagination ? pagination : false"
-    :row-key="rowKey"
-    :bordered="bordered"
-    :size="size"
-    :row-selection="{
-      ...(rowSelection || {}),
-      selectedRowKeys: state.selectedRowKeys,
-      onChange: onSelectChange,
-    }"
-    @change="handleTableChange"
-  >
-    <!-- 透传所有插槽 -->
-    <template v-for="(_, name) in $slots" #[name]="slotData">
-      <slot :name="name" v-bind="slotData" />
-    </template>
-  </a-table>
+  <a-flex vertical :gap="10">
+    <QueryFilter
+      class="mb-2"
+      v-if="needQueryFilter"
+      :fields="fields"
+      :values="values"
+      @search="getList(true)"
+    />
+    <a-flex justify="end" v-if="$slots['optBar']">
+      <slot name="optBar" />
+    </a-flex>
+    <a-flex
+      justify="space-between"
+      v-if="$slots['optBarLeft'] || $slots['optBarRight']"
+    >
+      <span v-if="$slots['optBarLeft']">
+        <slot name="optBarLeft" />
+      </span>
+      <span v-if="$slots['optBarRight']">
+        <slot name="optBarRight" />
+      </span>
+    </a-flex>
+    <a-table
+      class="simple-table"
+      :columns="finalColumns"
+      :data-source="dataSource"
+      :loading="loading"
+      :pagination="hasPagination ? pagination : false"
+      :row-key="rowKey"
+      :bordered="bordered"
+      :size="size"
+      @change="handleTableChange"
+      v-bind="
+        rowSelection
+          ? {
+              rowSelection: {
+                ...(rowSelection || {}),
+                selectedRowKeys: state.selectedRowKeys,
+                onChange: onSelectChange,
+              },
+            }
+          : {}
+      "
+    >
+      <!-- 透传所有插槽 -->
+      <template v-for="(_, name) in $slots" #[name]="slotData">
+        <slot :name="name" v-bind="slotData" />
+      </template>
+    </a-table>
+  </a-flex>
 </template>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

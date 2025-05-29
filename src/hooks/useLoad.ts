@@ -112,7 +112,7 @@ export const useTable = (
   watch(
     () => options.value.hasSelectedRows,
     (newVal) => {
-      state.hasSelectedRows = newVal;
+      state.hasSelectedRows = newVal || [];
       handleReChecked(); // 同步回显
     },
     { immediate: true }

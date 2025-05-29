@@ -57,6 +57,8 @@ const props = withDefaults(
     fullScreen: false,
     footer: true,
     draggable: false,
+    open: undefined, // 注：这样要显示设置undefined,否则isOpen获取到props.open会是false
+    visible: undefined,
   }
 );
 

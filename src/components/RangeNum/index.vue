@@ -10,7 +10,7 @@
   <span class="range-number">
     <a-input-number
       :value="realVal[0]"
-      style="width: 120px"
+      :style="[props.autoWidth ? { flex: 1, width: 'auto' } : { width: '80px' }]"
       placeholder="请输入"
       :min="0"
       @blur="(e: any) => handleChange(e.target.value, 'startVal')"
@@ -22,7 +22,7 @@
     <span style="margin: 0 5px">-</span>
     <a-input-number
       :value="realVal[1]"
-      style="width: 120px"
+      :style="[props.autoWidth ? { flex: 1, width: 'auto' } : { width: '80px' }]"
       placeholder="请输入"
       :min="0"
       @blur="(e: any) => handleChange(e.target.value, 'endVal')"
@@ -45,6 +45,7 @@ defineOptions({
 const props = withDefaults(
   defineProps<{
     value?: any[];
+    autoWidth?: boolean; // 是否自动宽度
     maxNum?: number; // 最大值设定
     minNum?: number; // 最小值设定
     suffix?: string;
@@ -52,6 +53,7 @@ const props = withDefaults(
   {
     value: () => [],
     minNum: 0,
+    autoWidth: false,
   }
 );
 const emit = defineEmits(["update:value"]);

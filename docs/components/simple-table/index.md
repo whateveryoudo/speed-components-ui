@@ -1,8 +1,9 @@
 # SimpleTable 简单表格
 
-简易的table组件，满足大部分需求，如需要高度定制的table，请使用`useLoad`的`useTable`。
+简易的table组件，满足大部分需求，如需要高度定制的table，请使用 `useLoad` 的 `useTable`。
 ::: tip 提示
-演示示例请求逻辑依赖了公共hook的[useLoad](/components/useLoad)的useTable。
+- 示例中存在边框样式问题(为文档框架内部影响)，实际使用无此问题。<br/>
+- 请求逻辑依赖了公共hook的[useLoad](/components/useLoad)的useTable。
 :::
 
 <script setup>
@@ -18,9 +19,11 @@ import WithQuery from './WithQuery.vue'
 
 ## 包含搜索的示例
 
-整合[QueryFilter]()组件,支持部分插槽定义(注：可内置使用，也可以自行使用query-filter配合使用)
+整合[QueryFilter](/components/query-filter/)组件,支持部分插槽定义(注：可内置使用，也可以自行使用query-filter配合使用)
 
 <WithQuery/>
+
+### 更自定义场景请参照[useLoad]中的示例
 
 ## API
 
@@ -32,7 +35,7 @@ import WithQuery from './WithQuery.vue'
 | fetchParams | 请求参数 | `Record<string, any>` | `{}` |
 | columns | 列配置 | `any[]` | - |
 | rowKey | 行唯一标识 | `string` | `'id'` |
-| showPagination | 是否显示分页 | `boolean` | `true` |
+| showPagination | 是否显示分页(关闭会去掉内置page,size参数) | `boolean` | `true` |
 | showSelection | 是否显示全选 | `boolean` | `false` |
 | showIndex | 是否显示序号 | `boolean` | `true` |
 | bordered | 是否显示边框 | `boolean` | `false` |

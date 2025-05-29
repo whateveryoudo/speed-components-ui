@@ -14,7 +14,6 @@
       }"
       :has-pagination="hasPagination"
       v-model:hasSelectedRows="hasSelectedRows"
-      bordered
     >
       <!-- 自定义单元格 -->
       <template #bodyCell="{ column, text, record }">

@@ -19,7 +19,7 @@ import TextMore from "./TextMore/index.vue";
 import TagGroupSelect from "./TagGroupSelect/index.vue";
 import QueryFilter from "./QueryFilter/index.vue";
 import QuestionTip from "./QuestionTip/index.vue";
-import SearchSelect from "./SearchSelect/index.vue";
+import ApiSelect from "./ApiSelect/index.vue";
 import ToggleInput from "./ToggleInput/index.vue";
 import ContentEditor from "./ContentEditor/index.vue";
 import { useAntdCssVars } from '../hooks';
@@ -37,7 +37,7 @@ const components: Component[] = [
   TextMore,
   TagGroupSelect,
   QueryFilter,
-  SearchSelect,
+  ApiSelect,
   ToggleInput,
   ContentEditor,
   QuestionTip,
@@ -113,7 +113,7 @@ export { default as SimpleTable } from "./SimpleTable/index.vue";
 export { default as RangeNum } from "./RangeNum/index.vue";
 export { default as TagGroupSelect } from "./TagGroupSelect/index.vue";
 export { default as QueryFilter } from "./QueryFilter/index.vue";
-export { default as SearchSelect } from "./SearchSelect/index.vue";
+export { default as ApiSelect } from "./ApiSelect/index.vue";
 export { default as ToggleInput } from "./ToggleInput/index.vue";
 export { default as ContentEditor } from "./ContentEditor/index.vue";
 export { default as TextMore } from "./TextMore/index.vue";

@@ -1,21 +1,46 @@
 <template>
   <Demo :code="code">
-    <div class="selected-info" v-if="hasSelectedRows.length">
-      已选择 {{ hasSelectedRows.length }} 项
-      <a-button type="link" @click="hasSelectedRows = []">清空</a-button>
-    </div>
-
+    <h4 v-if="!withQueryFilter">
+      内置查询<span class="text-[#999] ml-2 font-normal text-sm"
+        >此方式下，最外层无法获取到搜索字段</span
+      >
+    </h4>
+    <h4 v-else>结合query-filter使用</h4>
+    <s-query-filter
+      v-if="withQueryFilter"
+      :fields="fields"
+      :values="searchValues"
+      @search="handleSearch"
+    />
     <s-simple-table
+      ref="tableRef"
       :fetch-func="fetchData"
       :columns="columns"
-      :fetch-params="{ type: 'user' }"
-      :row-selection="{
-        type: 'checkbox',
-      }"
-      :has-pagination="hasPagination"
-      v-model:hasSelectedRows="hasSelectedRows"
+      :fetch-params="withQueryFilter ? searchValues : {}"
       bordered
+      :need-query-filter="!withQueryFilter"
     >
+      <!-- 整行的slot -->
+      <template #optBar>
+        <a-space>
+          <a-button type="primary">新增</a-button>
+          <a-button type="primary">导出</a-button>
+        </a-space>
+      </template>
+      <!-- 单独的slot-左 -->
+      <template #optBarLeft>
+        <a-space>
+          <a-button type="primary">新增</a-button>
+          <a-button type="primary">导出</a-button>
+        </a-space>
+      </template>
+      <!-- 单独的slot-右 -->
+      <template #optBarRight>
+        <a-space>
+          <a-button type="primary">新增</a-button>
+          <a-button type="primary">导出</a-button>
+        </a-space>
+      </template>
       <!-- 自定义单元格 -->
       <template #bodyCell="{ column, text, record }">
         <template v-if="column.dataIndex === 'age'">
@@ -34,12 +59,10 @@
     </s-simple-table>
 
     <a-flex vertical :gap="10">
+      <a-space v-if="withQueryFilter"> 搜索值： {{ searchValues }} </a-space>
       <a-space>
-        <a-button @click="selectSpecialRows()">初始化选中第二、第三行</a-button>
-      </a-space>
-      <a-space>
-        允许翻页
-        <a-switch v-model:checked="hasPagination" />
+        结合query-filter组件使用
+        <a-switch v-model:checked="withQueryFilter" />
       </a-space>
     </a-flex>
   </Demo>
@@ -47,32 +70,56 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import type { IFieldType } from "@/components/QueryFilter/type";
+const withQueryFilter = ref(false);
+const searchValues = ref({
+  name: "",
+  age: [],
+  address: "",
+});
+const tableRef = ref<any>(null);
+const fields = ref<IFieldType[]>([
+  {
+    label: "姓名",
+    fieldKey: "name",
+    fieldType: "input",
+  },
+  {
+    label: "年龄",
+    fieldKey: "age",
+    fieldType: "inputNumber",
+  },
+  {
+    label: "地址",
+    fieldKey: "address",
+    fieldType: "input",
+  },
+]);
 
-const hasSelectedRows = ref<any[]>([]); // 勾选条目
-const hasPagination = ref(true);
 const columns = [
   {
     title: "姓名",
     dataIndex: "name",
     key: "name",
+    queryConfig: "input",
   },
   {
     title: "年龄",
     dataIndex: "age",
     key: "age",
+    queryConfig: "inputNumber",
   },
   {
     title: "地址",
     dataIndex: "address",
     key: "address",
+    queryConfig: "input",
   },
 ];
-// 这里需要传入rowKey的项
-const selectSpecialRows = () => {
-  hasSelectedRows.value = [{ id: 2 }, { id: 3 }];
-};
+
 const fetchData = async (params: any) => {
   // 模拟接口请求
+  console.log("搜索了，搜索参数为", params);
   const { page = 1, size = 10 } = params;
   const list = Array.from({ length: size }, (_, index) => ({
     id: (page - 1) * size + index + 1,
@@ -90,24 +137,52 @@ const fetchData = async (params: any) => {
     },
   };
 };
-
+const handleSearch = (values: any) => {
+  searchValues.value = values;
+  tableRef.value.getList(); // 调用表格搜索
+};
 const code = `<template>
-  <div class="selected-info" v-if="hasSelectedRows.length">
-      已选择 {{ hasSelectedRows.length }} 项
-      <a-button type="link" @click="hasSelectedRows = []">清空</a-button>
-    </div>
-
+  <h4 v-if="!withQueryFilter">
+      内置查询<span class="text-[#999] ml-2 font-normal text-sm"
+        >此方式下，最外层无法获取到搜索字段</span
+      >
+    </h4>
+    <h4 v-else>结合query-filter使用</h4>
+    <s-query-filter
+      v-if="withQueryFilter"
+      :fields="fields"
+      :values="searchValues"
+      @search="handleSearch"
+    />
     <s-simple-table
+      ref="tableRef"
       :fetch-func="fetchData"
       :columns="columns"
-      :fetch-params="{ type: 'user' }"
-      :row-selection="{
-        type: 'checkbox',
-      }"
-      :has-pagination="hasPagination"
-      v-model:hasSelectedRows="hasSelectedRows"
+      :fetch-params="withQueryFilter ? searchValues : {}"
       bordered
+      :need-query-filter="!withQueryFilter"
     >
+    <!-- 整行的slot -->
+      <template #optBar>
+        <a-space>
+          <a-button type="primary">新增</a-button>
+          <a-button type="primary">导出</a-button>
+        </a-space>
+      </template>
+      <!-- 单独的slot-左 -->
+      <template #optBarLeft>
+        <a-space>
+          <a-button type="primary">新增</a-button>
+          <a-button type="primary">导出</a-button>
+        </a-space>
+      </template>
+      <!-- 单独的slot-右 -->
+      <template #optBarRight>
+        <a-space>
+          <a-button type="primary">新增</a-button>
+          <a-button type="primary">导出</a-button>
+        </a-space>
+      </template>
       <!-- 自定义单元格 -->
       <template #bodyCell="{ column, text, record }">
         <template v-if="column.dataIndex === 'age'">
@@ -126,44 +201,66 @@ const code = `<template>
     </s-simple-table>
 
     <a-flex vertical :gap="10">
+      <a-space v-if="withQueryFilter"> 搜索值： {{ searchValues }} </a-space>
       <a-space>
-        <a-button @click="selectSpecialRows()">初始化选中第二、第三行</a-button>
-      </a-space>
-      <a-space>
-        允许翻页
-        <a-switch v-model:checked="hasPagination" />
+        结合query-filter组件使用
+        <a-switch v-model:checked="withQueryFilter" />
       </a-space>
     </a-flex>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+import type { IFieldType } from "@/components/QueryFilter/type";
+const withQueryFilter = ref(false);
+const searchValues = ref({
+  name: "",
+  age: [],
+  address: "",
+});
+const tableRef = ref<any>(null);
+const fields = ref<IFieldType[]>([
+  {
+    label: "姓名",
+    fieldKey: "name",
+    fieldType: "input",
+  },
+  {
+    label: "年龄",
+    fieldKey: "age",
+    fieldType: "inputNumber",
+  },
+  {
+    label: "地址",
+    fieldKey: "address",
+    fieldType: "input",
+  },
+]);
 
-const hasSelectedRows = ref<any[]>([]); // 勾选条目
-const hasPagination = ref(true);
 const columns = [
   {
     title: "姓名",
     dataIndex: "name",
     key: "name",
+    queryConfig: "input",
   },
   {
     title: "年龄",
     dataIndex: "age",
     key: "age",
+    queryConfig: "inputNumber",
   },
   {
     title: "地址",
     dataIndex: "address",
     key: "address",
+    queryConfig: "input",
   },
 ];
-// 这里需要传入rowKey的项
-const selectSpecialRows = () => {
-  hasSelectedRows.value = [{ id: 2 }, { id: 3 }];
-};
+
 const fetchData = async (params: any) => {
   // 模拟接口请求
+  console.log("搜索了，搜索参数为", params);
   const { page = 1, size = 10 } = params;
   const list = Array.from({ length: size }, (_, index) => ({
     id: (page - 1) * size + index + 1,
@@ -181,20 +278,18 @@ const fetchData = async (params: any) => {
     },
   };
 };
-<\/script>
-
-<style scoped>
-
-.selected-info {
-  margin-bottom: 16px;
-  padding: 8px 16px;
-  background: #f5f5f5;
-  border-radius: 4px;
-}
+const handleSearch = (values: any) => {
+  searchValues.value = values;
+  tableRef.value.getList(); // 调用表格搜索
+};
 </style>`;
 </script>
 
-<style scoped>
+<style scoped lang="less">
+h4 {
+  margin: 0;
+  margin-bottom: 10px;
+}
 .selected-info {
   padding: 8px 16px;
   background: #f5f5f5;

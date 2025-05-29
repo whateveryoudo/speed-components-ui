@@ -58,9 +58,9 @@ export default defineConfig({
           items: [
             { text: 'RangeNum 范围数字', link: '/components/range-num/index' },
             { text: 'TagGroupSelect 标签组选择', link: '/components/tag-group-select/index' },
-            { text: 'QueryForm 查询表单', link: '/components/query-form/index' },
+            { text: 'QueryFilter 查询过滤器', link: '/components/query-filter/index' },
             { text: 'LazySelect 懒加载选择器', link: '/components/lazy-select/index' },
-            { text: 'SearchSelect 搜索选择器', link: '/components/search-select/index' },
+            { text: 'ApiSelect 支持请求的搜索选择器', link: '/components/api-select/index' },
             { text: 'ToggleInput 切换输入', link: '/components/toggle-input/index' },
             { text: 'ContentEditor 内容编辑器', link: '/components/content-editor/index' },
           ],
