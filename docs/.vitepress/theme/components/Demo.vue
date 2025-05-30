@@ -27,8 +27,8 @@ import { ref } from "vue";
 import { message } from "ant-design-vue";
 import "highlight.js/lib/common";
 import "highlight.js/styles/stackoverflow-light.css";
+// fix:构建时有问题，参考https://github.com/vuejs/vitepress/issues/1905
 import hljsVuePlugin from "@highlightjs/vue-plugin";
-
 const Highlightjs = hljsVuePlugin.component;
 
 const props = defineProps<{

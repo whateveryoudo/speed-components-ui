@@ -3,7 +3,7 @@
 用于单个文件的预览展示，支持图片、文档、音视频等多种类型，支持预览、下载、删除等操作。默认采用卡片模式，也支持列表模式。
 
 ::: tip 提示
-1、演示示例依赖了公共hook的[useCustomUpload](/components/useCustomUpload),你也可以自行实现。<br>
+1、演示示例依赖了公共hook的[useCustomUpload](/components/useCustomUpload/index),你也可以自行实现。<br>
 2、部分示例需结合后端运行[后端示例](https://gitee.com/ykxstore/speed-apis)
 :::
 

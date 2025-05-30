@@ -6,7 +6,7 @@
 import Basic from './Basic.vue'
 </script>
 ::: tip 提示
-演示示例请求逻辑依赖了公共hook的[useLoad](/components/useLoad)的useLoadMore。
+演示示例请求逻辑依赖了公共hook的useLoad的useLoadMore。
 :::
 
 ## 基础用法

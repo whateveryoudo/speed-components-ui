@@ -4,7 +4,7 @@
 
 ## 基础用法
 
-示例图标使用 [s-icon-font](/components/icon-font/) 组件,支持type调用iconfont线上图标，也支持传入antd图标组件。
+示例图标使用 [s-icon-font](/components/icon-font/index) 组件,支持type调用iconfont线上图标，也支持传入antd图标组件。
 
 <script setup>
   import Basic from './Basic.vue'

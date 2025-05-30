@@ -16,7 +16,7 @@ export default defineConfig({
     nav: [
       { text: '指南', link: '/guide/' },
       { text: '组件/hooks', link: '/components/' },
-      { text: '工具', link: '/utils/' },
+      // { text: '工具', link: '/utils/' },
     ],
     sidebar: {
       '/guide/': [
@@ -49,7 +49,6 @@ export default defineConfig({
             { text: 'IconFont 图标', link: '/components/icon-font/index' },
             { text: 'KeyMapTip 快捷键提示', link: '/components/key-map-tip/index' },
             { text: 'TextMore 文本展开收起', link: '/components/text-more/index' },
-            { text: 'TextStyleSetup 文本样式设置', link: '/components/text-style-setup/index' },
             { text: 'QuestionTip 说明提示', link: '/components/question-tip/index' },
           ],
         },
@@ -65,13 +64,12 @@ export default defineConfig({
             { text: 'ContentEditor 内容编辑器', link: '/components/content-editor/index' },
           ],
         },
-       
         {
           text: '一些常用hooks',
           items: [
             { text: 'useCustomUpload 自定义上传', link: '/components/useCustomUpload/index' },
             { text: 'useTable 表格通用 Hook', link: '/components/useTable/index' },
-            { text: 'useLoadMore 加载更多 Hook', link: '/components/useLoadMore/index' },
+            // { text: 'useLoadMore 加载更多 Hook', link: '/components/useLoadMore/index' },
             { text: 'useAntdCssVars 使用antd css变量', link: '/components/useAntdCssVars/index' },
           ],
         },
@@ -120,10 +118,22 @@ export default defineConfig({
       }
     },
     ssr: {
-      noExternal: ['speed-components'],
+      noExternal: [
+        'speed-components',
+        'ant-design-vue',
+        '@ant-design/icons-vue'
+      ],
     },
     optimizeDeps: {
-      include: ['speed-components'],
+      include: [
+        'speed-components',
+        'ant-design-vue',
+        '@ant-design/icons-vue'
+      ],
+    },
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'global': 'globalThis',
     },
     plugins: [
       UnoCSS(),

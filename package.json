@@ -1,6 +1,6 @@
 {
   "name": "speed-components-ui",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "基于 Ant Design Vue 的组件库",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
@@ -48,7 +48,6 @@
     "vue": "^3.4.0"
   },
   "devDependencies": {
-    "@highlightjs/vue-plugin": "^2.1.0",
     "@types/highlight.js": "^10.1.0",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^20.11.0",
@@ -75,7 +74,7 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.0",
-    "@highlightjs/vue-plugin": "^2.1.0",
+    "@highlightjs/vue-plugin": "^2.1.2",
     "@types/lodash-es": "^4.17.12",
     "@vueuse/core": "^13.1.0",
     "@wangeditor/editor": "^5.1.23",

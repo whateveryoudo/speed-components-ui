@@ -21,7 +21,7 @@ yarn add speed-components
 ## 在 main.ts 中引入组件库：
 
 ::: warning 初始化全局配置（app.use的第二个参数）
-**iconfontUrl** - iconfont在线地址，实际使用替换为自己的;[没有外网本地如何加载?]()<br>
+**iconfontUrl** - iconfont在线地址，实际使用替换为自己的;没有外网本地如何加载?<br>
 **registerGlobal** - 是否注册为全局组件，默认为true(如果按需，或者自己手动导入需设置为false)<br>
 **apis** - 请求方法配置，部分组件会携带一些请求
 :::

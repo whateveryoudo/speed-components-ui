@@ -10,7 +10,7 @@ import 'uno.css';
 import './style.css';
 import { fileDownload } from '../api/attachement';
 import { ConfigProvider } from 'ant-design-vue';
-import zhCN from 'ant-design-vue/es/locale/zh_CN';
+// import zhCN from 'ant-design-vue/es/locale/zh_CN';
 
 export default {
   ...DefaultTheme,
@@ -30,8 +30,9 @@ export default {
     app.component('Demo', Demo);
   },
   Layout: () => {
-    return h(ConfigProvider, {
-      locale: zhCN,
-    }, () => h(DefaultTheme.Layout));
+    return h(DefaultTheme.Layout);
+    // return h(ConfigProvider, {
+    //   locale: zhCN,
+    // }, () => h(DefaultTheme.Layout));
   },
 }; 

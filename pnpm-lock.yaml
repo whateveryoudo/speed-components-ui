@@ -12,8 +12,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.1(vue@3.5.13(typescript@5.8.3))
       '@highlightjs/vue-plugin':
-        specifier: ^2.1.0
-        version: 2.1.0(highlight.js@11.11.1)(vue@3.5.13(typescript@5.8.3))
+        specifier: ^2.1.2
+        version: 2.1.2(highlight.js@11.11.1)(vue@3.5.13(typescript@5.8.3))
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -563,8 +563,8 @@ packages:
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@highlightjs/vue-plugin@2.1.0':
-    resolution: {integrity: sha512-E+bmk4ncca+hBEYRV2a+1aIzIV0VSY/e5ArjpuSN9IO7wBJrzUE2u4ESCwrbQD7sAy+jWQjkV5qCCWgc+pu7CQ==}
+  '@highlightjs/vue-plugin@2.1.2':
+    resolution: {integrity: sha512-P7s9DLBGpBsbltk3ZKuYUu9lwDCEfpttjJ5ErI6Wco6GQWIsjcSCJzCoMHgXhRUNkFDtZo7ZgeF8M10POPbDLw==}
     peerDependencies:
       highlight.js: ^11.0.1
       vue: ^3
@@ -3395,7 +3395,7 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
-  '@highlightjs/vue-plugin@2.1.0(highlight.js@11.11.1)(vue@3.5.13(typescript@5.8.3))':
+  '@highlightjs/vue-plugin@2.1.2(highlight.js@11.11.1)(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       highlight.js: 11.11.1
       vue: 3.5.13(typescript@5.8.3)
@@ -5595,7 +5595,7 @@ snapshots:
   speed-components-ui@0.1.1(@algolia/client-search@5.23.4)(@types/node@20.17.32)(async-validator@4.2.5)(less@4.3.0)(postcss@8.5.3)(react-dom@16.14.0(react@16.14.0))(react@16.14.0)(search-insights@2.17.3)(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3)):
     dependencies:
       '@ant-design/icons-vue': 7.0.1(vue@3.5.13(typescript@5.8.3))
-      '@highlightjs/vue-plugin': 2.1.0(highlight.js@11.11.1)(vue@3.5.13(typescript@5.8.3))
+      '@highlightjs/vue-plugin': 2.1.2(highlight.js@11.11.1)(vue@3.5.13(typescript@5.8.3))
       '@vueuse/core': 13.1.0(vue@3.5.13(typescript@5.8.3))
       ant-design-vue: 4.2.6(vue@3.5.13(typescript@5.8.3))
       axios: 0.27.2

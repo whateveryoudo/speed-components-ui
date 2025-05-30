@@ -47,7 +47,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import { QuestionCircleOutlined } from '@ant-design/icons-vue';
 
 const code = ref(`
 <template>
