@@ -15,11 +15,11 @@
 | 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | value | 当前选中的值 | `string \| string[]` | - |
-| fetchFunc | 获取选项数据的函数 | `(params: { searchVal: string, ... }) => Promise<any>` | - |
+| fetchFunc | 获取选项数据的函数 | `(params:any) => Promise<any>` | - |
 | fieldNames | 自定义字段名 | `{ label: string, value: string }` | `{ label: 'name', value: 'id' }` |
 | fetchOptions | 请求配置 | `{ params?: Record<string, any>, afterRes?: Function }` | - |
-| mode | 设置 Select 的模式 | `'multiple'` | - |
-| showSearch | 是否显示搜索框 | `boolean` | `false` |
+| mode | 设置 Select 的模式(multiple为多选) | `'multiple'` | - |
+| search | 搜索配置(开启后会携带搜索字段到请求中) | `{key: string}` | - |
 | placeholder | 选择框默认文本 | `string` | `'请选择'` |
 
 ### 事件

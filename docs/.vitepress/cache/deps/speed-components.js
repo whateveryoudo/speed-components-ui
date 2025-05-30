@@ -2,8 +2,16 @@ import {
   require_zh_cn
 } from "./chunk-6KMQPRXY.js";
 import {
+  Viewer
+} from "./chunk-IREBLMTY.js";
+import {
+  purify
+} from "./chunk-M6FB2HSG.js";
+import {
+  message_default,
   theme_default
-} from "./chunk-LMHF3OV6.js";
+} from "./chunk-52QFRUSC.js";
+import "./chunk-5M46RDAQ.js";
 import "./chunk-5SOETNNC.js";
 import {
   require_customParseFormat
@@ -134,7 +142,7 @@ import ApiSelect from "/Users/ykx/work/gitee/speed-components/src/components/Api
 import ToggleInput from "/Users/ykx/work/gitee/speed-components/src/components/ToggleInput/index.vue";
 import ContentEditor from "/Users/ykx/work/gitee/speed-components/src/components/ContentEditor/index.vue";
 
-// src/utils/index.ts
+// src/utils/base.ts
 var import_dayjs = __toESM(require_dayjs_min());
 var import_customParseFormat = __toESM(require_customParseFormat());
 var import_zh_cn = __toESM(require_zh_cn());
@@ -169,6 +177,104 @@ var useAntdCssVars = () => {
       document.head.removeChild(style2);
     }
   };
+};
+
+// src/directives/vFocus.ts
+var vFocus = {
+  mounted(el) {
+    var _a;
+    if ((el == null ? void 0 : el.tagName) !== "INPUT") {
+      (_a = el == null ? void 0 : el.querySelector("input")) == null ? void 0 : _a.focus();
+      return;
+    }
+    el == null ? void 0 : el.focus();
+  }
+};
+
+// src/directives/vCopy.ts
+var vCopy = {
+  mounted(el, binding) {
+    if (el) {
+      el.addEventListener("click", () => {
+        const text = binding.arg || binding.value || el.innerText || "";
+        console.log(text);
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text);
+          message_default.success("复制成功");
+        } else {
+          const textarea = document.createElement("textarea");
+          document.body.appendChild(textarea);
+          textarea.style.position = "fixed";
+          textarea.style.width = "0";
+          textarea.style.height = "0";
+          textarea.style.top = "10px";
+          textarea.value = text;
+          textarea.select();
+          document.execCommand("copy", true);
+          message_default.success("复制成功");
+          document.body.removeChild(textarea);
+        }
+      });
+    }
+  }
+};
+
+// src/directives/vView.ts
+import "/Users/ykx/work/gitee/speed-components/node_modules/.pnpm/viewerjs@1.11.7/node_modules/viewerjs/dist/viewer.css";
+var vView = {
+  mounted(el) {
+    if (el) {
+      el.style.cursor = "zoom-in";
+      const viewer = new Viewer(el, {
+        // 内联展示
+        inline: false,
+        // 全屏预览时的缩放比例
+        viewed() {
+          viewer.zoomTo(0.8);
+        },
+        // 追加url处理（新版静态资源预览需要携带accessKey(公开地址),token(内部地址)）,未变化的地址也会重新再发送一遍请求？？
+        url(image) {
+          return image.src;
+        }
+      });
+      el.addEventListener("click", () => {
+        viewer.play();
+      });
+    }
+  }
+};
+
+// src/directives/vLinkTransform.ts
+var vLinkTransform = {
+  mounted(el, binding) {
+    if (el) {
+      const urlRegex = /(https?|http|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/g;
+      const baseInnerhtml = (binding == null ? void 0 : binding.value) ?? "";
+      const htmlText = baseInnerhtml.replace(urlRegex, (match) => {
+        const isSysLink = match.includes("/easycube/preview");
+        return `<a href="${match}" target="_blank" ${isSysLink && 'rel="opener"'}>${match}</a>`;
+      });
+      el.innerHTML = purify.sanitize(htmlText);
+    }
+  }
+};
+
+// src/directives/vSelect.ts
+var vSelect = {
+  mounted(el, binding) {
+    var _a, _b;
+    const defaultSelect = (binding == null ? void 0 : binding.value) ?? true;
+    if (!defaultSelect) {
+      return;
+    }
+    if ((el == null ? void 0 : el.tagName) !== "INPUT") {
+      (_a = el == null ? void 0 : el.querySelector("input")) == null ? void 0 : _a.focus();
+      (_b = el == null ? void 0 : el.querySelector("input")) == null ? void 0 : _b.select();
+      return;
+    }
+    el == null ? void 0 : el.focus();
+    el == null ? void 0 : el.select();
+  }
 };
 
 // src/components/index.ts
@@ -206,7 +312,11 @@ var components = [
 var defaultConfig = {
   registerGlobal: true,
   iconfontUrl: import.meta.env.VITE_ICONFONT_URL,
-  apis: {}
+  apis: {},
+  useLoadConfig: {
+    pageKey: "page",
+    pageSizekey: "size"
+  }
 };
 var configRef = ref({ ...defaultConfig });
 var currentConfig = computed(() => configRef.value);
@@ -227,6 +337,11 @@ var install = (app, config) => {
   }
   app.provide("speed-components-config", currentConfig);
   const cleanup = useAntdCssVars();
+  app.directive("focus", vFocus);
+  app.directive("copy", vCopy);
+  app.directive("view", vView);
+  app.directive("select", vSelect);
+  app.directive("link-transform", vLinkTransform);
   app.unmount = () => {
     cleanup();
     app.unmount();

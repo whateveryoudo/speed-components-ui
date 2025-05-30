@@ -10,7 +10,7 @@
   <span class="range-number">
     <a-input-number
       :value="realVal[0]"
-      :style="[props.autoWidth ? { flex: 1, width: 'auto' } : { width: '80px' }]"
+      :style="[props.autoWidth ? { flex: 1, width: 'auto' } : { width: suffix ? '110px' : '80px'}]"
       placeholder="请输入"
       :min="0"
       @blur="(e: any) => handleChange(e.target.value, 'startVal')"
@@ -22,7 +22,7 @@
     <span style="margin: 0 5px">-</span>
     <a-input-number
       :value="realVal[1]"
-      :style="[props.autoWidth ? { flex: 1, width: 'auto' } : { width: '80px' }]"
+      :style="[props.autoWidth ? { flex: 1, width: 'auto' } : { width: suffix ? '110px' : '80px' }]"
       placeholder="请输入"
       :min="0"
       @blur="(e: any) => handleChange(e.target.value, 'endVal')"

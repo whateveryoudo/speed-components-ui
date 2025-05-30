@@ -3,7 +3,7 @@
 简易的table组件，满足大部分需求，如需要高度定制的table，请使用 `useLoad` 的 `useTable`。
 ::: tip 提示
 - 示例中存在边框样式问题(为文档框架内部影响)，实际使用无此问题。<br/>
-- 请求逻辑依赖了公共hook的[useLoad](/components/useLoad)的useTable。
+- 请求逻辑依赖了公共hook的 [useLoad](/components/useLoad) 的useTable。
 :::
 
 <script setup>
@@ -32,23 +32,16 @@ import WithQuery from './WithQuery.vue'
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | fetchFunc | 请求函数 | `Function` | - |
-| fetchParams | 请求参数 | `Record<string, any>` | `{}` |
+| fetchParams | 请求参数(默认会携带上page,size参数) | `Record<string, any>` | `{}` |
 | columns | 列配置 | `any[]` | - |
 | rowKey | 行唯一标识 | `string` | `'id'` |
 | showPagination | 是否显示分页(关闭会去掉内置page,size参数) | `boolean` | `true` |
-| showSelection | 是否显示全选 | `boolean` | `false` |
 | showIndex | 是否显示序号 | `boolean` | `true` |
 | bordered | 是否显示边框 | `boolean` | `false` |
 | size | 表格大小 | `'small'` \| `'middle'` \| `'large'` | `'middle'` |
 | beforeFetch | 数据获取前的回调 | `() => void` | - |
-| afterFetch | 数据获取后的回调 | `(data: any, res?: any) => any` | - |
-| onSelectChange | 选中行变化回调 | `(selectedRowKeys: string[], selectedRows: any[]) => void` | - |
-
-### Events
-
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
-| change | 分页、排序、筛选变化时触发 | `(pagination, filters, sorter)` |
+| afterFetch | 请求后的参数转换（用于处理不符合标准参数的场景） | `(data: any) => any` | - |
+| fetchCallback | 数据获取后的回调 | `(data: any) => void` | - |
 
 ### Slots
 

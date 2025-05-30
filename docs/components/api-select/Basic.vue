@@ -8,8 +8,8 @@
           v-model:value="value"
           :fetch-func="fetchData"
           placeholder="请选择用户"
-          show-search
           allow-clear
+          :search="{key: 'userName'}"
         />
       </div>
 
@@ -20,9 +20,9 @@
           :fetch-func="fetchData"
           placeholder="请选择多个用户"
           mode="multiple"
-          show-search
           allow-clear
           class="w-[300px]"
+          :search="{key: 'userName'}"
         />
       </div>
 
@@ -77,9 +77,7 @@ const fetchData = async (params: any) => {
 
   return {
     success: true,
-    data: {
-      data: filteredList,
-    },
+    data: filteredList
   };
 };
 
@@ -92,7 +90,7 @@ const code = `<template>
           v-model:value="value"
           :fetch-func="fetchData"
           placeholder="请选择用户"
-          show-search
+          :search="{key: 'userName'}"
           allow-clear
         />
       </div>
@@ -104,7 +102,7 @@ const code = `<template>
           :fetch-func="fetchData"
           placeholder="请选择多个用户"
           mode="multiple"
-          show-search
+          :search="{key: 'userName'}"
           allow-clear
           class="w-[300px]"
         />

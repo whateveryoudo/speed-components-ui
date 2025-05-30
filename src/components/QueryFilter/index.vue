@@ -376,7 +376,6 @@ watch(
   .opt-wrapper {
     display: flex;
     justify-content: flex-end;
-    padding-bottom: 10px;
     .opt-wrapper-inner {
       display: flex;
       align-items: center;
@@ -387,6 +386,7 @@ watch(
   &.complex {
     .opt-wrapper {
       align-items: flex-end;
+      padding-bottom: 10px;
     }
   }
 }

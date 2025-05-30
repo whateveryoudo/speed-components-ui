@@ -134,6 +134,11 @@ const copyCode = async () => {
     // border-collapse: separate;
     display: table; // vite-press会影响自适应宽度
   }
+  :deep(.ant-pagination) {
+    li{
+      margin-top: 0;
+    }
+  }
   :deep(.ant-pagination-options) {
     margin-top: 0;
   }

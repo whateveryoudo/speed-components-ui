@@ -16,6 +16,7 @@
         allow-clear
         @blur="handleBlur"
         @click.stop
+        @pressEnter="handleBlur"
       />
       <!-- 是否需要二次确认 -->
       <span

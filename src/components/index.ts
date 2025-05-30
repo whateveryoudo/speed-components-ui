@@ -22,8 +22,9 @@ import QuestionTip from "./QuestionTip/index.vue";
 import ApiSelect from "./ApiSelect/index.vue";
 import ToggleInput from "./ToggleInput/index.vue";
 import ContentEditor from "./ContentEditor/index.vue";
-import { useAntdCssVars } from '../hooks';
-
+import { useAntdCssVars } from "../hooks";
+import { vFocus, vCopy, vView, vSelect, vLinkTransform } from "../directives";
+import type { RequestResponse } from "..";
 // 组件列表
 const components: Component[] = [
   FullModal,
@@ -53,6 +54,13 @@ export interface GlobalConfig {
   apis?: {
     [key: string]: AjaxMethod;
   };
+  // 全局转换请求响应（框架接收响应范式为：RequestResponse，可自行转换,能和后端协商最好）
+  transformRequsRes?: (res: any) => RequestResponse<any>;
+  // 使用useTable, useLoadMore的 一些配置
+  useLoadConfig: {
+    pageKey: string; // 全局page参数名，默认 page
+    pageSizekey: string; // 全局pageSize参数名 默认  pageSize
+  };
 }
 
 // 默认配置
@@ -60,6 +68,10 @@ const defaultConfig: GlobalConfig = {
   registerGlobal: true,
   iconfontUrl: import.meta.env.VITE_ICONFONT_URL,
   apis: {},
+  useLoadConfig: {
+    pageKey: "page",
+    pageSizekey: "size",
+  },
 };
 
 // 使用 ref 创建响应式配置
@@ -75,7 +87,6 @@ export const setConfig = (config: Partial<GlobalConfig>) => {
     ...config,
   };
 };
-
 
 const install = (app: App, config?: Partial<GlobalConfig>) => {
   // 合并配置
@@ -95,7 +106,12 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
 
   // 使用 Ant Design Vue CSS 变量
   const cleanup = useAntdCssVars();
-  
+  // 注册一些指令
+  app.directive("focus", vFocus);
+  app.directive("copy", vCopy);
+  app.directive("view", vView);
+  app.directive("select", vSelect);
+  app.directive("link-transform", vLinkTransform);
   // 在应用卸载时清理
   app.unmount = () => {
     cleanup();

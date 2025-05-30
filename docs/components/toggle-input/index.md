@@ -2,11 +2,12 @@
 
 基于 antd Input 封装的快捷文字修改组件，支持二次确认、自定义触发等功能。
 
+<script setup>
+    import Basic from './Basic.vue'
+</script>
 ## 基础用法
 
-:::demo
-toggle-input/Basic
-:::
+<Basic/>
 
 ## API
 

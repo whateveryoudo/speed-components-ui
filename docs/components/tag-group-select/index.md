@@ -1,12 +1,16 @@
 # TagGroup 标签组
 
-基于 antd Space 封装的标签组组件，支持单选、多选、图标等功能。
+类似antd  CheckableTag 效果， 支持单选、多选、图标等功能, 这里进行了组的封装,可以更简洁的获取数据。
 
 ## 基础用法
 
-:::demo
-tag-group/Basic
-:::
+示例图标使用 [s-icon-font](/components/icon-font/) 组件,支持type调用iconfont线上图标，也支持传入antd图标组件。
+
+<script setup>
+  import Basic from './Basic.vue'
+</script>
+
+<Basic/>
 
 ## API
 
@@ -14,16 +18,13 @@ tag-group/Basic
 
 | 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| value | 当前选中的值 | `string \| string[]` | `''` |
+| value(v-model) | 当前选中的值 | `string \| string[]` | `''` |
 | tags | 标签数据 | `TagItem[]` | `[]` |
+| gutter | 间隔 | `Number[]` | `[8,8]` |
 | mode | 选择模式 | `'single' \| 'multiple'` | `'single'` |
-| totalConfig | 全选配置 | `{ show: boolean; value: any }` | `{ show: true, value: '' }` |
+| displayType | 显示样式（支持antd-tag采用antd tag） | `'default' \| 'antd-tag'` | `'default'` |
 
-### 事件
-
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
-| update:value | 选中值变化时触发 | `(value: string \| string[])` |
+| totalConfig | 全选配置(批量选择下value无需传入) | `{ show: boolean; value?: any }` | `{ show: true, value: '' }` |
 
 ### TagItem 类型
 
@@ -33,19 +34,24 @@ interface TagItem {
   label: string;
   /** 标签值 */
   value: string;
-  /** 图标类型或渲染函数 */
+  /** 图标类型或渲染函数(antd-tag模式下不支持) */
   icon?: string | VNode;
-  /** 图标颜色 */
+  /** 图标颜色（antd-tag模式下不支持） */
   iconColor?: string;
   /** 其他属性 */
   [prop: string]: any;
 }
 ```
+### Events
+
+| 事件名称 | 说明 | 默认值 |
+| --- | --- | --- |
+| update:value | 选择回调 | function(value) |
+
+
+
 
 ## 注意事项
 
-1. 单选模式下，`value` 为字符串类型
-2. 多选模式下，`value` 为字符串数组类型
-3. 标签选中状态通过右上角的蓝色三角形标识
-4. 图标支持字符串类型（使用 `s-icon-font` 组件）或 VNode 类型
-5. 可以通过 `iconColor` 自定义图标颜色，默认为 `#5e76b5` 
+1. 单选模式下，开启全选需传入全选字段key,批量不需要。
+2. antd-tag模式显示，不支持自定义图标与颜色。

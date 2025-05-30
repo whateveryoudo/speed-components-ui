@@ -130,11 +130,9 @@ const fetchData = async (params: any) => {
 
   return {
     success: true,
-    data: {
-      records: list,
-      total: 100,
-      pages: 10,
-    },
+    data: list,
+    totalCount: 100,
+    totalPages: 10
   };
 };
 const handleSearch = (values: any) => {
@@ -271,11 +269,9 @@ const fetchData = async (params: any) => {
 
   return {
     success: true,
-    data: {
-      records: list,
-      total: 100,
-      pages: 10,
-    },
+    data: list,
+    totalCount: 100,
+    totalPages: 10
   };
 };
 const handleSearch = (values: any) => {

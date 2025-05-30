@@ -14,17 +14,21 @@ import {
   computed,
   unref,
   watch,
+  inject
 } from "vue";
+import type { RequestResponse } from '..';
 import { uniqBy } from "lodash-es";
 type OptionsType = {
   extraParams?: Record<string, any>;
   rowKey?: string;
   beforeFetch?: () => void;
-  afterFetch?: (data: any, res?: any) => any;
-  fetchCallback?: (res: any) => any;
+  transformAfterFetch?: (data: any, res?: any) => any;
+  afterFetch?: (res: any) => any;
   handleMultiRes?: (res: any) => any;
   fullRowsAjax?: any;
   emit?: any;
+  sortFieldKey?: string;
+  sortOrderKey?: string;
   [props: string]: any;
 };
 const defaultOptions = {
@@ -32,6 +36,8 @@ const defaultOptions = {
   needFullSelect: false,
   hasPagination: true,
   hasSelectedRows: [],
+  sortFieldKey: 'sortField',
+  sortOrderKey: 'sortOrder'
 };
 // 默认最大50
 export const defaultPageSizeOptions = ["10", "20", "50"];
@@ -43,14 +49,22 @@ export const useTable = (
   const loading = ref(false); // 通用请求loading
   const selectAllLoading = ref(false); // 全选请求loading
   const dataSource = ref<any[]>([]); // 选择请求返回数据
+  const speedComponentsConfig = inject<RequestResponse<any>>('speed-components-config');
+  const transformRequsRes = speedComponentsConfig?.value?.transformRequsRes;
+  const useLoadConfig = speedComponentsConfig?.value?.useLoadConfig;
   // 整合默认配置和传入配置
   const options = computed(() => {
-    return { ...defaultOptions, ...extraOptions.value };
+    return { ...defaultOptions, ...extraOptions.value, ...useLoadConfig };
   });
   // 唯一key
   const rowKey = computed(() => {
     return options.value.rowKey || "id";
   });
+  const tableHeaderFilters = ref({}); // 表格头搜索条件
+  const tableHeaderSorter = ref({
+    [String(options.value.sortFieldKey)]: '',
+    [String(options.value.sortOrderKey)]: ''
+  }); // 表格头排序
   const emit = options.value.emit;
   const pagination = ref({
     current: 1,
@@ -180,16 +194,30 @@ export const useTable = (
     }
     isSearch && (pagination.value.current = 1); // 重置页码
     try {
-      const res = await ajaxFnVal(
+      // 合并表格头搜索条件和排序
+      const baseParams = {
+        ...options.value.extraParams,
+        ...tableHeaderFilters.value,
+        ...tableHeaderSorter.value,
+      };
+      let res = {} as any;
+      res = await ajaxFnVal(
         options.value.hasPagination
           ? {
               page: pagination.value.current,
               size: pagination.value.pageSize,
-              ...options.value.extraParams,
+              ...baseParams,
             }
-          : options.value.extraParams
+          : baseParams
       );
-      if (res && res.success) {
+      if (transformRequsRes) {
+        if (typeof transformRequsRes !== 'function') {
+          console.error('transformRequsRes应为一个函数');
+        } else {
+          res = transformRequsRes(res);
+        }
+      }
+      if (res && res?.success) {
         loading.value = false;
         // 防止删除 | 修改pageSize后 最后一页无数据的情况(提前一页请求，这里仅倒退一次)
         if (
@@ -205,15 +233,13 @@ export const useTable = (
         }
         // 提交后的参数处理
         if (
-          options.value.afterFetch &&
-          typeof options.value.afterFetch === "function"
+          options.value.transformAfterFetch &&
+          typeof options.value.transformAfterFetch === "function"
         ) {
-          res.data = options.value.afterFetch(res.data);
+          res.data = options.value.transformAfterFetch(res.data);
         }
-        dataSource.value = options.value.hasPagination
-          ? res.data.records
-          : res.data;
-        pagination.value.total = Number(res.data.total);
+        dataSource.value = res?.data ?? [];
+        pagination.value.total = Number(res.totalCount);
         // 获取全量条目(翻页不需要重新请求)
         if (options.value.needFullSelect && isSearch) {
           getTotalRows();
@@ -222,10 +248,10 @@ export const useTable = (
         handleReChecked();
         // 请求的回调
         if (
-          options.value.fetchCallback &&
-          typeof options.value.fetchCallback === "function"
+          options.value.afterFetch &&
+          typeof options.value.afterFetch === "function"
         ) {
-          options.value.fetchCallback(dataSource.value);
+          options.value.afterFetch(dataSource.value);
         }
       }
     } catch (error) {
@@ -255,20 +281,19 @@ export const useTable = (
       emit("update:hasSelectedRows", state.hasSelectedRows);
     }
   };
-  const resetState = () => {
-    state.selectedRowKeys = [];
-    state.selectedRows = [];
-  };
-  const delItem = (id: string) => {
-    const selectRowIndex = state.selectedRowKeys.indexOf(id);
-    if (selectRowIndex !== -1) {
-      state.selectedRowKeys.splice(selectRowIndex, 1);
-    }
-  };
-  // 分页变化-兼容vxetable
-  const handleTableChange = (page: { pageSize: number; current: number }) => {
+  // 表格变化（分页，搜索，排序）
+  const handleTableChange = (page: { pageSize: number; current: number }, filters: any, sorter: any) => {
+    console.log(filters, sorter);
     pagination.value.current = page.current;
     pagination.value.pageSize = page.pageSize;
+    if (filters) {
+      tableHeaderFilters.value = filters;
+    }
+    if (sorter) {
+      tableHeaderSorter.value[String(options.value.sortFieldKey)] = sorter.field;
+      tableHeaderSorter.value[String(options.value.sortOrderKey)] = sorter.order;
+    }
+
     getList(false);
   };
   // 处理列宽度变化
@@ -285,8 +310,6 @@ export const useTable = (
     getList,
     onSelectChange,
     handleTableChange,
-    delItem,
-    resetState,
     handleResizeColumn,
     onCheckAllChange,
   };
@@ -304,9 +327,12 @@ export const useLoadMore = (
   })
 ) => {
   const ajaxFnVal = unref(ajaxFn);
+  const speedComponentsConfig = inject<RequestResponse<any>>('speed-components-config');
+  const transformRequsRes = speedComponentsConfig?.value?.transformRequsRes;
+  const useLoadConfig = speedComponentsConfig?.value?.useLoadConfig;
   // 整合默认配置和传入配置
   const options = computed(() => {
-    return { ...defaultLoadMoreOptions, ...extraOptions.value };
+    return { ...defaultLoadMoreOptions, ...extraOptions.value, ...useLoadConfig };
   });
   const pageParams = reactive({
     page: 1,
@@ -320,32 +346,38 @@ export const useLoadMore = (
   const handleInit = async () => {
     loading.value = true;
     try {
-      const res = await ajaxFnVal({
-        page: pageParams.page,
-        size: pageParams.size,
+      let res = await ajaxFnVal({
+        [options.value.pageKey]: pageParams.page,
+        [options.value.pageSizekey]: pageParams.size,
         ...options.value.extraParams,
       });
-
+      if (transformRequsRes) {
+        if (typeof transformRequsRes !== 'function') {
+          console.error('transformRequsRes应为一个函数');
+        } else {
+          res = transformRequsRes(res);
+        }
+      }
       if (res && res.success) {
         loading.value = false;
         if (
-          options.value.afterFetch &&
-          typeof options.value.afterFetch === "function"
+          options.value.transformAfterFetch &&
+          typeof options.value.transformAfterFetch === "function"
         ) {
-          res.data = options.value.afterFetch(res.data, res);
+          res.data = options.value.transformAfterFetch(res.data);
         }
         // 兼容获取，后端格式不同
-        const newData = list.value.concat(res.data?.records ?? res.data);
+        const newData = list.value.concat(res.data);
         list.value = newData;
         // 判断数据是否请求完
-        if (res.data.pages !== undefined) {
-          if (res.data.pages <= pageParams.page) {
+        if (res.totalPages !== undefined) {
+          if (res.totalPages <= pageParams.page) {
             noMore.value = true;
           } else {
             noMore.value = false;
           }
-        } else if (res.data.total !== undefined) {
-          if (res.data.total <= list.value.length) {
+        } else if (res.totalCount !== undefined) {
+          if (res.totalCount <= list.value.length) {
             noMore.value = true;
           } else {
             noMore.value = false;

@@ -55,11 +55,9 @@ const fetchData = async (params: any) => {
   }));
 
   return {
-    data: {
-      records: list,
-      pages: 4, // 固定总页数
-      total: 40, // 固定总条数
-    },
+    data: list,
+    totalCount: 40,
+    totalPages: 4,
     success: true,
   };
 };

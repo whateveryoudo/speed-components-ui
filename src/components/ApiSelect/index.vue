@@ -30,7 +30,7 @@ import { ref, watch } from "vue";
 import { debounce } from "lodash-es";
 // eslint-disable-next-line no-undef
 defineOptions({
-  name: "SSelectSearch",
+  name: "SApiSelect",
 });
 export type IFetchOptions = {
   params?: Record<string, any>;
@@ -50,6 +50,7 @@ const props = withDefaults(
   }>(),
   {
     placeholder: "请选择",
+    fieldNames: () => ({label: 'name', value: 'id'})
   }
 );
 const emits = defineEmits(["update:value"]);
@@ -69,7 +70,7 @@ const fetch = debounce(async () => {
   fetching.value = false;
   if (res) {
     if (props?.fetchOptions?.afterRes) {
-      data.value = props.fetchOptions.afterRes(res);
+      data.value = props.fetchOptions.afterRes(res.data);
     } else {
       data.value = res.data || [];
     }

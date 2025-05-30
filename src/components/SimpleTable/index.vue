@@ -27,8 +27,10 @@ interface Props {
   size?: "small" | "middle" | "large";
   /** 数据获取前的回调 */
   beforeFetch?: () => void;
+  /** 数据获取后的转换 */
+  afterFetch?: (data: any) => any;
   /** 数据获取后的回调 */
-  afterFetch?: (data: any, res?: any) => any;
+  fetchCallback?: (data: any) => any;
   /** 行选择配置 */
   rowSelection?: any;
   /** 选中的行条目 */

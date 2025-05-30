@@ -18,6 +18,7 @@
 | maxNum | 最大值设定 | `number` | - |
 | minNum | 最小值设定 | `number` | `0` |
 | suffix | 后缀文本 | `string` | - |
+| autoWidth | 是否自适应宽度(开启后会按照父元素均分) | `boolean` | false |
 
 ## 注意事项
 

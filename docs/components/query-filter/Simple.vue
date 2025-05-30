@@ -99,11 +99,11 @@ const fields = computed<IFieldType[]>(() => {
             key: "name",
           },
           // 支持自行处理结构
-          afterRes: (res: any) => {
-            return res.data.map((item: any) => ({
+          afterRes: (data: any[]) => {
+            return data && data.length > 0 ? data.map((item: any) => ({
               label: item.name,
               value: item.id,
-            }));
+            })) : [];
           },
         },
         fetchFunc: async (params: any) => {
