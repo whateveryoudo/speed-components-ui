@@ -12,6 +12,7 @@ const VITE_APP_BASE_PROXY_URL = process.env.VITE_APP_BASE_PROXY_URL || 'http://l
 export default defineConfig({
   title: 'Speed Components',
   description: '基于 Ant Design Vue 的组件库',
+  base: '/speed-components-ui/',
   themeConfig: {
     nav: [
       { text: '指南', link: '/guide/' },
