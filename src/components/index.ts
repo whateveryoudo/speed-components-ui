@@ -7,7 +7,7 @@
  */
 import type { App, Component } from "vue";
 import { computed, ref } from "vue";
-import FullModal from "./FullModal/index1.vue";
+import FullModal from "./FullModal/index.vue";
 import CollapseHz from "./CollapseHz/index.vue";
 import FilePreviewItem from "./FilePreviewItem/index.vue";
 import IconFont from "./IconFont/index";
@@ -119,7 +119,7 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
   };
 };
 
-export { default as FullModal } from "./FullModal/index1.vue";
+export { default as FullModal } from "./FullModal/index.vue";
 export { default as CollapseHz } from "./CollapseHz/index.vue";
 export { default as FilePreviewItem } from "./FilePreviewItem/index.vue";
 export { default as IconFont } from "./IconFont/index";

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, type CSSProperties, computed, watch } from 'vue'
-import FullModal from '../FullModal/index1.vue'
+import FullModal from '../FullModal/index.vue'
 import ColorPicker from '../CColorPicker/index.vue'
 import { cloneDeep } from 'lodash-es'
 /*eslint no-undef: "off"*/
