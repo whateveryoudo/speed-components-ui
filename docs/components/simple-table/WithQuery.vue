@@ -119,7 +119,6 @@ const columns = [
 
 const fetchData = async (params: any) => {
   // 模拟接口请求
-  console.log("搜索了，搜索参数为", params);
   const { page = 1, size = 10 } = params;
   const list = Array.from({ length: size }, (_, index) => ({
     id: (page - 1) * size + index + 1,
@@ -258,7 +257,6 @@ const columns = [
 
 const fetchData = async (params: any) => {
   // 模拟接口请求
-  console.log("搜索了，搜索参数为", params);
   const { page = 1, size = 10 } = params;
   const list = Array.from({ length: size }, (_, index) => ({
     id: (page - 1) * size + index + 1,

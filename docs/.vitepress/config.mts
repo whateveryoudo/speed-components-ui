@@ -123,17 +123,16 @@ export default defineConfig({
         'ant-design-vue',
         '@ant-design/icons-vue'
       ],
+      external: [
+        'speed-components/hooks/useAntdCssVars'
+      ]
     },
     optimizeDeps: {
       include: [
         'speed-components',
         'ant-design-vue',
         '@ant-design/icons-vue'
-      ],
-    },
-    define: {
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'global': 'globalThis',
+      ]
     },
     plugins: [
       UnoCSS(),

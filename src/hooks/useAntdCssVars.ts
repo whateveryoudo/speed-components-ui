@@ -13,7 +13,7 @@ const camelToKebab = (str: string): string => {
 
 /**
  * 生成 Ant Design Vue 的 CSS 变量
- * @returns {void}
+ * @returns {() => void} 清理函数
  */
 export const useAntdCssVars = () => {
   // 使用 defaultAlgorithm 和 defaultSeed 获取 token
@@ -34,17 +34,24 @@ export const useAntdCssVars = () => {
 
     return `:root {\n  ${cssVars.join('\n  ')}\n}`;
   };
-  // 创建并插入 style 标签
-  const style = document.createElement('style');
-  style.id = 'antd-css-vars';
-  style.textContent = generateCssVars();
-  document.head.appendChild(style);
 
-  // 返回清理函数
-  return () => {
-    const style = document.getElementById('antd-css-vars');
-    if (style) {
-      document.head.removeChild(style);
-    }
-  };
+  // 在客户端环境下才执行 DOM 操作
+  if (typeof window !== 'undefined') {
+    // 创建并插入 style 标签
+    const style = document.createElement('style');
+    style.id = 'antd-css-vars';
+    style.textContent = generateCssVars();
+    document.head.appendChild(style);
+
+    // 返回清理函数
+    return () => {
+      const style = document.getElementById('antd-css-vars');
+      if (style) {
+        document.head.removeChild(style);
+      }
+    };
+  }
+
+  // 在服务端环境下返回空函数
+  return () => {};
 }; 

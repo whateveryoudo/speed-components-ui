@@ -1,12 +1,23 @@
 <!-- 富文本编辑器：带有图片上传 -->
 <script lang="ts" setup>
-  import { type IToolbarConfig } from '@wangeditor/editor';
-  import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
-  import { inject, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue';
+  import { inject, nextTick, onBeforeUnmount, ref, shallowRef, watch } from 'vue';
+  import type { Ref } from 'vue';
 
+  // 是否在客户端环境
+  const isClient = typeof window !== 'undefined';
 
+  // 动态导入组件和样式
+  const Editor = ref();
+  const Toolbar = ref();
+  
+  if (isClient) {
+    import('@wangeditor/editor/dist/css/style.css');
+    import('@wangeditor/editor-for-vue').then((module) => {
+      Editor.value = module.Editor;
+      Toolbar.value = module.Toolbar;
+    });
+  }
 
-  import '@wangeditor/editor/dist/css/style.css';
   const globalConfig = inject("speed-components-config", ref({})) as Ref<GlobalConfig>;
 
   // 引入 css
@@ -16,7 +27,7 @@
       readOnly?: boolean;
       height?: string;
       placeholder?: string;
-      toolbarConfig?: Partial<IToolbarConfig>;
+      toolbarConfig?: any; // 改为 any，因为类型会在运行时动态导入
       mode?: 'simple' | 'default';
     }>(),
     {
@@ -103,6 +114,7 @@
 
 <template>
   <div
+    v-if="isClient && Editor && Toolbar"
     class="content-editor-wrapper"
     :style="{ height: height }"
   >
@@ -120,6 +132,11 @@
       @on-created="handleCreated"
       @on-change="handleChange"
     />
+  </div>
+  <div v-else class="content-editor-wrapper" :style="{ height: height }">
+    <div class="content-editor-placeholder">
+      {{ placeholder }}
+    </div>
   </div>
 </template>
 
@@ -157,5 +174,14 @@
       overflow-y: auto;
       overflow-x: hidden;
     }
+  }
+
+  .content-editor-placeholder {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 14px;
   }
 </style>

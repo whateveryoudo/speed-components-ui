@@ -6,7 +6,7 @@
  * @Description:
  */
 import type { App, Component } from "vue";
-import { computed, ref, defineComponent } from "vue";
+import { computed, ref } from "vue";
 import FullModal from "./FullModal/index.vue";
 import CollapseHz from "./CollapseHz/index.vue";
 import FilePreviewItem from "./FilePreviewItem/index.vue";
