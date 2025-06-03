@@ -9,10 +9,13 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const VITE_APP_BASE_URL = process.env.VITE_APP_BASE_URL || '/api';
 const VITE_APP_BASE_PROXY_URL = process.env.VITE_APP_BASE_PROXY_URL || 'http://localhost:4000';
 
+// 根据环境判断 base 路径
+const base = process.env.NODE_ENV === 'production' ? '/speed-components-ui/' : '/';
+
 export default defineConfig({
   title: 'Speed Components',
   description: '基于 Ant Design Vue 的组件库',
-  base: '/speed-components-ui/',
+  base,
   themeConfig: {
     nav: [
       { text: '指南', link: '/guide/' },
