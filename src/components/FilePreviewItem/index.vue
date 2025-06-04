@@ -11,19 +11,19 @@
     <div class="info-wrapper">
       <div
         class="overflow-hidden-one title"
-        :title="fileName"
+        :title="file.fileName"
         @click.stop="clickTitlePreview"
       >
-        {{ fileName }}
+        {{ file.fileName }}
       </div>
       <div
         v-if="
           mode !== 'list-simple' &&
-          (fileSize !== undefined || fileSize !== null)
+          (file.fileSize !== undefined || file.fileSize !== null)
         "
         class="overflow-hidden-one text-gray text-[12px]"
       >
-        {{ formatFileSize(Number(fileSize)) }}
+        {{ formatFileSize(Number(file.fileSize)) }}
       </div>
       <a-space class="right-actions" :size="5">
         <template v-if="mode !== 'list-simple'">
@@ -39,7 +39,7 @@
           <a
             v-if="canIdel"
             class="text-error"
-            @click.stop="emits('on-delete', id)"
+            @click.stop="emits('on-delete', file)"
           >
             删除
           </a>
@@ -48,13 +48,13 @@
           v-else
           title="删除"
           type="icon-close"
-          @click.stop="emits('on-delete', id)"
+          @click.stop="emits('on-delete', file)"
         />
       </a-space>
     </div>
   </div>
 
-  <a-tooltip v-else :title="fileName" placement="top">
+  <a-tooltip v-else :title="file.fileName" placement="top">
     <div class="file-preview-item-wrapper">
       <img ref="imgRef" :src="showPlacePic()" alt="" />
       <span class="actions-wrapper">
@@ -75,7 +75,7 @@
         :size="18"
         type="icon-close-circle-fill"
         class="close-icon"
-        @click.stop="emits('on-delete', id)"
+        @click.stop="emits('on-delete', file)"
       />
     </div>
   </a-tooltip>
@@ -85,8 +85,6 @@
 import { ref, computed, inject, type Ref } from "vue";
 import { formatFileSize } from "@/utils";
 import "viewerjs/dist/viewer.css";
-import { handleExceptDown } from "@/hooks/useDownload";
-import Viewer from "viewerjs";
 import excelImg from "@/assets/image/excel.png";
 import fileImg from "@/assets/image/file.png";
 import musicImg from "@/assets/image/music.png";
@@ -95,43 +93,44 @@ import videoImg from "@/assets/image/video.png";
 import wordImg from "@/assets/image/word.png";
 import zipImg from "@/assets/image/zip.png";
 import { GlobalConfig } from "..";
-
+import { useCustomUpload } from "@/hooks";
 export type IFileItem = {
   id: string;
   previewUrl?: string;
   fileName: string;
   fileType: string;
   fileSize?: string | number;
+  status?: "done" | "error" | "uploading";
 };
 const imgRef = ref();
-const viewerInstance = ref();
 const props = withDefaults(
   defineProps<{
     mode?: "card" | "list" | "list-simple";
-    id: IFileItem["id"];
     fileDownload?: (fileId: string) => Promise<BlobPart>; // 下载请求，返回流结果
     getPreviewUrl?: (fileId: string) => string; // 图片预览路径
     onPreview?: (fileId: string) => void; // 预览函数
     canIdel?: boolean;
     className?: string;
-    previewUrl?: IFileItem["previewUrl"];
-    fileType: IFileItem["fileType"];
-    fileSize: IFileItem["fileSize"];
-    fileName: IFileItem["fileName"];
+    file: IFileItem;
   }>(),
   {
     mode: "card",
     canIdel: true, // 是否允许删除附件
   }
 );
-const globalConfig = inject("speed-components-config", ref({})) as Ref<GlobalConfig>;
+// 这里仅使用hook的一些公共方法
+const { handlePreviewFile, handleDownloadFile } = useCustomUpload();
+const globalConfig = inject(
+  "speed-components-config",
+  ref({})
+) as Ref<GlobalConfig>;
 const emits = defineEmits(["on-delete"]);
 const showDownLoad = computed(() => {
-  if (!props.fileName) {
+  if (!props.file.fileName) {
     throw new Error("缺少必要属性fileName");
   }
   const rge = /\.\w+$/;
-  const fileSuffix = props.fileName.match(rge)?.[0] ?? "";
+  const fileSuffix = props.file.fileName.match(rge)?.[0] ?? "";
   if (fileSuffix) {
     return ![".png", ".jpg", ".gif", ".jpeg"].includes(fileSuffix);
   }
@@ -152,23 +151,26 @@ defineOptions({
 });
 // 占位图显示
 const showPlacePic = () => {
-  if (!props.fileName) {
+  const getPreviewUrl =
+    globalConfig?.value?.apis?.getPreviewUrl ?? props.getPreviewUrl;
+
+  if (!props.file.fileName) {
     throw new Error("缺少必要属性fileName");
   }
   const rge = /\.\w+$/;
   let target: any = fileImg;
-  const fileSuffix = props.fileName.match(rge)?.[0] ?? "";
+  const fileSuffix = props.file.fileName.match(rge)?.[0] ?? "";
   if (fileSuffix) {
     // 图片走插件预览(如何禁止img点击触发？？)
     if ([".png", ".jpg", ".gif", ".jpeg"].includes(fileSuffix)) {
-      if (!props.getPreviewUrl || typeof props.getPreviewUrl !== "function") {
+      if (!getPreviewUrl || typeof getPreviewUrl !== "function") {
         console.warn("缺少获取预览路径方法，将采用 previewUrl预览");
-        if (!props.previewUrl) {
+        if (!props.file.previewUrl) {
           throw new Error("缺少预览路径");
         }
-        return props.previewUrl || "";
+        return props.file.previewUrl || "";
       }
-      return props.getPreviewUrl(props.id);
+      return getPreviewUrl(props.file.id);
     } else {
       Object.keys(placeholderPicMap).forEach((key: string) => {
         if (key.includes(fileSuffix)) {
@@ -180,39 +182,8 @@ const showPlacePic = () => {
   return target;
 };
 // 附件预览
-const handlePreview = async () => {
-  if (!props.fileName) {
-    throw new Error("缺少必要属性fileName");
-  }
-  const rge = /\.\w+$/;
-  const fileSuffix = props.fileName.match(rge)?.[0] ?? "";
-  if (fileSuffix) {
-    // 图片走插件预览(如何禁止img点击触发？？)
-    if ([".png", ".jpg", ".gif", ".jpeg"].includes(fileSuffix)) {
-      if (viewerInstance.value) {
-        viewerInstance.value.view(0);
-      } else {
-        viewerInstance.value = new Viewer(imgRef.value, {
-          className: props.className,
-          // 内联展示
-          inline: false,
-        });
-        viewerInstance.value.view(0);
-      }
-    } else {
-      if (props.onPreview || typeof props.onPreview === "function") {
-        props.onPreview(props.id);
-      } else {
-        window.open(props.previewUrl);
-      }
-    }
-  } else {
-    if (props.onPreview || typeof props.onPreview === "function") {
-      props.onPreview(props.id);
-    } else {
-      window.open(props.previewUrl);
-    }
-  }
+const handlePreview = () => {
+  handlePreviewFile(props.file);
 };
 const clickTitlePreview = () => {
   if (props.mode === "list-simple") {
@@ -220,13 +191,8 @@ const clickTitlePreview = () => {
   }
 };
 // 附件下载
-const handleDownLoad = async () => {
-  const fileDownload = globalConfig?.value?.apis?.fileDownload ?? props.fileDownload;
-  if (!fileDownload || typeof fileDownload !== "function") {
-    throw new Error("文件下载方法缺失或传入的fileDownload不正确");
-  }
-  const res = (await fileDownload(props.id)) as any;
-  handleExceptDown(res, props.fileName, props.className);
+const handleDownLoad = () => {
+  handleDownloadFile(props.file);
 };
 </script>
 

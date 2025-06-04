@@ -22,6 +22,7 @@ import QuestionTip from "./QuestionTip/index.vue";
 import ApiSelect from "./ApiSelect/index.vue";
 import ToggleInput from "./ToggleInput/index.vue";
 import ContentEditor from "./ContentEditor/index.vue";
+import CustomUpload from './CustomUpload/index.vue'
 import { useAntdCssVars } from "../hooks";
 import { vFocus, vCopy, vView, vSelect, vLinkTransform } from "../directives";
 import type { RequestResponse } from "..";
@@ -42,6 +43,7 @@ const components: Component[] = [
   ToggleInput,
   ContentEditor,
   QuestionTip,
+  CustomUpload,
 ];
 
 // AJAX 方法类型
@@ -100,7 +102,6 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
       app.component(component.name as string, component as any);
     });
   }
-
   // 注入响应式配置
   app.provide("speed-components-config", currentConfig);
 
@@ -134,6 +135,7 @@ export { default as ToggleInput } from "./ToggleInput/index.vue";
 export { default as ContentEditor } from "./ContentEditor/index.vue";
 export { default as TextMore } from "./TextMore/index.vue";
 export { default as QuestionTip } from "./QuestionTip/index.vue";
+export { default as CustomUpload } from './CustomUpload/index.vue'
 
 export default {
   install,

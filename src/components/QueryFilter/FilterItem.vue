@@ -234,7 +234,7 @@ const placeholder = computed(() => {
 const commonStyle = computed(() => {
   return {
     width:
-      props.mode === "complex"
+      ["complex", "default"].includes(props.mode ?? "")
         ? "100%"
         : props.item?.props?.itemWidth
           ? props.item.props.itemWidth + "px"

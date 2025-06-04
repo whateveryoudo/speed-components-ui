@@ -48,7 +48,6 @@ request.interceptors.response.use(
       config: { responseType },
       headers,
     } = response;
-    debugger;
     // 返回全量res
     if (response?.config?.headers?.fullRes) {
       return response;
@@ -68,7 +67,6 @@ request.interceptors.response.use(
     }
   },
   (error: AxiosError) => {
-    debugger;
     console.log(error);
     if ((error.config as any).notShowErrorMessage) return;
     if (error.response) {

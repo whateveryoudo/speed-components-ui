@@ -12,7 +12,7 @@ const code = `<template>
       :getPreviewUrl="getPreviewUrl"
       :onPreview="onPreview"
       @on-delete="handleDelFile"
-      v-bind="fItem"
+      :file="fItem"
     />
   </div>
   <a-flex vertical class="mt-2">
@@ -58,13 +58,13 @@ files.value = [
     fileSize: 1024,
   },
 ];
-// 模拟预览地址拼接（需启动后端服务）
-const getPreviewUrl = (fieldId: string) => {
-  return "//localhost:4000/preview/" + fieldId + "?token=" + token.value;
+// 模拟预览地址拼接(如果你在全局初始化配置了地址，这里就不用再配置了)
+const getPreviewUrl = (fileId: string) => {
+  return "//localhost:4000/attachment/preview/" + fileId + "?token=" + token.value;
 };
 // TODO: 文件类型预览需自行实现
-const onPreview = (fieldId: string) => {
-  console.log(fieldId);
+const onPreview = (fileId: string) => {
+  console.log(fileId);
   message.warning("文件类型预览需自行实现");
 };
 <\/script>
@@ -117,13 +117,13 @@ files.value = [
     fileSize: 1024,
   },
 ];
-// 模拟预览地址拼接
-const getPreviewUrl = (fieldId: string) => {
-  return "//localhost:4000/attachment/preview/" + fieldId + "?token=" + token.value;
+// 模拟预览地址拼接(如果你在全局初始化配置了地址，这里就不用再配置了)
+const getPreviewUrl = (fileId: string) => {
+  return "//localhost:4000/attachment/preview/" + fileId + "?token=" + token.value;
 };
 // TODO: 文件类型预览需自行实现
-const onPreview = (fieldId: string) => {
-  console.log(fieldId);
+const onPreview = (fileId: string) => {
+  console.log(fileId);
   message.warning("文件类型预览需自行实现");
 };
 </script>
@@ -139,7 +139,7 @@ const onPreview = (fieldId: string) => {
         :onPreview="onPreview"
         :mode="mode"
         @on-delete="handleDelFile"
-        v-bind="fItem"
+        :file="fItem"
       />
     </div>
     <a-flex vertical class="mt-2" :gap="10">

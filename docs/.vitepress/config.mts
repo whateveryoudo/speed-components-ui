@@ -59,6 +59,7 @@ export default defineConfig({
         {
           text: '表单组件',
           items: [
+            { text: 'CustomUpload 自定义上传控件', link: '/components/custom-upload/index' },
             { text: 'RangeNum 范围数字', link: '/components/range-num/index' },
             { text: 'TagGroupSelect 标签组选择', link: '/components/tag-group-select/index' },
             { text: 'QueryFilter 查询过滤器', link: '/components/query-filter/index' },

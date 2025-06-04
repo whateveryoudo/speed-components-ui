@@ -60,16 +60,18 @@
   <!-- 简洁版 -->
   <div v-else-if="mode === 'simple'">
     <a-flex justify="flex-end" :style="{ gap: `0 ${gutter}px` }" wrap="wrap">
-      <filter-item
-        :item="item"
-        v-for="item in innerFields"
-        :key="item.fieldKey"
-        mode="simple"
-        :model-value="getFieldValue(item)"
-        :placeholder-with-label="placeholderWithLabel"
-        @update:model-value="(val) => handleItemChange(item, val)"
-        @enter="handleEnterSearch"
-      />
+      <template v-for="(item, index) in innerFields" :key="item.fieldKey">
+        <filter-item
+          v-if="index < defaultDisplayCount || isExpand"
+          :item="item"
+          mode="simple"
+          :model-value="getFieldValue(item)"
+          :placeholder-with-label="placeholderWithLabel"
+          @update:model-value="(val) => handleItemChange(item, val)"
+          @enter="handleEnterSearch"
+        />
+      </template>
+
       <a-space v-if="showOpt">
         <a-button type="text" @click="handleReset" title="重置">
           <template #icon><RedoOutlined /></template>

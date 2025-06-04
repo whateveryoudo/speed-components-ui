@@ -8,3 +8,15 @@ export const fileDownload = (fileId: string) => {
     },
   });
 };
+
+export const fileUpload = (formData: FormData) => {
+  return request.post(`${attachmentPrefix}/upload`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  });
+};
+
+export const fileDel = (fileId: string) => {
+  return request.delete(`${attachmentPrefix}/delete/${fileId}`);
+};

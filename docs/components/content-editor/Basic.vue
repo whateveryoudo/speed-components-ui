@@ -2,36 +2,9 @@
   <Demo :code="code">
     <div class="demo-wrapper">
       <div class="demo-item">
-        <h3>基础用法</h3>
-        <s-content-editor
-          v-model:value="content1"
-          placeholder="请输入内容..."
-        />
-      </div>
-
-      <div class="demo-item">
-        <h3>自定义高度</h3>
-        <s-content-editor
-          v-model:value="content2"
-          height="200px"
-          placeholder="请输入内容..."
-        />
-      </div>
-
-      <div class="demo-item">
         <h3>只读模式</h3>
         <s-content-editor
           v-model:value="content3"
-          read-only
-          placeholder="请输入内容..."
-        />
-      </div>
-
-      <div class="demo-item">
-        <h3>完整工具栏</h3>
-        <s-content-editor
-          v-model:value="content4"
-          mode="default"
           placeholder="请输入内容..."
         />
       </div>

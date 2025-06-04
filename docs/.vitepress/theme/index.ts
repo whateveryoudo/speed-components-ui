@@ -8,7 +8,7 @@ import '@/assets/style/base.less'
 import 'ant-design-vue/dist/reset.css';
 import 'uno.css';
 import './style.css';
-import { fileDownload } from '../api/attachement';
+import { fileDownload, fileUpload, fileDel } from '../api/attachement';
 import { ConfigProvider } from 'ant-design-vue';
 // import zhCN from 'ant-design-vue/es/locale/zh_CN';
 
@@ -21,6 +21,12 @@ export default {
       baseURL: (import.meta as any).env.VITE_APP_BASE_URL,
       apis: {
         fileDownload: fileDownload,
+        fileUpload: fileUpload,
+        fileDel: fileDel,
+        getPreviewUrl: (fileId: string) => {
+          // 实际情况替换为实际地址
+          return "//localhost:4000/attachment/preview/" + fileId + "?token=speed-test-token";
+        }
       },
     });
     // 注册所有图标组件

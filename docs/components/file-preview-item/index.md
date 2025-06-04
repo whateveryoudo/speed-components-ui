@@ -10,31 +10,41 @@
 <script setup>
     import Basic from './Basic.vue'
 </script>
+
 ## 基础用法
 
 列表显示（你可以自定义组的样式，注：此处的删除未请求接口）
 
 <Basic/>
 
-
 ## Props
 
-| 参数         | 说明                 | 类型                                   | 默认值   |
-| ------------ | -------------------- | -------------------------------------- | -------- |
-| id           | 文件唯一标识         | string                                 | -        |
-| fileName     | 文件名               | string                                 | -        |
-| fileType     | 文件类型             | string                                 | -        |
-| fileSize     | 文件大小             | string                                 | -        |
-| previewUrl   | 文件预览地址         | string                                 | -        |
-| mode         | 展示模式             | 'card' \| 'list' \| 'list-simple'      | 'card'   |
-| canIdel      | 是否允许删除         | boolean                                | true     |
-| className    | 自定义类名           | string                                 | -        |
+| 参数       | 说明         | 类型                              | 默认值 |
+| ---------- | ------------ | --------------------------------- | ------ |
+| file       | 文件         | `'IFileItem'`                         | -      |
+| fileType   | 文件类型     | string                            | -      |
+| fileSize   | 文件大小     | string                            | -      |
+| previewUrl | 文件预览地址 | string                            | -      |
+| mode       | 展示模式     | `'card'` \| `'list'` \| `'list-simple'` | 'card' |
+| canIdel    | 是否允许删除 | boolean                           | true   |
+| className  | 自定义类名   | string                            | -      |
+
+## IFileItem
+
+| 参数       | 说明         | 类型   | 默认值 |
+| ---------- | ------------ | ------ | ------ |
+| id         | 文件唯一标识 | string | -      |
+| fileName   | 文件名       | string | -      |
+| fileType   | 文件类型     | string | -      |
+| fileSize   | 文件大小     | `'string'` \| `'number'` | -      |
+| status   | 状态     | `'uploading'` \| `'done'` \| `'error'` | -      |
+| previewUrl | 文件预览地址 | string | -      |
 
 ## Events
 
-| 事件名      | 说明           | 回调参数         |
-| ----------- | -------------- | ---------------- |
-| on-delete   | 删除文件时触发 | (id: string)     |
+| 事件名    | 说明           | 回调参数     |
+| --------- | -------------- | ------------ |
+| on-delete | 删除文件时触发 | (id: string) |
 
 ## Slots
 

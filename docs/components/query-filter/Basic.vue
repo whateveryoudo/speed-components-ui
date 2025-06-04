@@ -69,8 +69,8 @@ const fields = computed<IFieldType[]>(() => {
             key: "name",
           },
           // 支持自行处理结构
-          afterRes: (res: any) => {
-            return res.data.map((item: any) => ({
+          afterRes: (res: any[]) => {
+            return res.map((item: any) => ({
               label: item.name,
               value: item.id,
             }));
@@ -237,8 +237,8 @@ const fields = computed<IFieldType[]>(() => {
             key: "name",
           },
           // 支持自行处理结构
-          afterRes: (res: any) => {
-            return res.data.map((item: any) => ({
+          afterRes: (res: any[]) => {
+            return res.map((item: any) => ({
               label: item.name,
               value: item.id,
             }));
