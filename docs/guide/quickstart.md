@@ -22,10 +22,28 @@ yarn add speed-components
 
 ::: warning 初始化全局配置（app.use的第二个参数）
 **iconfontUrl** - iconfont在线地址，实际使用替换为自己的;没有外网本地如何加载?<br>
+**transformRequestRes** - 通用请求转换方法（此函数会影响调用请求的所有组件，请主要修改外层的通用结构`'ResponseType'`）
 **registerGlobal** - 是否注册为全局组件，默认为true(如果按需，需设置为false)<br>
-**apis** - 请求方法配置，部分组件会携带一些请求
+**apis** - 请求方法配置，部分组件会携带一些请求（常为api中导出的请求方法，可参照[speed-apis](https://github.com/whateveryoudo/speed-apis)）
+ - fileUpload 上传附件通用方法
+ - fileDel 删除附件通用方法
+ - fileDownload 下载附件通用方法
 :::
- 
+
+### ResponseType
+
+``` ts
+// 统一配置请求返回数据类型
+export type ResponseType<T = any> = {
+  errCode: number;
+  errMessage: string;
+  success: boolean;
+  data: T;
+  [key: string]: any;
+};
+```
+
+
 ```ts
 import { createApp } from "vue";
 import SpeedComponents from "speed-components/components";
@@ -85,7 +103,6 @@ export default defineConfig({
 
 ## 注意事项
 
-1. 确保项目中已安装 Vue 3 和 Ant Design Vue 4
-2. 按需引入时，不需要手动引入样式
-3. 完整引入时，需要手动引入样式文件
-4. 建议使用 TypeScript 以获得更好的开发体验
+1. 按需引入时，不需要手动引入样式
+2. 完整引入时，需要手动引入样式文件
+3. 建议使用 TypeScript 以获得更好的开发体验

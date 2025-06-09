@@ -50,7 +50,7 @@ export const useTable = (
   const selectAllLoading = ref(false); // 全选请求loading
   const dataSource = ref<any[]>([]); // 选择请求返回数据
   const speedComponentsConfig = inject<RequestResponse<any>>('speed-components-config');
-  const transformRequsRes = speedComponentsConfig?.value?.transformRequsRes;
+  const transformRequestRes = speedComponentsConfig?.value?.transformRequestRes;
   const useLoadConfig = speedComponentsConfig?.value?.useLoadConfig;
   // 整合默认配置和传入配置
   const options = computed(() => {
@@ -210,11 +210,11 @@ export const useTable = (
             }
           : baseParams
       );
-      if (transformRequsRes) {
-        if (typeof transformRequsRes !== 'function') {
-          console.error('transformRequsRes应为一个函数');
+      if (transformRequestRes) {
+        if (typeof transformRequestRes !== 'function') {
+          console.error('transformRequestRes应为一个函数');
         } else {
-          res = transformRequsRes(res);
+          res = transformRequestRes(res);
         }
       }
       if (res && res?.success) {
@@ -328,7 +328,7 @@ export const useLoadMore = (
 ) => {
   const ajaxFnVal = unref(ajaxFn);
   const speedComponentsConfig = inject<RequestResponse<any>>('speed-components-config');
-  const transformRequsRes = speedComponentsConfig?.value?.transformRequsRes;
+  const transformRequestRes = speedComponentsConfig?.value?.transformRequestRes;
   const useLoadConfig = speedComponentsConfig?.value?.useLoadConfig;
   // 整合默认配置和传入配置
   const options = computed(() => {
@@ -351,11 +351,11 @@ export const useLoadMore = (
         [options.value.pageSizekey]: pageParams.size,
         ...options.value.extraParams,
       });
-      if (transformRequsRes) {
-        if (typeof transformRequsRes !== 'function') {
-          console.error('transformRequsRes应为一个函数');
+      if (transformRequestRes) {
+        if (typeof transformRequestRes !== 'function') {
+          console.error('transformRequestRes应为一个函数');
         } else {
-          res = transformRequsRes(res);
+          res = transformRequestRes(res);
         }
       }
       if (res && res.success) {

@@ -74,7 +74,7 @@ export default defineConfig({
           items: [
             { text: 'useCustomUpload 自定义上传', link: '/components/useCustomUpload/index' },
             { text: 'useTable 表格通用 Hook', link: '/components/useTable/index' },
-            // { text: 'useLoadMore 加载更多 Hook', link: '/components/useLoadMore/index' },
+            { text: 'useLoadMore 加载更多 Hook', link: '/components/load-more/index' },
             { text: 'useAntdCssVars 使用antd css变量', link: '/components/useAntdCssVars/index' },
           ],
         },

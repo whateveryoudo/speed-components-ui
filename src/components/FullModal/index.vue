@@ -82,7 +82,7 @@ const transformX = ref(0);
 const transformY = ref(0);
 const preTransformX = ref(0);
 const preTransformY = ref(0);
-const modalTitleRef = ref<HTMLElement>(null);
+const modalTitleRef = ref<HTMLElement | null>(null);
 const { x, y, isDragging } = useDraggable(modalTitleRef, {
   disabled: !props.draggable
 });
@@ -97,7 +97,7 @@ watch([x, y], () => {
     startX.value = x.value;
     startY.value = y.value;
     const bodyRect = document.body.getBoundingClientRect();
-    const titleRect = modalTitleRef.value.getBoundingClientRect();
+    const titleRect = modalTitleRef.value?.getBoundingClientRect() || { width: 0, height: 0 };
     dragRect.value.right = bodyRect.width - titleRect.width;
     dragRect.value.bottom = bodyRect.height - titleRect.height;
     preTransformX.value = transformX.value;

@@ -27,6 +27,7 @@ export default defineConfig({
       entry: {
         components: resolve(__dirname, 'src/components/index.ts'),
         hooks: resolve(__dirname, 'src/hooks/index.ts'),
+        resolver: resolve(__dirname, 'src/resolver.ts'),
       },
       name: 'SpeedComponents',
       fileName: (format, entryName) => `${entryName}.${format}.js`,

@@ -1,23 +1,25 @@
-import { h } from 'vue';
+import { h, type App } from 'vue';
 import DefaultTheme from 'vitepress/theme';
 import Antd from 'ant-design-vue';
 import * as Icons from '@ant-design/icons-vue';
 import Demo from './components/Demo.vue';
-import SpeedComs from '@/components'
+import SpeedComs from 'speed-components-ui/components'
 import '@/assets/style/base.less'
 import 'ant-design-vue/dist/reset.css';
 import 'uno.css';
 import './style.css';
+import 'speed-components-ui/dist/style.css';
 import { fileDownload, fileUpload, fileDel } from '../api/attachement';
 import { ConfigProvider } from 'ant-design-vue';
 // import zhCN from 'ant-design-vue/es/locale/zh_CN';
 
 export default {
   ...DefaultTheme,
-  enhanceApp({ app }) {
+  enhanceApp({ app }: { app: App}) {
     // 注册所有 Ant Design Vue 组件
     app.use(Antd);
     app.use(SpeedComs, {
+      iconfontUrl: "//at.alicdn.com/t/c/font_3871804_pab634p3if.js", // 示例地址
       baseURL: (import.meta as any).env.VITE_APP_BASE_URL,
       apis: {
         fileDownload: fileDownload,

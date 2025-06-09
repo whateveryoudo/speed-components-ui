@@ -1,6 +1,6 @@
 {
   "name": "speed-components-ui",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "基于 Ant Design Vue 的组件库",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
@@ -92,10 +92,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitee.com/ykxstore/speed-components.git"
+    "url": "git+https://github.com/whateveryoudo/speed-components-ui.git"
   },
   "bugs": {
-    "url": "https://gitee.com/ykxstore/speed-components/issues"
+    "url": "https://github.com/whateveryoudo/speed-components-ui/issues"
   },
-  "homepage": "https://gitee.com/ykxstore/speed-components#readme"
+  "homepage": "https://github.com/whateveryoudo/speed-components-ui#readme"
 }

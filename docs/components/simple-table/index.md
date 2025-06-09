@@ -1,6 +1,6 @@
 # SimpleTable 简单表格
 
-简易的table组件，满足大部分需求，如需要高度定制的table，请使用 `useLoad` 的 `useTable`。
+简易的table组件，满足大部分需求，如需要高度定制的table，请使用 `useTable`。
 ::: tip 提示
 - 示例中存在边框样式问题(为文档框架内部影响)，实际使用无此问题。<br/>
 - 请求逻辑依赖了公共hook的 [useTable](/components/useTable/index) 的useTable。
@@ -23,7 +23,7 @@ import WithQuery from './WithQuery.vue'
 
 <WithQuery/>
 
-### 更自定义场景请参照[useLoad]中的示例
+### 更自定义场景请参照[useTable](/components/useTable/index)中的示例
 
 ## API
 
