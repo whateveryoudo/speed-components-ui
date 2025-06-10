@@ -32,28 +32,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-      
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: false
-      
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          cache: 'npm'
       
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
       
       - name: Print speed-components-ui artifacts
         run: |
@@ -63,7 +45,7 @@ jobs:
           cat node_modules/speed-components-ui/package.json | grep -A 20 '"exports"'
       
       - name: Build with VitePress
-        run: pnpm docs:build
+        run: npm run docs:build
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
