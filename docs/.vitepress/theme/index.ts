@@ -12,7 +12,7 @@ import { ConfigProvider } from 'ant-design-vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
 
 // 根据环境动态导入
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = import.meta.env.NODE_ENV === 'development';
 
 export default {
   ...DefaultTheme,
@@ -21,7 +21,7 @@ export default {
     console.log(isDev);
     const SpeedComs = isDev 
       ? (await import('../../../src/components')).default
-      : (await import('speed-components-ui/components')).default;
+      : (await import('speed-components-ui/dist/components.es.js')).default;
     // 动态导入样式
     if (!isDev) {
       import('speed-components-ui/dist/style.css');
