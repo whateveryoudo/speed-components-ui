@@ -5,10 +5,8 @@ import * as Icons from '@ant-design/icons-vue';
 import Demo from './components/Demo.vue';
 import '@/assets/style/base.less'
 import 'ant-design-vue/dist/reset.css';
-import SpeedComs from 'speed-components-ui/components';
 import 'uno.css';
 import './style.css';
-import 'speed-components-ui/dist/style.css';
 import { fileDownload, fileUploadSingle, fileUploadMulti, fileDel } from '../api/attachement';
 import { ConfigProvider } from 'ant-design-vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
@@ -20,14 +18,13 @@ export default {
   ...DefaultTheme,
   async enhanceApp({ app }: { app: App}) {
     // 动态导入组件
-    console.log(isDev);
-    // const SpeedComs = isDev 
-    //   ? (await import('../../../src/components')).default
-    //   : (await import('speed-components-ui/components')).default;
-    // // 动态导入样式
-    // if (!isDev) {
-    //   import('speed-components-ui/dist/style.css');
-    // }
+    const SpeedComs = isDev 
+      ? (await import('../../../src/components')).default
+      : (await import('speed-components-ui/components')).default;
+    // 动态导入样式
+    if (!isDev) {
+      import('speed-components-ui/dist/style.css');
+    }
 
     // 注册所有 Ant Design Vue 组件
     app.use(Antd);

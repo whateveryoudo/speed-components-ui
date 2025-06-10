@@ -124,17 +124,14 @@ export default defineConfig({
     },
     ssr: {
       noExternal: [
-        'speed-components',
+        'speed-components-ui',
         'ant-design-vue',
         '@ant-design/icons-vue'
-      ],
-      external: [
-        'speed-components/hooks/useAntdCssVars'
       ]
     },
     optimizeDeps: {
       include: [
-        'speed-components',
+        'speed-components-ui',
         'ant-design-vue',
         '@ant-design/icons-vue'
       ]
