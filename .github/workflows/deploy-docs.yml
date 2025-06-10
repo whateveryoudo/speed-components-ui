@@ -55,6 +55,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       
+      - name: Print speed-components-ui artifacts
+        run: |
+          echo "==== speed-components-ui dist 目录结构 ===="
+          ls -l node_modules/speed-components-ui/dist
+          echo "==== speed-components-ui package.json exports 字段 ===="
+          cat node_modules/speed-components-ui/package.json | grep -A 20 '"exports"'
+      
       - name: Build with VitePress
         run: pnpm docs:build
       

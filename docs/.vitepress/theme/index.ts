@@ -21,7 +21,7 @@ export default {
     console.log(isDev);
     const SpeedComs = isDev 
       ? (await import('../../../src/components')).default
-      : (await import('speed-components-ui/dist/components.es.js')).default;
+      : (await import('speed-components-ui/components')).default;
     // 动态导入样式
     if (!isDev) {
       import('speed-components-ui/dist/style.css');
