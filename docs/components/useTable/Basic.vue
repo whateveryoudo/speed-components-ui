@@ -99,7 +99,7 @@ const code = ref(`<template>
     />
 </template>
 <script setup lang="ts">
-import { useTable } from "@/hooks/useLoad";
+import { useTable } from "speed-components-ui/hooks";
 import { computed, ref } from "vue";
 
 // 模拟请求数据

@@ -13,15 +13,16 @@ const props = withDefaults(
     acceptTypes?: string[];
     maxCount?: number;
     multiple?: boolean;
-    disalbed?: boolean;
-    type: "picture" | "file"; // 上传类型
+    disabled?: boolean;
+    type?: "picture" | "file"; // 上传类型
     name?: string;
     data?: object | ((file: IFileItem) => object);
   }>(),
   {
     value: [],
     maxCount: 9,
-    name: "files[]",
+    type: 'file',
+    name: "file",
     multiple: false,
     disabled: false,
     listType: "text",
@@ -62,10 +63,10 @@ const speedComsConfig = inject(
 ) as Ref<any>;
 // 内置规则， 图片追加内置， 文件则不限制规则
 const invokeAccept = computed(() => {
-  return props.type === "picture" ? [".jpg", ".png", ".jpeg", '.svg'] : [""];
+  return props.type === "picture" ? [".jpg", ".png", ".jpeg", '.svg'] : [];
 });
 const realAcceptTypes = computed(() => {
-  return props.acceptTypes || invokeAccept.value;
+  return props.acceptTypes.length > 0 ? props.acceptTypes : invokeAccept.value;
 });
 // 构建accept
 const accept = computed(() => {
@@ -82,6 +83,7 @@ const previewFiles = computed(() => {
     return {
       ...item,
       uid: item.id,
+      name: item.fileName,
       url: (getPreviewUrl ? getPreviewUrl(item.id) : item.previewUrl) || "",
     };
   });
@@ -112,10 +114,11 @@ watch(
       v-bind="props"
       :file-list="previewFiles"
       :accept="accept"
-      :disabled="disalbed"
+      :disabled="disabled"
       :list-type="type === 'picture' ? 'picture-card' : 'text'"
       :custom-request="handleCustomRequest"
       :max-count="maxCount"
+      :multiple="multiple"
       @preview="handlePreviewFile"
       @remove="handleDelFile"
       @download="handleDownloadFile"

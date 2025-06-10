@@ -40,8 +40,8 @@ import WithQuery from './WithQuery.vue'
 | bordered | 是否显示边框 | `boolean` | `false` |
 | size | 表格大小 | `'small'` \| `'middle'` \| `'large'` | `'middle'` |
 | beforeFetch | 数据获取前的回调 | `() => void` | - |
-| afterFetch | 请求后的参数转换（用于处理不符合标准参数的场景） | `(data: any) => any` | - |
-| fetchCallback | 数据获取后的回调 | `(data: any) => void` | - |
+| afterFetch | 数据获取后的回调 | `(data: any) => void` | - |
+| transformAfterFetch | 请求后的参数转换（用于处理不符合标准参数的场景,先于afterFetch执行） | `(data: any) => any` | - |
 
 ### Slots
 

@@ -2,9 +2,8 @@
   <Demo :code="code">
     <div class="demo-wrapper">
       <div class="demo-item">
-        <h3>只读模式</h3>
         <s-content-editor
-          v-model:value="content3"
+          v-model:value="content1"
           placeholder="请输入内容..."
         />
       </div>
@@ -15,10 +14,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const content1 = ref('<p>基础用法示例</p>')
-const content2 = ref('<p>自定义高度示例</p>')
-const content3 = ref('<p>只读模式示例</p>')
-const content4 = ref('<p>完整工具栏示例</p>')
+const content1 = ref('<p>富文本内容</p>')
 
 const code = `<template>
   <!-- 基础用法 -->
@@ -62,19 +58,18 @@ const content4 = ref('<p>完整工具栏示例</p>')
 <style scoped lang="less">
 .demo-wrapper {
   width: 100%;
-  padding: 24px;
   background: #fff;
   border-radius: 4px;
 
   .demo-item {
-    margin-bottom: 24px;
 
     &:last-child {
       margin-bottom: 0;
     }
 
     h3 {
-      margin-bottom: 16px;
+      margin-top: 0;
+      margin-bottom: 10px;
       font-size: 14px;
       color: #666;
     }

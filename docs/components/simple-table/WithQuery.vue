@@ -2,7 +2,7 @@
   <Demo :code="code">
     <h4 v-if="!withQueryFilter">
       内置查询<span class="text-[#999] ml-2 font-normal text-sm"
-        >此方式下，最外层无法获取到搜索字段</span
+        >此方式下，最外层无法获取到搜索字段，请打开f12查看参数输出</span
       >
     </h4>
     <h4 v-else>结合query-filter使用</h4>
@@ -118,6 +118,7 @@ const columns = [
 ];
 
 const fetchData = async (params: any) => {
+  console.log(params);
   // 模拟接口请求
   const { page = 1, size = 10 } = params;
   const list = Array.from({ length: size }, (_, index) => ({
@@ -141,7 +142,7 @@ const handleSearch = (values: any) => {
 const code = `<template>
   <h4 v-if="!withQueryFilter">
       内置查询<span class="text-[#999] ml-2 font-normal text-sm"
-        >此方式下，最外层无法获取到搜索字段</span
+        >此方式下，最外层无法获取到搜索字段，请打开f12查看参数输出</span
       >
     </h4>
     <h4 v-else>结合query-filter使用</h4>

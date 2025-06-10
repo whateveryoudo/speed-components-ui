@@ -35,6 +35,7 @@ const defaultOptions = {
   extraParams: {},
   needFullSelect: false,
   hasPagination: true,
+  hasSort: false,
   hasSelectedRows: [],
   sortFieldKey: 'sortField',
   sortOrderKey: 'sortOrder'
@@ -198,7 +199,7 @@ export const useTable = (
       const baseParams = {
         ...options.value.extraParams,
         ...tableHeaderFilters.value,
-        ...tableHeaderSorter.value,
+        ...(options.value.hasSort ? tableHeaderSorter.value : {}),
       };
       let res = {} as any;
       res = await ajaxFnVal(

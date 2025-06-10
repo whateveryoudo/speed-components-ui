@@ -18,9 +18,3 @@
 | keyMap | 快捷键文本 | string | - |
 
 ### antv的tooltip的[props](https://www.antdv.com/components/tooltip-cn#api)均支持使用
-
-### 插槽
-
-| 插槽名 | 说明 |
-| --- | --- |
-| default | 自定义内容 | 

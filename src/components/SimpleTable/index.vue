@@ -17,6 +17,8 @@ interface Props {
   columns: any[];
   /** 行唯一标识 */
   rowKey?: string;
+  /** 是否显示排序 */
+  hasSort?: boolean;
   /** 是否显示分页 */
   hasPagination?: boolean;
   /** 是否显示序号 */
@@ -27,10 +29,10 @@ interface Props {
   size?: "small" | "middle" | "large";
   /** 数据获取前的回调 */
   beforeFetch?: () => void;
-  /** 数据获取后的转换 */
-  afterFetch?: (data: any) => any;
   /** 数据获取后的回调 */
-  fetchCallback?: (data: any) => any;
+  afterFetch?: (data: any) => any;
+  /** 数据获取后的转换方法*/
+  transformAfterFetch?: (data: any) => any;
   /** 行选择配置 */
   rowSelection?: any;
   /** 选中的行条目 */
@@ -60,8 +62,10 @@ const tableOptions = computed(() => ({
   extraParams: { ...props.fetchParams, ...values.value },
   rowKey: props.rowKey,
   hasPagination: props.hasPagination,
+  hasSort: props.hasSort,
   beforeFetch: props.beforeFetch,
   afterFetch: props.afterFetch,
+  transformAfterFetch: props.transformAfterFetch,
   hasSelectedRows: props.hasSelectedRows,
   emit: emit,
 }));
@@ -76,7 +80,11 @@ const {
   onSelectChange,
   handleTableChange,
 } = useTable(props.fetchFunc, tableOptions);
-
+// 搜索
+const handleSearch = (params: any) => {
+  values.value = params;
+  getList(true);
+};
 // 计算最终的列配置
 const finalColumns = computed(() => {
   const columns = [...props.columns];
@@ -142,7 +150,7 @@ defineExpose({
       v-if="needQueryFilter"
       :fields="fields"
       :values="values"
-      @search="getList(true)"
+      @search="handleSearch"
     />
     <a-flex justify="end" v-if="$slots['optBar']">
       <slot name="optBar" />

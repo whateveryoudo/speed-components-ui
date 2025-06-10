@@ -15,7 +15,7 @@
 
 ## 复合示例
 
-一个包含，翻页，全选，排序，勾选，筛选的综合示例
+一个包含，翻页，全选，排序，勾选，筛选的综合示例(结合[QueryFilter](/components/query-filter/index))
 
 <Complex/>
 
@@ -40,7 +40,7 @@
 | afterFetch | 请求后回调函数 | `(res: any) => void` | - |
 | handleMultiRes | 处理多选结果(可用于过滤一些可勾选的rowKey) | `(res: any) => string[]` | - |
 | fullRowsAjax | 获取全量数据的请求函数 | `Function` | - |
-| emit | 事件发射器 | `Function` | - |
+| emit | 事件发射器(可用于封装对外更新的hasSelectedRows),内部会触发`emit("update:hasSelectedRows", state.hasSelectedRows);` | `Function` | - |
 | needFullSelect | 是否需要全选功能(配套fullRowsAjax传入) | `boolean` | `false` |
 | sortFieldKey | 排序字段key | `string` | `sortField`
 | sortOrderKey | 排序方式key | `string` | `sortOrder`
@@ -77,3 +77,9 @@
 | --- | --- | --- | --- |
 | isSearch | 是否为筛选请求（内部会重置页码为1） | `boolean` | true |
 | ListOption | needResetChecked(是否重置勾选，会清除所有已有勾选态)，backLoad（递归调用时使用，无需传入） | `{ needResetChecked:boolean; backLoad?:boolean }` | `{ needResetChecked:false, backLoad:false }` |
+
+
+
+### 注意事项
+
+1. 内部会做倒页处理，如：第三页删除到最后一条，会向前一页请求数据。

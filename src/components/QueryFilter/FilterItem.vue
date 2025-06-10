@@ -172,9 +172,9 @@
           :placeholder="placeholder"
           v-model:value="model"
           :fetchFunc="item.props?.fetchFunc"
-          :fetchOptions="item.props?.fetchOptions"
           :fieldNames="item.props?.fieldNames"
           :mode="item?.props?.mode"
+          v-bind="item.props?.fetchOptions"
           @update:value="handleSelectChange"
         />
       </template>

@@ -24,7 +24,6 @@
         <a-button type="text" class="px-2">
           <paper-clip-outlined />
         </a-button>
-
       </a-upload>
     </a-tooltip>
   </Demo>
@@ -86,9 +85,8 @@ const code = ref(`
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useCustomUpload } from "@/hooks/useCustomUpload";
 import { PaperClipOutlined } from "@ant-design/icons-vue";
-import type { IFileItem } from "@/hooks/useCustomUpload";
+import  { type IFileItem, useCustomUpload } from "speed-components-ui/hooks";
 // 定义上传选项
 const uploadOptions = ref({
   maxCount: 8, // 最大上传数量

@@ -6,7 +6,7 @@
         <s-api-select
           class="w-[300px]"
           v-model:value="value"
-          :fetch-func="fetchData"
+          :fetch-func="fetchData1"
           placeholder="请选择用户"
           allow-clear
           :search="{key: 'userName'}"
@@ -17,7 +17,7 @@
         <h3>多选模式</h3>
         <s-api-select
           v-model:value="multipleValue"
-          :fetch-func="fetchData"
+          :fetch-func="fetchData1"
           placeholder="请选择多个用户"
           mode="multiple"
           allow-clear
@@ -30,10 +30,9 @@
         <h3>自定义字段名：{label: 'username', value: 'userId'}</h3>
         <s-api-select
           v-model:value="customValue"
-          :fetch-func="fetchData"
+          :fetch-func="fetchData2"
           :field-names="{ label: 'username', value: 'userId' }"
           placeholder="请选择用户"
-          show-search
           class="w-[300px]"
           allow-clear
         />
@@ -55,8 +54,8 @@ const multipleValue = ref<string[]>([]);
 const customValue = ref<string>();
 
 // 模拟接口请求
-const fetchData = async (params: any) => {
-  const { searchVal = "" } = params;
+const fetchData1 = async (params: any) => {
+  const searchVal = params['userName'];
   // 模拟接口延迟
   await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -71,13 +70,31 @@ const fetchData = async (params: any) => {
   const filteredList = searchVal
     ? list.filter(
         (item) =>
-          item.name.includes(searchVal) || item.username.includes(searchVal)
+          item.name.includes(searchVal)
       )
     : list;
 
   return {
     success: true,
     data: filteredList
+  };
+};
+
+// 模拟接口请求
+const fetchData2 = async () => {
+  // 模拟接口延迟
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
+  const list = Array.from({ length: 10 }, (_, index) => ({
+    id: `${index + 1}`,
+    name: `用户${index + 1}`,
+    username: `user${index + 1}`,
+    userId: `U${index + 1}`,
+  }));
+
+  return {
+    success: true,
+    data: list
   };
 };
 
@@ -136,33 +153,49 @@ const multipleValue = ref<string[]>([])
 const customValue = ref<string>()
 
 // 模拟接口请求
-const fetchData = async (params: any) => {
-  const { searchVal = '' } = params
+const fetchData1 = async (params: any) => {
+  const searchVal = params['userName'];
   // 模拟接口延迟
-  await new Promise(resolve => setTimeout(resolve, 500))
-  
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
   const list = Array.from({ length: 10 }, (_, index) => ({
-    id: \`$\{index + 1}\`,
-    name: \`用户$\{index + 1}\`,
-    username: \`user$\{index + 1}\`,
-    userId: \`U$\{index + 1}\`
-  }))
+    id: \`\${index + 1}\`,
+    name: \`用户\${index + 1}\`,
+    username: \`user\${index + 1}\`,
+    userId: \`U\${index + 1}\`,
+  }));
 
   // 模拟搜索过滤
   const filteredList = searchVal
-    ? list.filter(item => 
-        item.name.includes(searchVal) || 
-        item.username.includes(searchVal)
+    ? list.filter(
+        (item) =>
+          item.name.includes(searchVal)
       )
-    : list
+    : list;
 
   return {
     success: true,
-    data: {
-      data: filteredList
-    }
-  }
-}
+    data: filteredList
+  };
+};
+
+// 模拟接口请求
+const fetchData2 = async () => {
+  // 模拟接口延迟
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
+  const list = Array.from({ length: 10 }, (_, index) => ({
+    id: \`\${index + 1}\`,
+    name: \`用户\${index + 1}\`,
+    username: \`user\${index + 1}\`,
+    userId: \`U\${index + 1}\`,
+  }));
+
+  return {
+    success: true,
+    data: list
+  };
+};
 <\/script>
 <style scoped lang="less">
 .demo-wrapper {

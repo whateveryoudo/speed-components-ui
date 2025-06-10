@@ -58,7 +58,7 @@ const props = withDefaults(
 );
 const emit = defineEmits(["update:value"]);
 const realVal = ref<any[]>([]);
-// 联动更新
+// 联动更新（这里判断）
 const handleChange = (val: number, type: "startVal" | "endVal") => {
   // 先更新realVal
   if (type === "startVal") {

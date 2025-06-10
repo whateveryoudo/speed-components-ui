@@ -3,7 +3,7 @@
     <div class="demo-wrapper">
       <div class="demo-item">
         <h3>默认显示为文件上传</h3>
-        <div class="mb-2">此模式下不会限制上传文件类型</div>
+        <div class="mb-2">此模式下默认不会限制上传文件类型，你可以通过传入acceptList进行覆盖。</div>
         <s-custom-upload v-model:value="files3" />
         <a-space> files：{{ files3 }} </a-space>
       </div>
@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { UploadOutlined } from "@ant-design/icons-vue";
-import type { IFileItem } from "@/hooks/useCustomUpload";
+import type { IFileItem } from "speed-components-ui/hooks";
 
 const files = ref<IFileItem[]>([]);
 const files2 = ref<IFileItem[]>([]);
@@ -43,7 +43,7 @@ const code = ref(`
     <div class="demo-wrapper">
         <div class="demo-item">
         <h3>默认显示为文件上传</h3>
-        <div class="mb-2">此模式下不会限制上传文件类型</div>
+        <div class="mb-2">此模式下默认不会限制上传文件类型，你可以通过传入acceptList进行覆盖。</div>
         <s-custom-upload
           v-model:value="files3"
         />
@@ -73,7 +73,7 @@ const code = ref(`
 <script setup lang="ts">
 import { ref } from "vue";
 import { UploadOutlined } from "@ant-design/icons-vue";
-import type { IFileItem } from "@/hooks/useCustomUpload";
+import type { IFileItem } from "speed-components-ui/hooks";
 
 const files = ref<IFileItem[]>([]);
 const files2 = ref<IFileItem[]>([]);

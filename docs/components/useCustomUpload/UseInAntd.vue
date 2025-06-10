@@ -30,7 +30,7 @@ import { useCustomUpload } from "@/hooks/useCustomUpload";
 import type { IFileItem } from "@/hooks/useCustomUpload";
 // 定义上传选项
 const uploadOptions = ref({
-  maxCount: 5, // 最大上传数量
+  maxCount: 1, // 最大上传数量
   maxSize: 2, // 最大文件大小(MB)
   acceptTypes: [".jpg", ".png", ".pdf"], // 接受的文件类型
   // 转换为upload组件要的格式(这里是单项)
@@ -90,11 +90,10 @@ const code = ref(`
 <script setup lang="ts">
 import { ref } from "vue";
 import { UploadOutlined } from "@ant-design/icons-vue";
-import { useCustomUpload } from "@/hooks/useCustomUpload";
-import type { IFileItem  } from "@/hooks/useCustomUpload";
+import { useCustomUpload, type IFileItem } from "speed-components-ui/hooks";
 // 定义上传选项
 const uploadOptions = ref({
-  maxCount: 5, // 最大上传数量
+  maxCount: 1, // 最大上传数量
   maxSize: 2, // 最大文件大小(MB)
   acceptTypes: ['.jpg', '.png', '.pdf'], // 接受的文件类型
   // 转换为upload组件要的格式(这里是单项)

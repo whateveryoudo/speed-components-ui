@@ -209,7 +209,7 @@ watch(
     <template #title>
       <slot name="title">
         <div ref="modalTitleRef"
-          :class="['w-full flex justify-between align-center', { 'cursor-move': props.draggable }]">
+          :class="['w-full flex justify-between items-center', { 'cursor-move': props.draggable }]">
           <slot name="title-left">
             <span class="title-left">
               {{ title }}

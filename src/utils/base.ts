@@ -61,9 +61,9 @@ export const evalFunc = (fn: string, args?: any) => {
     return null;
   }
 };
-// 判断数字是否为空，这里会过滤0,参数请传入数字
-export const isNumEmpty = (num?: number): num is undefined => {
-  return num === undefined || num === null;
+// 判断数字是否为空，这里会过滤0
+export const isNumEmpty = (num?: number | string) => {
+  return num === undefined || num === null || num === '';
 };
 // 这里存入全量数据
 export function flattenTreeDataClosure(data: Schema[]) {

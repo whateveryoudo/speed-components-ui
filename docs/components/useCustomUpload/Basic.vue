@@ -1,6 +1,6 @@
 <template>
   <Demo :code="code">
-    <input type="file" @change="handleFileChange" multiple />
+    <input type="file" multiple @change="handleFileChange" />
     <div v-if="uploadLoading">上传中...</div>
     <div v-if="files.length > 0">
       <div v-for="file in files" :key="file.uid" class="file-item">
@@ -19,6 +19,7 @@ import { useCustomUpload } from "@/hooks/useCustomUpload";
 
 // 定义上传选项
 const uploadOptions = ref({
+  multiple: true,
   // 上传后的回调
   afterUpload: (files: any[]) => {
     console.log("上传完成:", files);
@@ -76,6 +77,7 @@ import { useCustomUpload } from "@/hooks/useCustomUpload";
 
 // 定义上传选项
 const uploadOptions = ref({
+  multiple: true,
   // 上传后的回调
   afterUpload: (files: any[]) => {
     console.log("上传完成:", files);

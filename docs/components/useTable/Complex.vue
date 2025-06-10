@@ -11,7 +11,7 @@
       :fields="fields"
       :values="searchValues"
       :col="8"
-      @search="getList(true)"
+      @search="handleSearch"
     ></s-query-filter>
     <a-flex justify="space-between" class="my-2">
       <a-space>
@@ -169,6 +169,13 @@ const searchValues = ref<Record<string, any>>({
   createTimeStart: "",
   createTimeEnd: "",
 });
+// 搜索
+const handleSearch = (params: any) => {
+  // 参数更新
+  searchValues.value = params;
+  // 重置页码搜索
+  getList(true);
+};
 
 // 模拟请求数据
 const fetchData = async (params: any) => {
@@ -260,7 +267,7 @@ const columns = [
         value: "3",
       },
     ],
-    filterMultiple: false,
+    filterMultiple: true,
   },
   // 实际后端可能会返回日期格式，需要自行结合dayjs添加转换方法
   {
@@ -273,6 +280,7 @@ const columns = [
 
 const options = computed(() => ({
   needFullSelect: true, // 需要全选
+  hasSort: true,
   extraParams: {
     ...searchValues.value,
     // 你可以加入一些固定参数

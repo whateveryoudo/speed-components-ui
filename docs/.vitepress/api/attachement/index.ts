@@ -9,8 +9,15 @@ export const fileDownload = (fileId: string) => {
   });
 };
 
-export const fileUpload = (formData: FormData) => {
-  return request.post(`${attachmentPrefix}/upload`, formData, {
+export const fileUploadSingle = (formData: FormData) => {
+  return request.post(`${attachmentPrefix}/upload/single`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  });
+};
+export const fileUploadMulti = (formData: FormData) => {
+  return request.post(`${attachmentPrefix}/upload/multi`, formData, {
     headers: {
       "Content-Type": "multipart/form-data"
     }

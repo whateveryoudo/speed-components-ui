@@ -33,7 +33,7 @@
       </div>
 
       <div class="demo-item">
-        <h3>当成普通快捷提示</h3>
+        <h3>自定义触发器</h3>
         <s-question-tip tip="我是自定义提示">
           <AlertOutlined />
         </s-question-tip>
@@ -81,7 +81,7 @@ const code = `<template>
       </div>
 
       <div class="demo-item">
-        <h3>当成普通快捷提示</h3>
+        <h3>自定义触发器</h3>
         <s-question-tip
           tip="我是自定义提示"
         >

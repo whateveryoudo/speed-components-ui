@@ -3,19 +3,30 @@ import DefaultTheme from 'vitepress/theme';
 import Antd from 'ant-design-vue';
 import * as Icons from '@ant-design/icons-vue';
 import Demo from './components/Demo.vue';
-import SpeedComs from 'speed-components-ui/components'
 import '@/assets/style/base.less'
 import 'ant-design-vue/dist/reset.css';
 import 'uno.css';
 import './style.css';
-import 'speed-components-ui/dist/style.css';
-import { fileDownload, fileUpload, fileDel } from '../api/attachement';
+import { fileDownload, fileUploadSingle, fileUploadMulti, fileDel } from '../api/attachement';
 import { ConfigProvider } from 'ant-design-vue';
-// import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+
+// 根据环境动态导入
+const isDev = process.env.NODE_ENV === 'development';
 
 export default {
   ...DefaultTheme,
-  enhanceApp({ app }: { app: App}) {
+  async enhanceApp({ app }: { app: App}) {
+    // 动态导入组件
+    const SpeedComs = isDev 
+      ? (await import('../../../src/components')).default
+      : (await import('speed-components-ui/components')).default;
+
+    // 动态导入样式
+    if (!isDev) {
+      import('speed-components-ui/dist/style.css');
+    }
+
     // 注册所有 Ant Design Vue 组件
     app.use(Antd);
     app.use(SpeedComs, {
@@ -23,7 +34,8 @@ export default {
       baseURL: (import.meta as any).env.VITE_APP_BASE_URL,
       apis: {
         fileDownload: fileDownload,
-        fileUpload: fileUpload,
+        fileUploadSingle: fileUploadSingle,
+        fileUploadMulti: fileUploadMulti,
         fileDel: fileDel,
         getPreviewUrl: (fileId: string) => {
           // 实际情况替换为实际地址
@@ -38,9 +50,9 @@ export default {
     app.component('Demo', Demo);
   },
   Layout: () => {
-    return h(DefaultTheme.Layout);
-    // return h(ConfigProvider, {
-    //   locale: zhCN,
-    // }, () => h(DefaultTheme.Layout));
+    // return h(DefaultTheme.Layout);
+    return h(ConfigProvider, {
+      locale: zhCN,
+    }, () => h(DefaultTheme.Layout));
   },
 }; 

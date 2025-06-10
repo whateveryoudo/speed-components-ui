@@ -12,7 +12,7 @@ export type IFileItem = {
   fileName: string;
   fileType: string;
   fileSize?: string | number;
-  status?: 'done' | 'error' | 'uploading';
+  status?: "done" | "error" | "uploading";
   className?: string;
 };
 type IUploadOption = {
@@ -20,9 +20,11 @@ type IUploadOption = {
   maxSize?: number;
   name?: string; // 上传文件的key名
   acceptTypes?: string[];
+  multiple?: boolean;
   // 一些外部传入的api接口
   apis?: {
-    fileUpload: (formData: FormData) => Promise<any>;
+    fileUploadMulti: (formData: FormData) => Promise<any>;
+    fileUploadSingle: (formData: FormData) => Promise<any>;
     fileDel?: (fieldId: string) => Promise<any>;
     fileDownload?: (fieldId: string) => Promise<any>;
     getPreviewUrl?: (fieldId: string) => string;
@@ -42,12 +44,13 @@ export function useCustomUpload(
   const speedComsConfig = inject("speed-components-config", ref({ apis: {} }));
   const options = computed<IUploadOption>(() => {
     if (outOptions === undefined) {
-      return speedComsConfig.value?.apis ? { apis: speedComsConfig.value?.apis } : {}; // 如果没有外部传入，则使用默认配置
+      return speedComsConfig.value?.apis
+        ? { apis: speedComsConfig.value?.apis }
+        : {}; // 如果没有外部传入，则使用默认配置
     }
     return speedComsConfig.value?.apis
       ? { apis: speedComsConfig.value?.apis, ...outOptions.value }
       : outOptions.value; // 整合apis选项
-
   });
   const beforeUpload = (
     file: NewFileListType[number],
@@ -60,20 +63,6 @@ export function useCustomUpload(
     let hasOverLimit = false,
       validType = true,
       isLt = true;
-    if (options.value.maxCount) {
-      hasOverLimit =
-        files.value.length + (fileList || [])?.length > options.value.maxCount;
-      if (hasOverLimit) {
-        message.warning(`已超过最大上传数${options.value.maxCount}`);
-        return false;
-      }
-    }
-    if (options.value.maxSize && file.size) {
-      isLt = file.size / 1024 / 1024 < options.value.maxSize;
-      if (!isLt) {
-        message.warning(`单个文件最大为${options.value.maxSize}M`);
-      }
-    }
     // 校验格式，目前仅通过文件名后缀处理
     if (options.value.acceptTypes && options.value.acceptTypes.length > 0) {
       const rge = /\.\w+$/;
@@ -85,25 +74,51 @@ export function useCustomUpload(
         validType = false;
       }
     }
+    // 这里追加判断如果是一项，则执行替换
+    if (options.value.maxCount) {
+      if (options.value.maxCount > 1) {
+        hasOverLimit =
+          files.value.length + (fileList || [])?.length >
+          options.value.maxCount;
+        if (hasOverLimit) {
+          message.warning(`已超过最大上传数${options.value.maxCount}`);
+          return false;
+        }
+      }
+    }
+    if (options.value.maxSize && file.size) {
+      isLt = file.size / 1024 / 1024 < options.value.maxSize;
+      if (!isLt) {
+        message.warning(`单个文件最大为${options.value.maxSize}M`);
+      }
+    }
 
     return isLt && validType;
   };
   const customRequest = async (option: any) => {
-    // 用不上回调，这里是自己写的渲染
-    if (!options?.value?.apis?.fileUpload) {
-      console.warn("未配置上传接口");
+    if (options.value.multiple && !options?.value?.apis?.fileUploadMulti) {
+      console.warn("未配置批量上传接口");
       return;
+    } else {
+      if (!options?.value?.apis?.fileUploadSingle) {
+        console.warn("未配置单条上传接口");
+        return;
+      }
     }
+    
     let formData = new FormData();
     const { file } = option;
-    // 确保file是数组
-    const fileList = Array.isArray(file) ? file : [file];
-
-    // 添加所有文件
-    fileList.forEach((f: File) => {
-      formData.append(options.value.name || "files[]", f);
-    });
-
+    let fileList = [];
+    // 兼容数组和单项
+    if (options.value.multiple && Array.isArray(file)) {
+      fileList = file;
+      file.forEach((f: File) => {
+        formData.append(options.value.name || "files[]", f);
+      });
+    } else {
+      fileList = [file];
+      formData.append(options.value.name || "file", file);
+    }
     if (options.value?.data) {
       if (
         !(
@@ -120,7 +135,9 @@ export function useCustomUpload(
           formData.append(key, data[key]);
         });
       } else {
-        const customData = (options.value.data as (file: File[]) => FormData)(fileList);
+        const customData = (options.value.data as (file: File[]) => FormData)(
+          fileList
+        );
         // 合并自定义FormData
         Array.from(customData.entries()).forEach(([key, value]) => {
           formData.append(key, value);
@@ -140,27 +157,34 @@ export function useCustomUpload(
       fileName: f.name,
       status: "uploading",
     }));
-
-    files.value.push(...filesToAdd);
-
+    if (options.value.maxCount === 1) {
+      files.value = [filesToAdd[0]];
+    } else {
+      files.value.push(...filesToAdd);
+    }
+    const realFileUpload = options.value.multiple
+      ? options.value.apis.fileUploadMulti
+      : options.value.apis.fileUploadSingle;
     try {
-      const res = await options.value.apis.fileUpload(formData);
+      const res = await realFileUpload(formData);
       uploadLoading.value = false;
       if (res.success) {
-        const filterData = res.data.map((item: any) => {
-          if (
-            options?.value?.transformResult &&
-            typeof options.value.transformResult === "function"
-          ) {
-            return options.value.transformResult(item);
+        const filterData = (options.value.multiple ? res.data : [res.data]).map(
+          (item: any) => {
+            if (
+              options?.value?.transformResult &&
+              typeof options.value.transformResult === "function"
+            ) {
+              return options.value.transformResult(item);
+            }
+            return {
+              id: item.id,
+              fileType: item.fileType,
+              fileSize: item.fileSize,
+              fileName: item.fileName,
+            };
           }
-          return {
-            id: item.id,
-            fileType: item.fileType,
-            fileSize: item.fileSize,
-            fileName: item.fileName,
-          };
-        });
+        );
 
         // 更新所有文件状态
         filterData.forEach((item: any, index: number) => {
@@ -168,12 +192,12 @@ export function useCustomUpload(
             (f: any) => f.uid === uids[index]
           );
           if (targetIndex !== -1) {
-            files.value[targetIndex] = { ...item, status: 'done' };
+            files.value[targetIndex] = { ...item, status: "done" };
           }
         });
 
         // 调用成功回调
-        option.afterUpload?.();
+        option.afterUpload?.(files.value);
       } else {
         // 更新所有文件状态为错误
         uids.forEach((uid) => {
@@ -251,17 +275,18 @@ export function useCustomUpload(
           viewerInstance.value.view(0);
         } else {
           let img = null;
-          if (document.getElementById('viewer-img')) {
+          if (document.getElementById("viewer-img")) {
             // 如果已经存在，则直接显示
-            img = document.getElementById('viewer-img');
+            img = document.getElementById("viewer-img");
           } else {
             // 创建新的 img 元素
-            img = document.createElement('img');
-            img.id = 'viewer-img';
-            img.style.display = 'none'; // 隐藏元素
+            img = document.createElement("img");
+            img.id = "viewer-img";
+            img.style.display = "none"; // 隐藏元素
           }
           if (img) {
-            (img as HTMLImageElement).src = (getPreviewUrl ? getPreviewUrl(file.id) : file.previewUrl) || '';
+            (img as HTMLImageElement).src =
+              (getPreviewUrl ? getPreviewUrl(file.id) : file.previewUrl) || "";
             viewerInstance.value = new Viewer(img, {
               className: file.className,
               // 内联展示
@@ -269,32 +294,37 @@ export function useCustomUpload(
             });
             viewerInstance.value.view(0);
           }
-
         }
       } else {
-        if (options.value.onPreview || typeof options.value.onPreview === "function") {
+        if (
+          options.value.onPreview ||
+          typeof options.value.onPreview === "function"
+        ) {
           options.value.onPreview(file.id);
         } else {
           window.open(file.previewUrl);
         }
       }
     } else {
-      if (options.value.onPreview || typeof options.value.onPreview === "function") {
+      if (
+        options.value.onPreview ||
+        typeof options.value.onPreview === "function"
+      ) {
         options.value.onPreview(file.id);
       } else {
         window.open(file.previewUrl);
       }
     }
-  }
+  };
   // 图片/附件下载
   const handleDownloadFile = async (file: IFileItem) => {
     const fileDownload = options.value?.apis?.fileDownload;
     if (!fileDownload || typeof fileDownload !== "function") {
       throw new Error("文件下载方法缺失或传入的fileDownload不正确");
     }
-    const res = (await fileDownload(file.id));
+    const res = await fileDownload(file.id);
     handleExceptDown(res, file.fileName, file?.className);
-  }
+  };
   return {
     beforeUpload,
     customRequest,

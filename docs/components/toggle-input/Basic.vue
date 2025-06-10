@@ -11,7 +11,7 @@
       </div>
 
       <div class="demo-item">
-        <h3>二次确认</h3>
+        <h3>二次确认(常用于ajax请求后更新)</h3>
         <s-toggle-input
           :text="infoValues.text2"
           need-confirm
@@ -21,10 +21,7 @@
 
       <div class="demo-item">
         <h3>自定义触发</h3>
-        <s-toggle-input
-          :text="infoValues.text3"
-          :update-text="handleUpdate3"
-        >
+        <s-toggle-input :text="infoValues.text3" :update-text="handleUpdate3">
           <template #trigger="{ info }">
             <a-button type="link" @click="info.flag = true">
               点击修改
@@ -66,45 +63,69 @@ const handleUpdate3 = (state: any) => {
 };
 
 const code = `<template>
-  <!-- 基础用法 -->
-  <s-toggle-input
-    text="点击修改"
-    :update-text="handleUpdate"
-  />
+   <div class="demo-wrapper">
+      <div class="demo-item">
+        <h3>基础用法</h3>
+        <s-toggle-input
+          input-width="300px"
+          :text="infoValues.text1"
+          :update-text="handleUpdate1"
+        />
+      </div>
 
-  <!-- 自定义宽度 -->
-  <s-toggle-input
-    text="点击修改"
-    input-width="300px"
-    :update-text="handleUpdate"
-  />
+      <div class="demo-item">
+        <h3>二次确认(常用于ajax请求后更新)</h3>
+        <s-toggle-input
+          :text="infoValues.text2"
+          need-confirm
+          :update-text="handleUpdate2"
+        />
+      </div>
 
-  <!-- 二次确认 -->
-  <s-toggle-input
-    text="点击修改"
-    need-confirm
-    :update-text="handleUpdate"
-  />
-
-  <!-- 自定义触发 -->
-  <s-toggle-input
-    text="点击修改"
-    :update-text="handleUpdate"
-  >
-    <template #trigger="{ info }">
-      <a-button type="link">
-        {{ info.text }}
-      </a-button>
-    </template>
-  </s-toggle-input>
+      <div class="demo-item">
+        <h3>自定义触发</h3>
+        <s-toggle-input
+          :text="infoValues.text3"
+          :update-text="handleUpdate3"
+        >
+          <template #trigger="{ info }">
+            <a-button type="link" @click="info.flag = true">
+              点击修改
+            </a-button>
+          </template>
+        </s-toggle-input>
+      </div>
+    </div>
 </template>
 
 <script setup lang="ts">
-import { message } from 'ant-design-vue'
+import { message } from "ant-design-vue";
+import { reactive } from "vue";
 
-const handleUpdate = (state: any) => {
-  message.success(\`修改成功：\${state.text}\`)
-}
+const infoValues = reactive({
+  text1: "测试内容1",
+  text2: "测试内容2",
+  text3: "测试内容3",
+});
+const handleUpdate1 = (state: { text: string; flag: boolean }) => {
+  infoValues.text1 = state.text;
+  state.flag = false;
+  message.success(\`修改成功：\${state.text}\`);
+};
+const handleUpdate2 = (state: any) => {
+  // 模拟异步请求
+  setTimeout(() => {
+    message.success(\`修改成功：\${state.text}\`);
+    infoValues.text2 = state.text;
+    state.flag = false;
+  }, 500);
+};
+
+const handleUpdate3 = (state: any) => {
+  infoValues.text3 = state.text;
+  state.flag = false;
+  message.success(\`修改成功：\${state.text}\`);
+};
 <\/script>`;
 </script>
 

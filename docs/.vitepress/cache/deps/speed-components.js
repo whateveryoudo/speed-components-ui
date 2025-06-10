@@ -10,14 +10,15 @@ import {
 import {
   message_default,
   theme_default
-} from "./chunk-BV77S2MO.js";
+} from "./chunk-RGZQ4SVG.js";
+import {
+  require_customParseFormat
+} from "./chunk-TCLP4MPK.js";
 import "./chunk-5SOETNNC.js";
 import {
   require_dayjs_min
 } from "./chunk-KLOCJB4C.js";
-import {
-  require_customParseFormat
-} from "./chunk-TCLP4MPK.js";
+import "./chunk-FAWDCRZC.js";
 import {
   create
 } from "./chunk-TP4WBCF5.js";
@@ -140,12 +141,16 @@ import QuestionTip from "/Users/ykx/work/gitee/speed-components/src/components/Q
 import ApiSelect from "/Users/ykx/work/gitee/speed-components/src/components/ApiSelect/index.vue";
 import ToggleInput from "/Users/ykx/work/gitee/speed-components/src/components/ToggleInput/index.vue";
 import ContentEditor from "/Users/ykx/work/gitee/speed-components/src/components/ContentEditor/index.vue";
+import CustomUpload from "/Users/ykx/work/gitee/speed-components/src/components/CustomUpload/index.vue";
 
 // src/utils/base.ts
 var import_dayjs = __toESM(require_dayjs_min());
 var import_customParseFormat = __toESM(require_customParseFormat());
 var import_zh_cn = __toESM(require_zh_cn());
 import_dayjs.default.extend(import_customParseFormat.default);
+
+// src/hooks/useCustomUpload.ts
+import "/Users/ykx/work/gitee/speed-components/node_modules/.pnpm/viewerjs@1.11.7/node_modules/viewerjs/dist/viewer.css";
 
 // src/hooks/useAntdCssVars.ts
 var { defaultAlgorithm, defaultSeed } = theme_default;
@@ -295,6 +300,7 @@ import { default as default12 } from "/Users/ykx/work/gitee/speed-components/src
 import { default as default13 } from "/Users/ykx/work/gitee/speed-components/src/components/ContentEditor/index.vue";
 import { default as default14 } from "/Users/ykx/work/gitee/speed-components/src/components/TextMore/index.vue";
 import { default as default15 } from "/Users/ykx/work/gitee/speed-components/src/components/QuestionTip/index.vue";
+import { default as default16 } from "/Users/ykx/work/gitee/speed-components/src/components/CustomUpload/index.vue";
 var components = [
   FullModal,
   CollapseHz,
@@ -310,7 +316,8 @@ var components = [
   ApiSelect,
   ToggleInput,
   ContentEditor,
-  QuestionTip
+  QuestionTip,
+  CustomUpload
 ];
 var defaultConfig = {
   registerGlobal: true,
@@ -359,6 +366,7 @@ export {
   default11 as ApiSelect,
   default3 as CollapseHz,
   default13 as ContentEditor,
+  default16 as CustomUpload,
   default4 as FilePreviewItem,
   default2 as FullModal,
   IconFont_default as IconFont,
