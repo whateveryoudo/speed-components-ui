@@ -18,6 +18,7 @@ export default {
   ...DefaultTheme,
   async enhanceApp({ app }: { app: App}) {
     // 动态导入组件
+    console.log(isDev);
     const SpeedComs = isDev 
       ? (await import('../../../src/components')).default
       : (await import('speed-components-ui/components')).default;
