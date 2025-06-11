@@ -174,6 +174,7 @@ export default defineConfig({
         "ant-design-vue",
         "@ant-design/icons-vue"
       ],
+      external: ['speed-components-ui/components']
     },
     server: {
       proxy: {
