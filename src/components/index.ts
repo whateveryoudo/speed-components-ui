@@ -23,7 +23,7 @@ import ApiSelect from "./ApiSelect/index.vue";
 import ToggleInput from "./ToggleInput/index.vue";
 import ContentEditor from "./ContentEditor/index.vue";
 import CustomUpload from './CustomUpload/index.vue'
-import { useAntdCssVars } from "../hooks";
+import { useAntdCssVars, type ThemeConfig } from "../hooks/useAntdCssVars";
 import { vFocus, vCopy, vView, vSelect, vLinkTransform } from "../directives";
 import type { RequestResponse } from "..";
 // 组件列表
@@ -52,6 +52,7 @@ type AjaxMethod = (params?: any) => Promise<any>;
 // 全局配置类型
 export interface GlobalConfig {
   iconfontUrl?: string;
+  themeConfig?: ThemeConfig;
   registerGlobal?: boolean; // 是否注册为全局组件
   apis?: {
     [key: string]: AjaxMethod;
@@ -90,6 +91,16 @@ export const setConfig = (config: Partial<GlobalConfig>) => {
   };
 };
 
+// 主题相关
+let themeInstance: ReturnType<typeof useAntdCssVars> | null = null;
+
+// 更新主题方法
+export const updateTheme = (config: ThemeConfig) => {
+  if (themeInstance) {
+    themeInstance.updateTheme(config);
+  }
+};
+
 const install = (app: App, config?: Partial<GlobalConfig>) => {
   // 合并配置
   if (config) {
@@ -106,7 +117,7 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
   app.provide("speed-components-config", currentConfig);
 
   // 使用 Ant Design Vue CSS 变量
-  const cleanup = useAntdCssVars();
+  themeInstance = useAntdCssVars(config?.themeConfig);
   // 注册一些指令
   app.directive("focus", vFocus);
   app.directive("copy", vCopy);
@@ -115,7 +126,7 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
   app.directive("link-transform", vLinkTransform);
   // 在应用卸载时清理
   app.unmount = () => {
-    cleanup();
+    themeInstance?.cleanup();
     app.unmount();
   };
 };
@@ -140,5 +151,6 @@ export { default as CustomUpload } from './CustomUpload/index.vue'
 export default {
   install,
   setConfig,
+  updateTheme,
   version: "0.1.0",
 };

@@ -5,6 +5,7 @@
       <s-full-modal allowFullScreen v-model:open="showModal" title="标题" @ok="handleOk" @cancel="handleCancel">
         内容区域
       </s-full-modal>
+      <span class="text-[var(--ant-color-primary)]">测试颜色</span>
     </div>
   </Demo>
 </template>

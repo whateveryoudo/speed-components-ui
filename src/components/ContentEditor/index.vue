@@ -10,7 +10,6 @@ import {
   watch,
 } from "vue";
 import type { Ref } from "vue";
-import type { GlobalConfig } from "../index";
 import { Form } from "ant-design-vue";
 import { useCustomUpload } from "@/hooks/useCustomUpload";
 // 是否在客户端环境

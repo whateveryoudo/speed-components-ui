@@ -5,7 +5,6 @@
  * @LastEditors: Anxure
  * @LastEditTime: 2024-05-10 09:59:06
  */
-import type { Schema } from '@/types';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import 'dayjs/locale/zh-cn';
@@ -15,6 +14,15 @@ import { cloneDeep } from 'lodash-es';
 interface ParsedUrlQuery {
   [key: string]: string | string[];
 }
+
+// 定义基础树节点接口
+interface BaseTreeNode {
+  id: string;
+  name?: string;
+  children?: any[];
+  [key: string]: any;
+}
+
 // 获取随机数
 export function getRandomId() {
   return Number(Math.random().toString().substr(3, 4) + Date.now()).toString(36);
@@ -66,7 +74,7 @@ export const isNumEmpty = (num?: number | string) => {
   return num === undefined || num === null || num === '';
 };
 // 这里存入全量数据
-export function flattenTreeDataClosure(data: Schema[]) {
+export function flattenTreeDataClosure<T extends BaseTreeNode>(data: T[]) {
   const treeData = cloneDeep(data);
   const flattenData: {
     name: string;
@@ -74,7 +82,7 @@ export function flattenTreeDataClosure(data: Schema[]) {
     parentKey: string;
     type: string;
   }[] = [];
-  function flattenTree(data: Schema[], parentKey: string) {
+  function flattenTree(data: T[], parentKey: string) {
     data.forEach((ele) => {
       const { id, children } = ele;
       flattenData.push({
@@ -92,10 +100,10 @@ export function flattenTreeDataClosure(data: Schema[]) {
   return flattenData;
 }
 // 3.给个节点0-0-1-0，找到ta所有的父级节点
-export function findParent(item: string, flattenTree: any) {
-  const parentArr: Schema[] = []; // 存储所有的父级元素
-  function find(item: string, flattenTree: any) {
-    flattenTree.forEach((ele: any) => {
+export function findParent<T extends BaseTreeNode>(item: string, flattenTree: T[]) {
+  const parentArr: T[] = []; // 存储所有的父级元素
+  function find(item: string, flattenTree: T[]) {
+    flattenTree.forEach((ele) => {
       if (ele.id === item) {
         parentArr.unshift(ele);
         find(ele.parentKey, flattenTree);
@@ -111,13 +119,17 @@ export function findParent(item: string, flattenTree: any) {
  *@params2: ${Array} 完整树结构
  *@returns ${String} 父节点key名
  */
-export const getParentNode = (key: string, tree: Schema[], childrenKey: string): Schema | null => {
-  let parentNode: Schema | null = null;
+export const getParentNode = <T extends BaseTreeNode>(
+  key: string,
+  tree: T[],
+  childrenKey: string
+): T | null => {
+  let parentNode: T | null = null;
   for (let i = 0; i < tree.length; i++) {
-    const node: Record<string, any> = tree[i];
+    const node = tree[i];
     if (node[childrenKey]) {
-      if (node[childrenKey].some((item: Schema) => item.id === key)) {
-        parentNode = node as Schema;
+      if (node[childrenKey].some((item: T) => item.id === key)) {
+        parentNode = node;
       } else if (getParentNode(key, node[childrenKey], childrenKey)) {
         parentNode = getParentNode(key, node[childrenKey], childrenKey);
       }
@@ -130,8 +142,12 @@ export const getParentNode = (key: string, tree: Schema[], childrenKey: string):
  *@params1: ${String} 唯一键
  *@params2: ${Array} 完整树结构
  */
-export const getNodeByKey = (key: string, tree: any[], idKey = 'id'): Schema => {
-  let result;
+export const getNodeByKey = <T extends BaseTreeNode>(
+  key: string,
+  tree: T[],
+  idKey = 'id'
+): T | undefined => {
+  let result: T | undefined;
   for (let i = 0; i < tree.length; i++) {
     const node = tree[i];
     if (node[idKey] === key) {

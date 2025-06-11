@@ -3,6 +3,7 @@ import { ref, type CSSProperties, computed, watch } from 'vue'
 import FullModal from '../FullModal/index.vue'
 import ColorPicker from '../CColorPicker/index.vue'
 import { cloneDeep } from 'lodash-es'
+import { Switch, Select, Slider, Button } from 'ant-design-vue'
 /*eslint no-undef: "off"*/
 defineOptions({
   name: 'STextStyleSetup',
@@ -159,7 +160,7 @@ const handleOk = () => {
               <div class="config-item switch">
                 <span class="title">斜体</span>
                 <div class="form-item">
-                  <a-switch v-model:checked="style.fontStyle" />
+                  <Switch v-model:checked="style.fontStyle" />
                 </div>
               </div>
             </div>
@@ -168,7 +169,7 @@ const handleOk = () => {
               <div class="config-item switch">
                 <span class="title">加粗</span>
                 <div class="form-item">
-                  <a-switch v-model:checked="style.fontWeight" />
+                  <Switch v-model:checked="style.fontWeight" />
                 </div>
               </div>
             </div>
@@ -177,7 +178,7 @@ const handleOk = () => {
               <div class="config-item">
                 <span class="title">字体</span>
                 <div class="form-item">
-                  <a-select
+                  <Select
                     v-model:value="style.fontFamily"
                     style="width: 100%; margin-right: 10px"
                     placeholder="选择字体"
@@ -220,7 +221,7 @@ const handleOk = () => {
                     <template #option="{ label, value }">
                       <span :style="{ fontFamily: value }">{{ label }}</span>
                     </template>
-                  </a-select>
+                  </Select>
                 </div>
               </div>
             </div>
@@ -231,7 +232,7 @@ const handleOk = () => {
               <div class="config-item">
                 <span class="title">透明</span>
                 <div class="form-item">
-                  <a-slider v-model:value="style.opacity" :min="10" :max="100" />
+                  <Slider v-model:value="style.opacity" :min="10" :max="100" />
                 </div>
               </div>
             </div>
@@ -240,7 +241,7 @@ const handleOk = () => {
               <div class="config-item">
                 <span class="title">间距</span>
                 <div class="form-item">
-                  <a-slider
+                  <Slider
                     v-model:value="style.letterSpacing"
                     :min="0"
                     :max="50"
@@ -256,7 +257,7 @@ const handleOk = () => {
               <div class="config-item">
                 <span class="title">缩进</span>
                 <div class="form-item">
-                  <a-slider
+                  <Slider
                     v-model:value="style.textIndent"
                     :min="0"
                     :max="10"
@@ -270,7 +271,7 @@ const handleOk = () => {
               <div class="config-item">
                 <span class="title">大小</span>
                 <div class="form-item">
-                  <a-slider
+                  <Slider
                     v-model:value="style.fontSize"
                     :min="12"
                     :max="100"
@@ -373,7 +374,7 @@ const handleOk = () => {
       </div>
 
       <template #extra-btn>
-        <a-button @click="resetStyle()">样式重置</a-button>
+        <Button @click="resetStyle()">样式重置</Button>
       </template>
     </FullModal>
   </div>

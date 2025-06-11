@@ -7,6 +7,8 @@ import {
   constructQueryFilterByColumns,
   fieldTypeMap,
 } from "../QueryFilter/const";
+import { Flex, Table } from "ant-design-vue";
+import type { TablePaginationConfig } from "ant-design-vue";
 
 interface Props {
   /** 请求函数 */
@@ -78,8 +80,26 @@ const {
   state,
   getList,
   onSelectChange,
-  handleTableChange,
+  handleTableChange: originalHandleTableChange,
 } = useTable(props.fetchFunc, tableOptions);
+
+// 包装 handleTableChange 以适配 Table 组件的类型
+const handleTableChange = (
+  pagination: TablePaginationConfig,
+  filters: Record<string, any>,
+  sorter: any,
+  extra: any
+) => {
+  originalHandleTableChange(
+    {
+      current: pagination.current || 1,
+      pageSize: pagination.pageSize || 10,
+    },
+    filters,
+    sorter
+  );
+};
+
 // 搜索
 const handleSearch = (params: any) => {
   values.value = params;
@@ -144,7 +164,7 @@ defineExpose({
 </script>
 
 <template>
-  <a-flex vertical :gap="10">
+  <Flex vertical :gap="10">
     <QueryFilter
       class="mb-2"
       v-if="needQueryFilter"
@@ -152,10 +172,10 @@ defineExpose({
       :values="values"
       @search="handleSearch"
     />
-    <a-flex justify="end" v-if="$slots['optBar']">
+    <Flex justify="end" v-if="$slots['optBar']">
       <slot name="optBar" />
-    </a-flex>
-    <a-flex
+    </Flex>
+    <Flex
       justify="space-between"
       v-if="$slots['optBarLeft'] || $slots['optBarRight']"
     >
@@ -165,8 +185,8 @@ defineExpose({
       <span v-if="$slots['optBarRight']">
         <slot name="optBarRight" />
       </span>
-    </a-flex>
-    <a-table
+    </Flex>
+    <Table
       class="simple-table"
       :columns="finalColumns"
       :data-source="dataSource"
@@ -192,8 +212,8 @@ defineExpose({
       <template v-for="(_, name) in $slots" #[name]="slotData">
         <slot :name="name" v-bind="slotData" />
       </template>
-    </a-table>
-  </a-flex>
+    </Table>
+  </Flex>
 </template>
 
 <style lang="less"></style>

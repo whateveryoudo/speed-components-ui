@@ -9,6 +9,8 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { DoubleRightOutlined, DoubleLeftOutlined } from "@ant-design/icons-vue";
+import { Tooltip } from "ant-design-vue";
 
 // eslint-disable-next-line no-undef
 defineOptions({
@@ -101,13 +103,13 @@ watch(
   >
     <template v-if="iconFlag">
       <slot name="trigger-render">
-        <ATooltip :placement="expandDir">
+        <Tooltip :placement="expandDir">
           <template #title>{{ toggleFlag ? "收起" : "展开" }}</template>
           <span :class="['toggle-icon', expandDir]" @click="handleSetToggle">
             <DoubleRightOutlined v-if="toggleFlag" />
             <DoubleLeftOutlined v-else />
           </span>
-        </ATooltip>
+        </Tooltip>
       </slot>
     </template>
     <slot v-if="controlPanel" name="expand-render" />

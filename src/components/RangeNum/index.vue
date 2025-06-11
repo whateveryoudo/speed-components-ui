@@ -8,7 +8,7 @@
 -->
 <template>
   <span class="range-number">
-    <a-input-number
+    <InputNumber
       :value="realVal[0]"
       :style="[props.autoWidth ? { flex: 1, width: 'auto' } : { width: suffix ? '110px' : '80px'}]"
       placeholder="请输入"
@@ -18,9 +18,9 @@
       <template v-if="suffix" #addonAfter>
         {{ suffix }}
       </template>
-    </a-input-number>
+    </InputNumber>
     <span style="margin: 0 5px">-</span>
-    <a-input-number
+    <InputNumber
       :value="realVal[1]"
       :style="[props.autoWidth ? { flex: 1, width: 'auto' } : { width: suffix ? '110px' : '80px' }]"
       placeholder="请输入"
@@ -30,7 +30,7 @@
       <template v-if="suffix" #addonAfter>
         {{ suffix }}
       </template>
-    </a-input-number>
+    </InputNumber>
   </span>
 </template>
 
@@ -38,6 +38,8 @@
 import { ref, watch } from "vue";
 import { cloneDeep } from "lodash-es";
 import { isNumEmpty } from "@/utils";
+import { InputNumber } from "ant-design-vue";
+
 // eslint-disable-next-line no-undef
 defineOptions({
   name: "SRangeNum",

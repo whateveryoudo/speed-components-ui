@@ -2,9 +2,9 @@
 <script setup lang="ts">
 import { CheckOutlined } from "@ant-design/icons-vue";
 import { computed, nextTick, ref, watch } from "vue";
-import { Form } from "ant-design-vue";
 import { useLoadMore } from "@/hooks";
 import { debounce } from "lodash-es";
+import { Popover, Input, Spin, Empty, Form, Menu, MenuItem, Tag } from "ant-design-vue";
 // eslint-disable-next-line no-undef
 defineOptions({
   name: "SLazySelect",
@@ -182,7 +182,7 @@ watch(
 
 <template>
   <div class="lazy-select-wrapper">
-    <APopover
+    <Popover
       :open="visible"
       placement="bottomLeft"
       trigger="click"
@@ -193,7 +193,7 @@ watch(
     >
       <template #content>
         <!-- 是否显示顶部search -->
-        <a-input
+        <Input
           v-if="search"
           v-model:value="searchVal"
           class="search-wrapper"
@@ -205,12 +205,12 @@ watch(
           <template #prefix>
             <search-outlined />
           </template>
-        </a-input>
+        </Input>
         <div ref="scrollRef" class="inner-wrapper">
-          <a-spin :spinning="initLoading">
+          <Spin :spinning="initLoading">
             <div v-if="list.length > 0" class="scroll-list">
-              <AMenu :selectedKeys="selectedKeys">
-                <AMenuItem
+              <Menu :selectedKeys="selectedKeys">
+                <MenuItem
                   v-for="item in list"
                   :key="item[valueKey]"
                   class="option-item"
@@ -230,14 +230,14 @@ watch(
                       selectedKeys.includes(item[valueKey])
                     "
                   />
-                </AMenuItem>
-              </AMenu>
+                </MenuItem>
+              </Menu>
               <!-- 提示语 -->
               <div class="status">
                 <span v-if="noMore" class="no-more"> 没有更多数据了~ </span>
                 <span v-if="!noMore && loading">
                   数据加载中...
-                  <a-spin
+                  <Spin
                     :spinning="loading"
                     style="margin-left: 5px"
                     size="small"
@@ -246,8 +246,8 @@ watch(
               </div>
             </div>
 
-            <a-empty v-else :description="emptyText" />
-          </a-spin>
+            <Empty v-else :description="emptyText" />
+          </Spin>
         </div>
       </template>
       <!-- 采用antd样式模拟:区分单选和多选,暂不支持回填slot -->
@@ -263,7 +263,7 @@ watch(
         </span>
         <template v-else>
           <template v-if="Array.isArray(value) && mode === 'multiple'">
-            <ATag
+            <Tag
               v-for="(item, index) in value.slice(0, maxCount)"
               :key="item.value"
               closable
@@ -272,10 +272,10 @@ watch(
               <span class="tag-text" :title="item.label">
                 {{ maxTagTextLength && item.label.length > maxTagTextLength ? item.label.slice(0, maxTagTextLength) + '...' : item.label }}
               </span>
-            </ATag>
-            <ATag v-if="value.length > maxCount" color="blue">
+            </Tag>
+            <Tag v-if="value.length > maxCount" color="blue">
               +{{ value.length - maxCount }}...
-            </ATag>
+            </Tag>
           </template>
           <template v-else>
             <span class="tag-text" :title="(value as IValueItem).label">
@@ -297,7 +297,7 @@ watch(
           @click.stop="handleClear"
         />
       </div>
-    </APopover>
+    </Popover>
   </div>
 </template>
 

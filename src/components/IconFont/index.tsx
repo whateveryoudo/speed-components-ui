@@ -49,7 +49,8 @@ export default defineComponent({
     const config = inject('speed-components-config', ref({
       iconfontUrl: ''
     }));
-    let scriptUrls = [config?.value?.iconfontUrl];
+    // 这里加入内置的图标
+    let scriptUrls = ['//at.alicdn.com/t/c/font_4946230_7d6dp217fih.js', config?.value?.iconfontUrl];
     const wrapStyleObj = computed(() => {
       const { size, color } = props;
       const fontSize = typeof size === 'string' ? parseInt(size) : size;

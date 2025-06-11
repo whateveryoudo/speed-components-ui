@@ -167,15 +167,7 @@ export default defineConfig({
       include: ["ant-design-vue/es/locale/zh_CN", "@ant-design/icons-vue"],
     },
     ssr: {
-      noExternal: ["ant-design-vue", "@ant-design/icons-vue"]
-    },
-    build: {
-      rollupOptions: {
-        external: [/^speed-components-ui\/(components|hooks|utils|dist\/.*\.css)$/],
-        output: {
-          format: 'es'
-        }
-      }
+      noExternal: ["ant-design-vue", "@ant-design/icons-vue"],
     },
     server: {
       proxy: {

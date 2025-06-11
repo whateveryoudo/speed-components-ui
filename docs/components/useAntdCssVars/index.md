@@ -1,9 +1,15 @@
 # useAntdCssVars
 
+<script setup>
+
+  import ChangeTheme from './ChangeTheme.vue'
+</script>
+
 用于生成 Ant Design Vue 的 CSS 变量，支持在 CSS 中使用 Ant Design Vue 的主题变量。
 
 ::: tip 提示
-React 版本支持`theme` 属性设置为 `{ cssVar: true }`，Vue 这里采用手动挂载 style 元素
+1、这里采用手动挂载 style 元素 <br/>
+2、ssr不支持
 :::
 
 ## 功能特点
@@ -15,15 +21,37 @@ React 版本支持`theme` 属性设置为 `{ cssVar: true }`，Vue 这里采用�
 
 ## 使用方式
 
-```ts
-import { useAntdCssVars } from 'speed-components';
+```vue
+<template>
+  <a-config-provider :theme="themeConfig"> // 你的顶层页面 </a-config-provider>
+</template>
+<script setup lang="ts">
+import { useAntdCssVars } from "speed-components-ui/hooks";
+import { ref } from "vue";
+// 通antd主题配置相同
+const themeConfig = ref({
+  token: {
+    colorPrimary: "red",
+  },
+});
 
-// 在应用初始化时调用
-const cleanup = useAntdCssVars();
+// 如果你的页面使用了useAntdCssVars
+// 可以在应用初始化时传入
+const { cleanup, updateTheme } = useAntdCssVars(themeConfig.value);
 
-// 在应用卸载时清理
-cleanup();
+// 动态修改token示例
+setTimeout(() => {
+  themeConfig.value.token.colorPrimary = "blue";
+  // 这里要用update方法(内部没有监听themeConfig变化)
+  updateTheme(themeConfig.value);
+}, 1000);
+</script>
 ```
+
+### 示例 
+你可以点击下发按钮切换当前文档组件样式
+
+<ChangeTheme/>
 
 ## 生成的 CSS 变量
 
@@ -50,5 +78,4 @@ cleanup();
 
 1. 该 hook 使用 Ant Design Vue 的默认主题
 2. 变量名会自动转换为 kebab-case 格式
-3. 建议在应用初始化时调用一次即可
-4. 记得在应用卸载时调用清理函数 
+3. 页面的css使用场景不支持主题层级隔离（如：多层config-provider 实现同一页面不同 主题色）

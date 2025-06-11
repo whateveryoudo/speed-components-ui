@@ -1,4 +1,4 @@
-import type { ComponentResolver } from 'unplugin-vue-components/types'
+import type { ComponentResolver } from 'unplugin-vue-components'
 import { componentNames } from './components/auto-import'
 
 export interface SpeedComponentsResolverOptions {

@@ -1,13 +1,13 @@
 <!-- 单个过滤项组件 -->
 <template>
   <div :class="['item-wrapper', mode]">
-    <a-flex
+    <Flex
       justify="space-between"
       :class="mode === 'complex' ? 'w-full' : ''"
       align="center"
     >
       <span class="item-label" v-if="mode !== 'simple'" :title="item.label">{{ item.label }}</span>
-      <a-select
+      <Select
         v-if="mode === 'complex'"
         :dropdownMatchSelectWidth="100"
         style="flex-shrink: 0"
@@ -15,12 +15,12 @@
         :options="relOptions"
         :value="rel"
         @change="handleRelChange"
-      ></a-select>
-    </a-flex>
+      ></Select>
+    </Flex>
     <div class="item-value">
       <!-- 字符串 -->
       <template v-if="item.fieldType === 'input'">
-        <a-input
+        <Input
           v-model:value="model"
           :placeholder="placeholder"
           allow-clear
@@ -31,12 +31,12 @@
           <template #suffix v-if="item?.props?.hasSearchIcon">
             <SearchOutlined />
           </template>
-        </a-input>
+        </Input>
       </template>
 
       <!-- 数字 -->
       <template v-if="item.fieldType === 'inputNumber'">
-        <a-input-number
+        <InputNumber
           v-if="mode === 'complex' && item.fieldRel != 'scope'"
           v-model:value="model"
           :style="commonStyle"
@@ -53,14 +53,14 @@
       <!-- 日期 -->
       <template v-else-if="item.fieldType === 'date'">
         <!-- 范围 -->
-        <a-range-picker
+        <RangePicker
           v-if="item.fieldRel === 'scope'"
           :style="commonStyle"
           :placeholder="['起始日期', '结束日期']"
           v-model:value="model"
           :valueFormat="item?.props?.valueFormat ?? 'YYYY-MM-DD'"
         />
-        <a-date-picker
+        <DatePicker
           v-else
           :style="commonStyle"
           :placeholder="placeholder"
@@ -74,7 +74,7 @@
       <!-- 日期时间 -->
       <template v-else-if="item.fieldType === 'dateTime'">
         <!-- 范围 -->
-        <a-range-picker
+        <RangePicker
           v-if="item.fieldRel === 'scope'"
           :style="commonStyle"
           :placeholder="['起始日期', '结束日期']"
@@ -87,7 +87,7 @@
             ],
           }"
         />
-        <a-date-picker
+        <DatePicker
           v-else
           :style="commonStyle"
           :placeholder="placeholder"
@@ -100,14 +100,14 @@
       <!-- 时间 -->
       <template v-else-if="item.fieldType === 'time'">
         <!-- 范围 -->
-        <a-time-range-picker
+        <TimeRangePicker
           v-if="item.fieldRel === 'scope'"
           :style="commonStyle"
           :placeholder="['起始时间', '结束时间']"
           v-model:value="model"
           :valueFormat="item?.props?.valueFormat ?? 'HH:mm:ss'"
         />
-        <a-time-picker
+        <TimePicker
           v-else
           :style="commonStyle"
           :placeholder="placeholder"
@@ -118,7 +118,7 @@
 
       <!-- 日期范围 -->
       <template v-else-if="item.fieldType === 'dateRange'">
-        <a-range-picker
+        <RangePicker
           :style="commonStyle"
           :placeholder="item?.props?.placeholder ?? ['开始时间', '结束时间']"
           v-model:value="model"
@@ -128,7 +128,7 @@
 
       <!-- 日期时间范围 -->
       <template v-else-if="item.fieldType === 'dateTimeRange'">
-        <a-range-picker
+        <RangePicker
           :style="commonStyle"
           :placeholder="item?.props?.placeholder ?? ['开始时间', '结束时间']"
           v-model:value="model"
@@ -144,7 +144,7 @@
 
       <!-- Select -->
       <template v-if="item.fieldType === 'select'">
-        <a-select
+        <Select
           allow-clear
           :show-search="item?.props?.showSearch"
           :style="commonStyle"
@@ -155,14 +155,14 @@
           @change="handleSelectChange"
           style="min-width: 100px"
         >
-          <a-select-option
+          <SelectOption
             v-for="option in item.props?.options"
             :key="option.value"
             :value="option.value"
           >
             {{ option.label }}
-          </a-select-option>
-        </a-select>
+          </SelectOption>
+        </Select>
       </template>
 
       <!-- 自定义带请求的搜索 -->
@@ -171,7 +171,7 @@
           :style="commonStyle"
           :placeholder="placeholder"
           v-model:value="model"
-          :fetchFunc="item.props?.fetchFunc"
+          :fetchFunc="item.props?.fetchFunc!"
           :fieldNames="item.props?.fieldNames"
           :mode="item?.props?.mode"
           v-bind="item.props?.fetchOptions"
@@ -189,6 +189,19 @@ import type { IFieldType } from "./type";
 import ApiSelect from "../ApiSelect/index.vue";
 import RangeNum from "../RangeNum/index.vue";
 import { debounce } from "lodash-es";
+import { SearchOutlined } from "@ant-design/icons-vue";
+import { 
+  Input, 
+  Select, 
+  SelectOption, 
+  RangePicker, 
+  DatePicker, 
+  TimePicker, 
+  TimeRangePicker,
+  InputNumber,
+  Flex
+} from "ant-design-vue";
+
 defineOptions({
   name: "FilterItem",
 });

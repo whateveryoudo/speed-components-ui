@@ -9,7 +9,7 @@
 <template>
   <div class="toggle-input-wrapper">
     <span v-if="state.flag">
-      <a-input
+      <Input
         v-model:value="state.text"
         v-focus
         :style="{ width: inputWidth }"
@@ -53,7 +53,7 @@
 
 <script lang="ts" setup>
 import { reactive, watch } from 'vue';
-import { message } from 'ant-design-vue';
+import { Input } from 'ant-design-vue';
 /*eslint no-undef: "off"*/
 defineOptions({
   name: 'SToggleInput',

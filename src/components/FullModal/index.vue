@@ -8,9 +8,11 @@
 -->
 <script lang="ts" setup>
 import { watch, ref, type CSSProperties, watchEffect, computed } from "vue";
-import type { ButtonProps } from "ant-design-vue";
+import { type ButtonProps, Modal, Button, Space, Flex } from "ant-design-vue";
 import { useDraggable } from '@vueuse/core';
 import { FullscreenOutlined, FullscreenExitOutlined, CloseOutlined } from "@ant-design/icons-vue";
+import type { ButtonType } from 'ant-design-vue/es/button';
+
 // eslint-disable-next-line no-undef
 defineOptions({
   name: "SFullModal",
@@ -30,7 +32,7 @@ const props = withDefaults(
     okText?: string;
     okButtonProps?: ButtonProps;
     cancelButtonProps?: ButtonProps;
-    okType?: string;
+    okType?: ButtonType;
     closable?: boolean;
     confirmLoading?: boolean;
     showCancelBtn?: boolean;
@@ -189,7 +191,7 @@ watch(
 </script>
 <!-- overflowY高度一样也出现了滚动条？？ -->
 <template>
-  <a-modal :wrap-class-name="`full-base-modal ${isFullScreen ? 'full-screen' : ''}`" :body-style="{
+  <Modal :wrap-class-name="`full-base-modal ${isFullScreen ? 'full-screen' : ''}`" :body-style="{
     minHeight,
     maxHeight: isFullScreen ? '100vh' : maxHeight,
     height: typeof height === 'number'
@@ -217,15 +219,15 @@ watch(
           </slot>
           <!-- 右侧自定义按钮 -->
           <slot name="title-right">
-            <a-space class="title-right">
-              <a-button type="text" v-if="allowFullScreen">
+            <Space class="title-right">
+              <Button type="text" v-if="allowFullScreen">
                 <FullscreenExitOutlined v-if="isFullScreen" @click.stop="toggleFullScreen" />
                 <FullscreenOutlined v-else @click.stop="toggleFullScreen" />
-              </a-button>
-              <a-button type="text" v-if="closable" @click.stop="handleClose">
+              </Button>
+              <Button type="text" v-if="closable" @click.stop="handleClose">
                 <CloseOutlined />
-              </a-button>
-            </a-space>
+              </Button>
+            </Space>
           </slot>
         </div>
       </slot>
@@ -234,30 +236,29 @@ watch(
 
     <template #footer>
       <slot name="footer">
-        <a-flex align="center" :justify="$slots['footer-left'] ? 'space-between' : 'flex-end'" v-if="footer">
+        <Flex align="center" :justify="$slots['footer-left'] ? 'space-between' : 'flex-end'" v-if="footer">
           <slot name="footer-left">
           </slot>
           <!-- 支持右侧自定义按钮集合 -->
           <slot name="footer-right">
-            <a-space>
-              <a-button v-if="showCancelBtn" v-bind="cancelButtonProps" @click="handleClose">
+            <Space>
+              <Button v-if="showCancelBtn" v-bind="cancelButtonProps" @click="handleClose">
                 {{ cancelText }}
-              </a-button>
+              </Button>
 
-              <a-button :loading="confirmLoading" v-bind="okButtonProps ? okButtonProps : { type: okType }" @click="
+              <Button :loading="confirmLoading" v-bind="okButtonProps || { type: okType }" @click="
                 ($event: Event) => {
                   emits('ok', $event);
                 }
               ">
                 {{ okText }}
-              </a-button>
-            </a-space>
-
+              </Button>
+            </Space>
           </slot>
-        </a-flex>
+        </Flex>
       </slot>
     </template>
-  </a-modal>
+  </Modal>
 </template>
 
 <style lang="less">

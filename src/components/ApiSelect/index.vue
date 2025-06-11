@@ -1,5 +1,5 @@
 <template>
-  <a-select
+  <Select
     v-model:value="innerValue"
     :show-search="!!search"
     :mode="mode"
@@ -20,14 +20,16 @@
     "
   >
     <template v-if="fetching" #notFoundContent>
-      <a-spin size="small" />
+      <Spin size="small" />
     </template>
-  </a-select>
+  </Select>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { debounce } from "lodash-es";
+import { Select, Spin } from "ant-design-vue";
+import type { SelectValue, DefaultOptionType } from 'ant-design-vue/es/select';
 // eslint-disable-next-line no-undef
 defineOptions({
   name: "SApiSelect",
@@ -42,7 +44,7 @@ const props = withDefaults(
     fetchFunc: Function;
     fieldNames?: { label: string; value: string };
     fetchOptions?: IFetchOptions;
-    value?: any;
+    value?: SelectValue;
     mode?: "multiple";
     search?: {
       key: string;
@@ -54,7 +56,7 @@ const props = withDefaults(
   }
 );
 const emits = defineEmits(["update:value"]);
-let innerValue = ref();
+let innerValue = ref<SelectValue>();
 const searchVal = ref("");
 const fetching = ref(false);
 const data = ref<any[]>([]);
@@ -83,13 +85,13 @@ const handleSearch = (val: string) => {
     fetch();
   }
 };
-const handleChange = (val: string | any[], option: any) => {
-  emits("update:value", val, option);
+const handleChange = (value: SelectValue, option: DefaultOptionType | DefaultOptionType[]) => {
+  emits("update:value", value, option);
 };
 fetch();
 watch(
   () => props.value,
-  (val: any) => {
+  (val: SelectValue) => {
     innerValue.value = val;
   },
   {

@@ -7,7 +7,7 @@
  * @FilePath: \easycube-ui\src\widgets\globalComponents\KeymapTip.vue
 -->
 <template>
-  <a-tooltip v-bind="$attrs" :placement="placement">
+  <Tooltip v-bind="$attrs" :placement="placement">
     <template #title>
       <div class="keymap-tip-wrapper">
         <span v-if="title">{{ title }}</span>
@@ -18,10 +18,11 @@
       </div>
     </template>
     <slot></slot>
-  </a-tooltip>
+  </Tooltip>
 </template>
 
 <script setup lang="ts">
+import { Tooltip } from "ant-design-vue";
 
 // eslint-disable-next-line no-undef
 defineOptions({

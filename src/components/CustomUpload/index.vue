@@ -4,6 +4,8 @@ import { useCustomUpload, type IFileItem } from "@/hooks/useCustomUpload";
 import { Form } from "ant-design-vue";
 import { cloneDeep } from "lodash-es";
 import { acceptToMimeMap } from "./const";
+import { Upload, Button } from "ant-design-vue";
+import { UploadOutlined, PlusOutlined } from "@ant-design/icons-vue";
 defineOptions({
   name: "SCustomUpload",
 });
@@ -110,7 +112,7 @@ watch(
 </script>
 <template>
   <div>
-    <AUpload
+    <Upload
       v-bind="props"
       :file-list="previewFiles"
       :accept="accept"
@@ -126,15 +128,15 @@ watch(
       <template v-if="files.length < maxCount">
         <slot name="trigger" v-if="$slots.trigger" />
         <div v-else-if="type === 'picture'">
-          <plus-outlined />
+          <PlusOutlined />
           <div style="margin-top: 8px">上传图片</div>
         </div>
-        <a-button v-else>
-          <upload-outlined></upload-outlined>
+        <Button v-else>
+          <UploadOutlined></UploadOutlined>
           上传文件
-        </a-button>
+        </Button>
       </template>
-    </AUpload>
+    </Upload>
   </div>
 </template>
 <style lang="less" scoped>

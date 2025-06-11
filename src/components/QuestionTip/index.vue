@@ -11,7 +11,7 @@
   <span>
     {{ label }}
     <template v-if="true">
-      <a-tooltip
+      <Tooltip
         v-if="tip && theme === 'dark'"
         :placement="placement"
         v-bind="$attrs"
@@ -30,9 +30,9 @@
         <slot>
         <s-icon-font type="icon-question-circle" />
         </slot>
-      </a-tooltip>
+      </Tooltip>
       <!-- 白色提示 -->
-      <a-popover
+      <Popover
         v-if="tip && theme === 'white'"
         :title="false"
         :placement="placement"
@@ -52,13 +52,14 @@
         <slot>
           <s-icon-font type="icon-question-circle" />
         </slot>
-      </a-popover>
+      </Popover>
     </template>
   </span>
 </template>
 
 <script setup lang="ts">
 import { type TooltipPlacement } from 'ant-design-vue/es/tooltip/Tooltip';
+import { Tooltip, Popover } from 'ant-design-vue';
 
 // eslint-disable-next-line no-undef
 defineOptions({

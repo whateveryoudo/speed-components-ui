@@ -25,7 +25,7 @@
       >
         {{ formatFileSize(Number(file.fileSize)) }}
       </div>
-      <a-space class="right-actions" :size="5">
+      <Space class="right-actions" :size="5">
         <template v-if="mode !== 'list-simple'">
           <a class="text-primary" @click.stop="handlePreview"> 预览 </a>
           <a
@@ -50,11 +50,11 @@
           type="icon-close"
           @click.stop="emits('on-delete', file)"
         />
-      </a-space>
+      </Space>
     </div>
   </div>
 
-  <a-tooltip v-else :title="file.fileName" placement="top">
+  <Tooltip v-else :title="file.fileName" placement="top">
     <div class="file-preview-item-wrapper">
       <img ref="imgRef" :src="showPlacePic()" alt="" />
       <span class="actions-wrapper">
@@ -78,7 +78,7 @@
         @click.stop="emits('on-delete', file)"
       />
     </div>
-  </a-tooltip>
+  </Tooltip>
 </template>
 
 <script setup lang="ts">
@@ -94,6 +94,8 @@ import wordImg from "@/assets/image/word.png";
 import zipImg from "@/assets/image/zip.png";
 import { GlobalConfig } from "..";
 import { useCustomUpload } from "@/hooks";
+import { EyeOutlined, DownloadOutlined } from "@ant-design/icons-vue";
+import { Space, Tooltip } from "ant-design-vue";
 export type IFileItem = {
   id: string;
   previewUrl?: string;

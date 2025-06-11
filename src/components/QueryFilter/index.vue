@@ -1,13 +1,13 @@
 <!-- 配置式搜索:不支持联动操作, 不提供太多slot -->
 <template>
   <!-- 普通类型/复合类型 -->
-  <a-row
+  <Row
     :gutter="20"
     v-if="mode !== 'simple'"
     :class="['query-filter-wrapper', mode]"
   >
     <template v-for="(item, index) in innerFields" :key="item.fieldKey">
-      <a-col
+      <Col
         v-if="index < rowCount - 1 || (index > rowCount - 2 && isExpand)"
         :span="col"
       >
@@ -22,11 +22,11 @@
           @rel-change="(val) => handleRelChange(item, val)"
           @enter="handleEnterSearch"
         />
-      </a-col>
+      </Col>
     </template>
 
     <!-- Actions -->
-    <a-col
+    <Col
       v-if="showOpt"
       :span="col"
       :offset="optOffset"
@@ -34,15 +34,15 @@
       :style="{ marginTop: optOffset + 1 === 24 / props.col ? '10px' : 0 }"
     >
       <div class="opt-wrapper-inner">
-        <a-button @click="handleReset">
+        <Button @click="handleReset">
           <template #icon><RedoOutlined /></template>
           重置
-        </a-button>
-        <a-button type="primary" @click="handleSearch">
+        </Button>
+        <Button type="primary" @click="handleSearch">
           <template #icon><SearchOutlined /></template>
           查询
-        </a-button>
-        <a-button
+        </Button>
+        <Button
           v-if="fields.length > defaultDiplayCols"
           type="link"
           @click="isExpand = !isExpand"
@@ -52,10 +52,10 @@
             <UpOutlined v-if="isExpand" />
             <DownOutlined v-else />
           </template>
-        </a-button>
+        </Button>
       </div>
-    </a-col>
-  </a-row>
+    </Col>
+  </Row>
 
   <!-- 简洁版 -->
   <div v-else-if="mode === 'simple'">
@@ -106,6 +106,7 @@ import {
 import type { IFieldType } from "./type";
 import FilterItem from "./FilterItem.vue";
 import { htmlTypeRelMap } from "./const";
+import { Row, Col, Button, Space, Flex } from "ant-design-vue";
 defineOptions({
   name: "SQueryFilter",
 });

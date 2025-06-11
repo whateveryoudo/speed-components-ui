@@ -10,7 +10,7 @@
 <template>
   <div class="text-more-wrapper">
     <!-- 这里不用监听onEllipsis -->
-    <a-typography-paragraph
+    <TypographyParagraph
       v-if="ellipsis"
       :ellipsis="{
         rows: rows,
@@ -22,18 +22,21 @@
       }"
       :content="text"
     />
-    <a-typography-paragraph v-else>
+    <TypographyParagraph v-else>
       {{ text
       }}<span
         style="color: var(--ant-color-primary); margin-left: 5px;cursor:pointer"
         @click="ellipsis = true"
       >收起</span>
-    </a-typography-paragraph>
+    </TypographyParagraph>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { Typography } from 'ant-design-vue';
+const { Paragraph: TypographyParagraph } = Typography;
+
 // eslint-disable-next-line no-undef
 defineOptions({
   name: 'STextMore',

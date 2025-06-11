@@ -21,7 +21,7 @@
     >
       <template #item="{ element, index }">
         <div class="option-item">
-          <minus-circle-outlined
+          <MinusCircleOutlined
             class="minus-icon"
             @click="delOption(index)"
           />
@@ -47,7 +47,7 @@
       class="add-btn"
       @click="addOption"
     >
-      <plus-circle-outlined style="position: relative; top: 2px" />
+      <PlusCircleOutlined style="position: relative; top: 2px" />
       <span class="add-txt">{{ addText }}</span>
     </div>
   </div>
@@ -56,7 +56,8 @@
 <script lang="ts" setup>
   import draggable from 'vuedraggable';
   import { cloneDeep } from 'lodash-es';
-  import { ref, reactive, watch } from 'vue';
+  import { ref } from 'vue';
+  import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons-vue";
   /*eslint no-undef: "off"*/
   defineOptions({
     name: 'CDragList',

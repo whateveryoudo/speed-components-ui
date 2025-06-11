@@ -1,9 +1,8 @@
-import { h, type App } from "vue";
+import { h, ref, type App, provide } from "vue";
 import DefaultTheme from "vitepress/theme";
 import Antd from "ant-design-vue";
 import * as Icons from "@ant-design/icons-vue";
 import Demo from "./components/Demo.vue";
-import "@/assets/style/base.less";
 import "ant-design-vue/dist/reset.css";
 import "uno.css";
 import "./style.css";
@@ -18,19 +17,43 @@ import zhCN from "ant-design-vue/es/locale/zh_CN";
 
 // 根据环境动态导入
 const isDev = import.meta.env.NODE_ENV === "development";
+const themeConfig = ref({});
+let speedComsInstance: any = null;
+
+// 创建自定义 Layout 组件
+const CustomLayout = {
+  setup() {
+    // 在 Layout 组件中提供主题配置和方法
+    provide('theme', themeConfig);
+    provide('changeTheme', (config: any) => {
+      themeConfig.value = config;
+      if (speedComsInstance) {
+        speedComsInstance.updateTheme(config);
+      }
+    });
+
+    return () => h(
+      ConfigProvider,
+      {
+        locale: zhCN,
+        theme: themeConfig.value,
+      },
+      () => h(DefaultTheme.Layout)
+    );
+  }
+};
 
 export default {
   ...DefaultTheme,
   async enhanceApp({ app }: { app: App }) {
-    // 动态导入组件
+    // 动态导入组件（github CI报错？？）
     const SpeedComs = isDev
       ? (await import("../../../src/components")).default
-      : (await import("speed-components-ui/components")).default;
-    // 动态导入样式
-    if (!isDev) {
-      import("speed-components-ui/dist/style.css");
-    }
-
+      : (await import("../../../src/components")).default;
+    
+    // 保存 SpeedComs 实例
+    speedComsInstance = SpeedComs;
+    
     // 注册所有 Ant Design Vue 组件
     app.use(Antd);
     app.use(SpeedComs, {
@@ -57,14 +80,5 @@ export default {
     }
     app.component("Demo", Demo);
   },
-  Layout: () => {
-    // return h(DefaultTheme.Layout);
-    return h(
-      ConfigProvider,
-      {
-        locale: zhCN,
-      },
-      () => h(DefaultTheme.Layout)
-    );
-  },
+  Layout: CustomLayout
 };

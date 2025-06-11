@@ -1,7 +1,7 @@
 <!-- 这里单选 -->
 <template>
   <div class="tag-group-wrapper">
-    <a-space :size="gutter" wrap v-if="displayType === 'default'">
+    <Space :size="gutter" wrap v-if="displayType === 'default'">
       <div
         class="tag-item"
         :class="['tag-item', { 'tag-item-checked': getItemCheckedAll() }]"
@@ -30,32 +30,34 @@
         </template>
         {{ tag.label }}
       </div>
-    </a-space>
+    </Space>
 
     <!-- antd tag显示 -->
-    <a-space v-else :size="gutter" wrap>
-      <a-checkable-tag
+    <Space v-else :size="gutter" wrap>
+      <CheckableTag
         :checked="getItemCheckedAll()"
         @update:checked="handleSelectAll"
         v-if="totalConfig?.show"
       >
         全部
-      </a-checkable-tag>
-      <a-checkable-tag
+      </CheckableTag>
+      <CheckableTag
         v-for="tag in tags"
         :key="tag.value"
         :checked="getItemChecked(tag.value)"
         @update:checked="(checked: boolean) => handleChange(tag.value, checked)"
       >
         {{ tag.label }}
-      </a-checkable-tag>
-    </a-space>
+      </CheckableTag>
+    </Space>
   </div>
 </template>
 
 <script setup lang="ts">
 import { type VNode } from "vue";
-import { Form } from "ant-design-vue";
+import { Form, Space, Tag } from "ant-design-vue";
+const { CheckableTag } = Tag;
+
 export type TagItem = {
   icon?: string | VNode;
   iconColor?: string;
