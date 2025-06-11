@@ -171,7 +171,7 @@ export default defineConfig({
     },
     build: {
       rollupOptions: {
-        external: ["speed-components-ui/components"],
+        external: [/^speed-components-ui\/(components|hooks|utils|dist\/.*\.css)$/]
       },
     },
     server: {
