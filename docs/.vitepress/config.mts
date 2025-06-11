@@ -166,17 +166,13 @@ export default defineConfig({
     optimizeDeps: {
       include: [
         "ant-design-vue/es/locale/zh_CN",
-        "@ant-design/icons-vue",
-        "speed-components-ui/components",
-        "speed-components-ui/hooks",
-        "speed-components-ui/dist/style.css",
+        "@ant-design/icons-vue"        
       ],
     },
     ssr: {
       noExternal: [
         "ant-design-vue",
-        "@ant-design/icons-vue",
-        "speed-components-ui",
+        "@ant-design/icons-vue"
       ],
     },
     server: {
