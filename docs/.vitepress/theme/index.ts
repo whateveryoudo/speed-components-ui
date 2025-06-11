@@ -25,12 +25,11 @@ export default {
     // 动态导入组件
     const SpeedComs = isDev
       ? (await import("../../../src/components")).default
-      : (await import("../../../src/components")).default;
-    // : (await import('speed-components-ui/components')).default;
+      : (await import("speed-components-ui/components")).default;
     // 动态导入样式
-    // if (!isDev) {
-    //   import("speed-components-ui/dist/style.css");
-    // }
+    if (!isDev) {
+      import("speed-components-ui/dist/style.css");
+    }
 
     // 注册所有 Ant Design Vue 组件
     app.use(Antd);
