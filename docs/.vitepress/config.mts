@@ -111,6 +111,10 @@ export default defineConfig({
               text: "ContentEditor 内容编辑器",
               link: "/components/content-editor/index",
             },
+            {
+              text: "CustomTag 自定义标签",
+              link: "/components/custom-tag/index",
+            },
           ],
         },
         {
@@ -170,6 +174,7 @@ export default defineConfig({
       noExternal: ["ant-design-vue", "@ant-design/icons-vue"],
     },
     server: {
+      port: 3001,
       proxy: {
         [VITE_APP_BASE_URL]: {
           target: VITE_APP_BASE_PROXY_URL,

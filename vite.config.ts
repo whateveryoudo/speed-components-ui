@@ -4,6 +4,12 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 import UnoCSS from '@unocss/vite'
+import { rmSync } from 'fs'
+
+// 清理 dist 目录
+if (process.env.BUILD_MODE === 'lib') {
+  rmSync('dist', { recursive: true, force: true })
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,6 +19,8 @@ export default defineConfig({
     vueJsx(),
     dts({
       include: ['src/**/*.ts', 'src/**/*.d.ts', 'src/**/*.tsx', 'src/**/*.vue'],
+      insertTypesEntry: true, // 会自动为你的入口文件生成 .d.ts
+      outDir: 'dist',
     }),
     UnoCSS(),
   ],

@@ -14,9 +14,9 @@ import {
   computed,
   unref,
   watch,
-  inject
+  inject,
 } from "vue";
-import type { RequestResponse } from '..';
+import type { RequestResponse } from "..";
 import { uniqBy } from "lodash-es";
 type OptionsType = {
   extraParams?: Record<string, any>;
@@ -37,8 +37,8 @@ const defaultOptions = {
   hasPagination: true,
   hasSort: false,
   hasSelectedRows: [],
-  sortFieldKey: 'sortField',
-  sortOrderKey: 'sortOrder'
+  sortFieldKey: "sortField",
+  sortOrderKey: "sortOrder",
 };
 // 默认最大50
 export const defaultPageSizeOptions = ["10", "20", "50"];
@@ -50,7 +50,9 @@ export const useTable = (
   const loading = ref(false); // 通用请求loading
   const selectAllLoading = ref(false); // 全选请求loading
   const dataSource = ref<any[]>([]); // 选择请求返回数据
-  const speedComponentsConfig = inject<RequestResponse<any>>('speed-components-config');
+  const speedComponentsConfig = inject<RequestResponse<any>>(
+    "speed-components-config"
+  );
   const transformRequestRes = speedComponentsConfig?.value?.transformRequestRes;
   const useLoadConfig = speedComponentsConfig?.value?.useLoadConfig;
   // 整合默认配置和传入配置
@@ -63,8 +65,8 @@ export const useTable = (
   });
   const tableHeaderFilters = ref({}); // 表格头搜索条件
   const tableHeaderSorter = ref({
-    [String(options.value.sortFieldKey)]: '',
-    [String(options.value.sortOrderKey)]: ''
+    [String(options.value.sortFieldKey)]: "",
+    [String(options.value.sortOrderKey)]: "",
   }); // 表格头排序
   const emit = options.value.emit;
   const pagination = ref({
@@ -205,15 +207,15 @@ export const useTable = (
       res = await ajaxFnVal(
         options.value.hasPagination
           ? {
-              page: pagination.value.current,
-              size: pagination.value.pageSize,
+              [options.value.pageKey]: pagination.value.current,
+              [options.value.pageSizeKey]: pagination.value.pageSize,
               ...baseParams,
             }
           : baseParams
       );
       if (transformRequestRes) {
-        if (typeof transformRequestRes !== 'function') {
-          console.error('transformRequestRes应为一个函数');
+        if (typeof transformRequestRes !== "function") {
+          console.error("transformRequestRes应为一个函数");
         } else {
           res = transformRequestRes(res);
         }
@@ -283,7 +285,11 @@ export const useTable = (
     }
   };
   // 表格变化（分页，搜索，排序）
-  const handleTableChange = (page: { pageSize: number; current: number }, filters: any, sorter: any) => {
+  const handleTableChange = (
+    page: { pageSize: number; current: number },
+    filters: any,
+    sorter: any
+  ) => {
     console.log(filters, sorter);
     pagination.value.current = page.current;
     pagination.value.pageSize = page.pageSize;
@@ -291,8 +297,10 @@ export const useTable = (
       tableHeaderFilters.value = filters;
     }
     if (sorter) {
-      tableHeaderSorter.value[String(options.value.sortFieldKey)] = sorter.field;
-      tableHeaderSorter.value[String(options.value.sortOrderKey)] = sorter.order;
+      tableHeaderSorter.value[String(options.value.sortFieldKey)] =
+        sorter.field;
+      tableHeaderSorter.value[String(options.value.sortOrderKey)] =
+        sorter.order;
     }
 
     getList(false);
@@ -328,12 +336,18 @@ export const useLoadMore = (
   })
 ) => {
   const ajaxFnVal = unref(ajaxFn);
-  const speedComponentsConfig = inject<RequestResponse<any>>('speed-components-config');
+  const speedComponentsConfig = inject<RequestResponse<any>>(
+    "speed-components-config"
+  );
   const transformRequestRes = speedComponentsConfig?.value?.transformRequestRes;
   const useLoadConfig = speedComponentsConfig?.value?.useLoadConfig;
   // 整合默认配置和传入配置
   const options = computed(() => {
-    return { ...defaultLoadMoreOptions, ...extraOptions.value, ...useLoadConfig };
+    return {
+      ...defaultLoadMoreOptions,
+      ...extraOptions.value,
+      ...useLoadConfig,
+    };
   });
   const pageParams = reactive({
     page: 1,
@@ -353,8 +367,8 @@ export const useLoadMore = (
         ...options.value.extraParams,
       });
       if (transformRequestRes) {
-        if (typeof transformRequestRes !== 'function') {
-          console.error('transformRequestRes应为一个函数');
+        if (typeof transformRequestRes !== "function") {
+          console.error("transformRequestRes应为一个函数");
         } else {
           res = transformRequestRes(res);
         }

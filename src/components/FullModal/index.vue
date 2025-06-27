@@ -37,6 +37,7 @@ const props = withDefaults(
     confirmLoading?: boolean;
     showCancelBtn?: boolean;
     maskClosable?: boolean;
+    destroyOnClose?: boolean;
     footer?: boolean
     draggable?: boolean;
     fullScreen?: boolean;
@@ -59,6 +60,7 @@ const props = withDefaults(
     fullScreen: false,
     footer: true,
     draggable: false,
+    destroyOnClose: false,
     open: undefined, // 注：这样要显示设置undefined,否则isOpen获取到props.open会是false
     visible: undefined,
   }
@@ -199,7 +201,7 @@ watch(
       : height
     ,
     overflowY: 'auto',
-  }" :open="isOpen" :keyboard="false" destroy-on-close :closable="false" :width="width"
+  }" :open="isOpen" :keyboard="false" :destroy-on-close="destroyOnClose" :closable="false" :width="width"
     :mask-closable="maskClosable" @update:open="updateVisible" v-bind="$attrs">
     <slot />
     <template #modalRender="{ originVNode }">

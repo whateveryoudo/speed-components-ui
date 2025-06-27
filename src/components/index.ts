@@ -23,9 +23,13 @@ import ApiSelect from "./ApiSelect/index.vue";
 import ToggleInput from "./ToggleInput/index.vue";
 import ContentEditor from "./ContentEditor/index.vue";
 import CustomUpload from './CustomUpload/index.vue'
+import CustomTag from './CustomTag/index.vue'
 import { useAntdCssVars, type ThemeConfig } from "../hooks/useAntdCssVars";
 import { vFocus, vCopy, vView, vSelect, vLinkTransform } from "../directives";
 import type { RequestResponse } from "..";
+// 导入 UnoCSS 样式
+import 'uno.css'
+
 // 组件列表
 const components: Component[] = [
   FullModal,
@@ -43,6 +47,7 @@ const components: Component[] = [
   ToggleInput,
   ContentEditor,
   QuestionTip,
+  CustomTag,
   CustomUpload,
 ];
 
@@ -146,7 +151,8 @@ export { default as ToggleInput } from "./ToggleInput/index.vue";
 export { default as ContentEditor } from "./ContentEditor/index.vue";
 export { default as TextMore } from "./TextMore/index.vue";
 export { default as QuestionTip } from "./QuestionTip/index.vue";
-export { default as CustomUpload } from './CustomUpload/index.vue'
+export { default as CustomUpload } from "./CustomUpload/index.vue";
+export { default as STag } from "./CustomTag/index.vue";
 
 export default {
   install,
