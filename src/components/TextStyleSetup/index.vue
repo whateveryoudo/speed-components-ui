@@ -287,11 +287,11 @@ const handleOk = () => {
               <div class="config-item">
                 <span class="title">行高</span>
                 <div class="form-item">
-                  <a-slider
+                  <Slider
                     v-model:value="style.lineHeight"
                     :min="1"
                     :max="10"
-                    style="width: 100%"></a-slider>
+                    style="width: 100%"></Slider>
                 </div>
               </div>
             </div>
@@ -327,12 +327,12 @@ const handleOk = () => {
                 <ColorPicker v-model:color="style.gradientColor2" placeholder="结尾渐变色" />
               </div>
               <div class="form-item">
-                <a-slider
+                <Slider
                   v-model:value="style.gradientAngle"
                   :min="-180"
                   :max="180"
                   :step="10"
-                  style="width: 100%"></a-slider>
+                  style="width: 100%"></Slider>
               </div>
             </div>
           </div> -->
@@ -344,25 +344,25 @@ const handleOk = () => {
                 <ColorPicker v-model:color="style.shadowColor" placeholder="阴影颜色" />
               </div>
               <div class="form-item" style="margin-right: 10px">
-                <a-slider
+                <Slider
                   v-model:value="style.shadowX"
                   :min="-20"
                   :max="20"
-                  style="width: 100%"></a-slider>
+                  style="width: 100%"></Slider>
               </div>
               <div class="form-item" style="margin-right: 10px">
-                <a-slider
+                <Slider
                   v-model:value="style.shadowY"
                   :min="-20"
                   :max="20"
-                  style="width: 100%"></a-slider>
+                  style="width: 100%"></Slider>
               </div>
               <div class="form-item">
-                <a-slider
+                <Slider
                   v-model:value="style.shadowBlur"
                   :min="0"
                   :max="20"
-                  style="width: 100%"></a-slider>
+                  style="width: 100%"></Slider>
               </div>
             </div>
           </div> -->

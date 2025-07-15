@@ -1,6 +1,7 @@
 import {
   createElementBlock,
   defineComponent,
+  init_vue_runtime_esm_bundler,
   onMounted,
   openBlock,
   ref,
@@ -8,8 +9,11 @@ import {
   toRaw,
   watch,
   watchEffect
-} from "./chunk-5U2WJACE.js";
-import "./chunk-G3PMV62Z.js";
+} from "./chunk-IQIPIT2A.js";
+import "./chunk-V4OQ3NZ2.js";
+
+// node_modules/.pnpm/@wangeditor+editor-for-vue@5.1.12_@wangeditor+editor@5.1.23_vue@3.5.16_typescript@5.8.3_/node_modules/@wangeditor/editor-for-vue/dist/index.esm.js
+init_vue_runtime_esm_bundler();
 
 // node_modules/.pnpm/@wangeditor+editor@5.1.23/node_modules/@wangeditor/editor/dist/index.esm.js
 var e = "undefined" != typeof globalThis ? globalThis : "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : {};

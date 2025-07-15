@@ -6,6 +6,7 @@
   import { downloadFile } from '../../../../apis/common';
   /* REPLACE API_COMMON END */
   import { handleExceptDown } from '../../hooks/useDownload';
+  import { Popover } from 'ant-design-vue';
   const props = defineProps<{
     files: Array<{
       id: string;
@@ -34,7 +35,7 @@
 <template>
   <div class="file-list-viewer">
     <template v-if="type === 'image'">
-      <a-popover
+      <Popover
         placement="bottom"
         overlayClassName="preview-popover"
       >
@@ -69,10 +70,10 @@
             class="image-item"
           />
         </div>
-      </a-popover>
+      </Popover>
     </template>
     <template v-else>
-      <a-popover
+      <Popover
         placement="bottom"
         overlayClassName="preview-popover"
       >
@@ -113,7 +114,7 @@
             </span>
           </a>
         </div>
-      </a-popover>
+      </Popover>
     </template>
   </div>
 </template>

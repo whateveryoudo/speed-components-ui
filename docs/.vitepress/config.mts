@@ -115,6 +115,10 @@ export default defineConfig({
               text: "CustomTag 自定义标签",
               link: "/components/custom-tag/index",
             },
+            {
+              text: "ColorPicker 颜色选择器",
+              link: "/components/color-picker/index",
+            },
           ],
         },
         {

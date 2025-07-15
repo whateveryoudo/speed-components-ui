@@ -1,6 +1,6 @@
 import {
   __commonJS
-} from "./chunk-G3PMV62Z.js";
+} from "./chunk-V4OQ3NZ2.js";
 
 // node_modules/.pnpm/highlight.js@11.11.1/node_modules/highlight.js/lib/core.js
 var require_core = __commonJS({
@@ -1543,4 +1543,4 @@ var require_core = __commonJS({
 export {
   require_core
 };
-//# sourceMappingURL=chunk-4WYE2GUT.js.map
+//# sourceMappingURL=chunk-GMQUY4BE.js.map

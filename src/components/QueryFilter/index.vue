@@ -59,7 +59,7 @@
 
   <!-- 简洁版 -->
   <div v-else-if="mode === 'simple'">
-    <a-flex justify="flex-end" :style="{ gap: `0 ${gutter}px` }" wrap="wrap">
+    <Flex justify="flex-end" :style="{ gap: `0 ${gutter}px` }" wrap="wrap">
       <template v-for="(item, index) in innerFields" :key="item.fieldKey">
         <filter-item
           v-if="index < defaultDisplayCount || isExpand"
@@ -72,14 +72,14 @@
         />
       </template>
 
-      <a-space v-if="showOpt">
-        <a-button type="text" @click="handleReset" title="重置">
+      <Space v-if="showOpt">
+        <Button type="text" @click="handleReset" title="重置">
           <template #icon><RedoOutlined /></template>
-        </a-button>
-        <a-button type="text" @click="handleSearch" title="查询">
+        </Button>
+        <Button type="text" @click="handleSearch" title="查询">
           <template #icon><SearchOutlined /></template>
-        </a-button>
-        <a-button
+        </Button>
+        <Button
           v-if="fields.length > defaultDisplayCount"
           type="text"
           @click="isExpand = !isExpand"
@@ -88,9 +88,9 @@
           <template #icon
             ><UpOutlined v-if="isExpand" /><DownOutlined v-else
           /></template>
-        </a-button>
-      </a-space>
-    </a-flex>
+        </Button>
+      </Space>
+    </Flex>
   </div>
 </template>
 

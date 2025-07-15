@@ -17,11 +17,11 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    dts({
-      include: ['src/**/*.ts', 'src/**/*.d.ts', 'src/**/*.tsx', 'src/**/*.vue'],
-      insertTypesEntry: true, // 会自动为你的入口文件生成 .d.ts
-      outDir: 'dist',
-    }),
+    // dts({
+    //   include: ['src/**/*.ts', 'src/**/*.d.ts', 'src/**/*.tsx', 'src/**/*.vue'],
+    //   insertTypesEntry: true, // 会自动为你的入口文件生成 .d.ts
+    //   outDir: 'dist',
+    // }),
     UnoCSS(),
   ],
   resolve: {

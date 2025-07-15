@@ -1,16 +1,20 @@
 import {
   require_core
-} from "./chunk-4WYE2GUT.js";
+} from "./chunk-GMQUY4BE.js";
 import {
   computed,
   defineComponent,
   h,
+  init_vue_runtime_esm_bundler,
   ref,
   watch
-} from "./chunk-5U2WJACE.js";
+} from "./chunk-IQIPIT2A.js";
 import {
   __toESM
-} from "./chunk-G3PMV62Z.js";
+} from "./chunk-V4OQ3NZ2.js";
+
+// node_modules/.pnpm/@highlightjs+vue-plugin@2.1.2_highlight.js@11.11.1_vue@3.5.16_typescript@5.8.3_/node_modules/@highlightjs/vue-plugin/dist/highlightjs-vue.esm.min.js
+init_vue_runtime_esm_bundler();
 
 // node_modules/.pnpm/highlight.js@11.11.1/node_modules/highlight.js/es/core.js
 var import_core = __toESM(require_core());

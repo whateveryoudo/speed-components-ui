@@ -24,12 +24,13 @@ import ToggleInput from "./ToggleInput/index.vue";
 import ContentEditor from "./ContentEditor/index.vue";
 import CustomUpload from './CustomUpload/index.vue'
 import CustomTag from './CustomTag/index.vue'
+import ColorPicker from './ColorPicker/index.vue'
 import { useAntdCssVars, type ThemeConfig } from "../hooks/useAntdCssVars";
 import { vFocus, vCopy, vView, vSelect, vLinkTransform } from "../directives";
 import type { RequestResponse } from "..";
 // 导入 UnoCSS 样式
 import 'uno.css'
-
+import 'vue-color/style.css'
 // 组件列表
 const components: Component[] = [
   FullModal,
@@ -49,6 +50,7 @@ const components: Component[] = [
   QuestionTip,
   CustomTag,
   CustomUpload,
+  ColorPicker
 ];
 
 // AJAX 方法类型
@@ -101,7 +103,7 @@ let themeInstance: ReturnType<typeof useAntdCssVars> | null = null;
 
 // 更新主题方法
 export const updateTheme = (config: ThemeConfig) => {
-  if (themeInstance) {
+  if (themeInstance?.updateTheme) {
     themeInstance.updateTheme(config);
   }
 };
@@ -131,7 +133,7 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
   app.directive("link-transform", vLinkTransform);
   // 在应用卸载时清理
   app.unmount = () => {
-    themeInstance?.cleanup();
+    themeInstance?.cleanup?.();
     app.unmount();
   };
 };
@@ -153,10 +155,11 @@ export { default as TextMore } from "./TextMore/index.vue";
 export { default as QuestionTip } from "./QuestionTip/index.vue";
 export { default as CustomUpload } from "./CustomUpload/index.vue";
 export { default as STag } from "./CustomTag/index.vue";
+export { default as ColorPicker } from "./ColorPicker/index.vue";
 
 export default {
   install,
   setConfig,
   updateTheme,
-  version: "0.1.0",
+  version: "0.1.16",
 };

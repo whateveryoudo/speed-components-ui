@@ -4,6 +4,8 @@ import Antd from "ant-design-vue";
 import * as Icons from "@ant-design/icons-vue";
 import Demo from "./components/Demo.vue";
 import "ant-design-vue/dist/reset.css";
+import SpeedComs from "../../../dist/components.es.js";
+import "../../../dist/style.css";
 import "uno.css";
 import "./style.css";
 import {
@@ -47,10 +49,8 @@ export default {
   ...DefaultTheme,
   async enhanceApp({ app }: { app: App }) {
     // 动态导入组件（github CI报错？？）
-    const SpeedComs = isDev
-      ? (await import("../../../src/components")).default
-      : (await import("../../../src/components")).default;
-    
+    // const SpeedComs = (await import("../../../src/components")).default;
+    console.log(SpeedComs);
     // 保存 SpeedComs 实例
     speedComsInstance = SpeedComs;
     
@@ -58,13 +58,12 @@ export default {
     app.use(Antd);
     app.use(SpeedComs, {
       iconfontUrl: "//at.alicdn.com/t/c/font_3871804_pab634p3if.js", // 示例地址
-      baseURL: (import.meta as any).env.VITE_APP_BASE_URL,
       apis: {
         fileDownload: fileDownload,
         fileUploadSingle: fileUploadSingle,
         fileUploadMulti: fileUploadMulti,
         fileDel: fileDel,
-        getPreviewUrl: (fileId: string) => {
+        getPreviewUrl: async (fileId: string) => {
           // 实际情况替换为实际地址
           return (
             "//localhost:4000/attachment/preview/" +

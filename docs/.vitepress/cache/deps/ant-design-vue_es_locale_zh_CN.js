@@ -2,7 +2,7 @@ import {
   _extends,
   zh_CN_default
 } from "./chunk-2RBTTVNF.js";
-import "./chunk-G3PMV62Z.js";
+import "./chunk-V4OQ3NZ2.js";
 
 // node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.16_typescript@5.8.3_/node_modules/ant-design-vue/es/vc-picker/locale/zh_CN.js
 var locale = {
