@@ -38,7 +38,7 @@ const props = withDefaults(
     showCancelBtn?: boolean;
     maskClosable?: boolean;
     destroyOnClose?: boolean;
-    footer?: boolean
+    footer?: boolean | null
     draggable?: boolean;
     fullScreen?: boolean;
   }>(),
@@ -200,10 +200,11 @@ watch(
       ? height + 'px'
       : height
     ,
-    overflowY: 'auto',
+    overflowY: maxHeight === 'auto' ? 'initial' : 'auto', // 这里可能会出现不明滚动条
   }" :open="isOpen" :keyboard="false" :destroy-on-close="destroyOnClose" :closable="false" :width="width"
-    :mask-closable="maskClosable" @update:open="updateVisible" v-bind="$attrs">
+    :mask-closable="maskClosable" @update:open="updateVisible" v-bind="footer ? $attrs : { ...$attrs, footer: null }">
     <slot />
+
     <template #modalRender="{ originVNode }">
       <div :style="transformStyle">
         <component :is="originVNode" />
@@ -234,11 +235,9 @@ watch(
         </div>
       </slot>
     </template>
-    <!-- 这里没提供footer插槽了，如需自定义底部，设置footer为false -->
-
     <template #footer>
       <slot name="footer">
-        <Flex align="center" :justify="$slots['footer-left'] ? 'space-between' : 'flex-end'" v-if="footer">
+        <Flex align="center" :justify="$slots['footer-left'] ? 'space-between' : 'flex-end'">
           <slot name="footer-left">
           </slot>
           <!-- 支持右侧自定义按钮集合 -->

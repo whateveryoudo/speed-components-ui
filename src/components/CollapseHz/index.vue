@@ -11,7 +11,6 @@
 import { ref, watch } from "vue";
 import { DoubleRightOutlined, DoubleLeftOutlined } from "@ant-design/icons-vue";
 import { Tooltip } from "ant-design-vue";
-
 // eslint-disable-next-line no-undef
 defineOptions({
   name: "SCollapseHz",
@@ -82,7 +81,7 @@ watch(
 watch(
   () => props.triggerMode,
   (val?: "default" | "hover") => {
-    iconFlag.value = val === "default";
+    iconFlag.value = val === "hover";
   },
   {
     immediate: true,

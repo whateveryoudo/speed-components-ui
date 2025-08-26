@@ -110,7 +110,7 @@ export function useCustomUpload(
     const { file } = option;
     let fileList = [];
     // 兼容数组和单项
-    if (options.value.multiple && Array.isArray(file)) {
+    if (options.value.multiple && file?.length) {
       fileList = file;
       file.forEach((f: File) => {
         formData.append(options.value.name || "files[]", f);

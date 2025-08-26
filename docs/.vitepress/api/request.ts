@@ -35,6 +35,7 @@ const request = axios.create({
 });
 request.interceptors.request.use(
   (config: any) => {
+
     // 添加测试token
     config.headers["Authorization"] = `Bearer speed-test-token`;
     return config;

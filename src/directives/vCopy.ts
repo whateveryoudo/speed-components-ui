@@ -10,7 +10,7 @@ export const vCopy = {
         if (navigator.clipboard) {
           // clipboard api 复制
           navigator.clipboard.writeText(text)
-          message.success('复制成功')
+          message.success('复制成功');
         }
 
         // 通用做法

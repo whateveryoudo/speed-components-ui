@@ -63,10 +63,10 @@ export default {
         fileUploadSingle: fileUploadSingle,
         fileUploadMulti: fileUploadMulti,
         fileDel: fileDel,
-        getPreviewUrl: async (fileId: string) => {
+        getPreviewUrl: (fileId: string) => {
           // 实际情况替换为实际地址
           return (
-            "//localhost:4000/attachment/preview/" +
+            "//localhost:3005/attachment/preview/" +
             fileId +
             "?token=speed-test-token"
           );

@@ -3,12 +3,17 @@ import { resolve } from "path";
 import { fileURLToPath } from "url";
 import UnoCSS from "unocss/vite";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import { loadEnv } from 'vite';
+
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
+// 加载环境变量
+const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd() + '/docs');
+
 // 环境变量配置
-const VITE_APP_BASE_URL = process.env.VITE_APP_BASE_URL || "/api";
-const VITE_APP_BASE_PROXY_URL =
-  process.env.VITE_APP_BASE_PROXY_URL || "http://localhost:4000";
+const VITE_APP_BASE_URL = env.VITE_APP_BASE_URL || "/api";
+const VITE_APP_BASE_PROXY_URL = env.VITE_APP_BASE_PROXY_URL || "http://localhost:4000";
+
 
 // 根据环境判断 base 路径
 const base =
