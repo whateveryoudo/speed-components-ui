@@ -27,7 +27,7 @@ import CustomTag from './CustomTag/index.vue'
 import ColorPicker from './ColorPicker/index.vue'
 import { useAntdCssVars, type ThemeConfig } from "../hooks/useAntdCssVars";
 import { vFocus, vCopy, vView, vSelect, vLinkTransform } from "../directives";
-import type { RequestResponse } from "..";
+import type { RequestResponse } from "../global";
 // 导入 UnoCSS 样式
 import 'uno.css'
 import 'vue-color/style.css'

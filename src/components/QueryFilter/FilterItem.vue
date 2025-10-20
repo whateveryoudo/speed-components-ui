@@ -14,7 +14,7 @@
         :bordered="false"
         :options="relOptions"
         :value="rel"
-        @change="handleRelChange"
+        @change="handleRelChange as any"
       ></Select>
     </Flex>
     <div class="item-value">
@@ -67,7 +67,7 @@
           v-model:value="model"
           :valueFormat="item?.props?.valueFormat ?? 'YYYY-MM-DD'"
           @change="handleSelectChange"
-          v-bind="item.props"
+          v-bind="item.props as any"
         />
       </template>
 
@@ -120,7 +120,7 @@
       <template v-else-if="item.fieldType === 'dateRange'">
         <RangePicker
           :style="commonStyle"
-          :placeholder="item?.props?.placeholder ?? ['开始时间', '结束时间']"
+          :placeholder="item?.props?.placeholder as string[] ?? ['开始时间', '结束时间']"
           v-model:value="model"
           :valueFormat="item?.props?.valueFormat ?? 'YYYY-MM-DD'"
         />
@@ -130,7 +130,7 @@
       <template v-else-if="item.fieldType === 'dateTimeRange'">
         <RangePicker
           :style="commonStyle"
-          :placeholder="item?.props?.placeholder ?? ['开始时间', '结束时间']"
+          :placeholder="item?.props?.placeholder as string[] ?? ['开始时间', '结束时间']"
           v-model:value="model"
           :valueFormat="item?.props?.valueFormat ?? 'YYYY-MM-DD HH:mm:ss'"
           :show-time="{
@@ -222,7 +222,7 @@ const emit = defineEmits<{
 }>();
 
 // 占位文字获取
-const placeholder = computed(() => {
+const placeholder = computed<any>(() => {
   let basePrefix = "";
   if (
     ["select", "selectSearch", "time", "date", "dateTime"].includes(

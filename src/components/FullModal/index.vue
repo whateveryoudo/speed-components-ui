@@ -41,6 +41,7 @@ const props = withDefaults(
     footer?: boolean | null
     draggable?: boolean;
     fullScreen?: boolean;
+    overflowY?: boolean;
   }>(),
   {
     title: "弹框标题",
@@ -63,6 +64,7 @@ const props = withDefaults(
     destroyOnClose: false,
     open: undefined, // 注：这样要显示设置undefined,否则isOpen获取到props.open会是false
     visible: undefined,
+    overflowY: true, // 是默认开启最大滚动
   }
 );
 
@@ -191,7 +193,7 @@ watch(
   }
 );
 </script>
-<!-- overflowY高度一样也出现了滚动条？？ -->
+<!-- overflowY高度一样也出现了滚动条？？某些场景下line-height会导致滚动条出现，你可以设置max-height:auto或者overflow-y:false来去掉滚动属性 -->
 <template>
   <Modal :wrap-class-name="`full-base-modal ${isFullScreen ? 'full-screen' : ''}`" :body-style="{
     minHeight,
@@ -200,7 +202,7 @@ watch(
       ? height + 'px'
       : height
     ,
-    overflowY: maxHeight === 'auto' ? 'initial' : 'auto', // 这里可能会出现不明滚动条
+    overflowY: (maxHeight === 'auto'|| !overflowY) ? 'initial' : 'auto', // 这里可能会出现不明滚动条
   }" :open="isOpen" :keyboard="false" :destroy-on-close="destroyOnClose" :closable="false" :width="width"
     :mask-closable="maskClosable" @update:open="updateVisible" v-bind="footer ? $attrs : { ...$attrs, footer: null }">
     <slot />

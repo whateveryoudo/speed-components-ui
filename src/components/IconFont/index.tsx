@@ -7,10 +7,17 @@
  * @FilePath: \easycube-apps\packages\components\src\globalComponents\IconFont\index.tsx
  */
 
-import { type PropType, defineComponent, computed, unref, inject, ref } from 'vue';
-import { createFromIconfontCN } from '@ant-design/icons-vue';
+import {
+  type PropType,
+  defineComponent,
+  computed,
+  unref,
+  inject,
+  ref,
+} from "vue";
+import { createFromIconfontCN } from "@ant-design/icons-vue";
 export default defineComponent({
-  name: 'SIconFont',
+  name: "SIconFont",
   props: {
     iconRender: {
       type: Function,
@@ -18,15 +25,15 @@ export default defineComponent({
     },
     type: {
       type: String as PropType<string>,
-      default: '',
+      default: "",
     },
     prefix: {
       type: String,
-      default: 'icon-',
+      default: "icon-",
     },
     color: {
       type: String,
-      default: '',
+      default: "",
     },
     size: {
       type: [String, Number] as PropType<string | number>,
@@ -45,17 +52,25 @@ export default defineComponent({
       default: () => {},
     },
   },
-  setup(props, { attrs, }) {
-    const config = inject('speed-components-config', ref({
-      iconfontUrl: ''
-    }));
-    // 这里加入内置的图标
-    let scriptUrls = ['//at.alicdn.com/t/c/font_4946230_7d6dp217fih.js', config?.value?.iconfontUrl];
+  setup(props, { attrs }) {
+    const config = inject(
+      "speed-components-config",
+      ref({
+        iconfontUrl: "",
+      })
+    );
+    // 这里加入内置的图标(兼容数组注入)
+    let scriptUrls = [
+      "//at.alicdn.com/t/c/font_4946230_7d6dp217fih.js",
+      ...(Array.isArray(config?.value?.iconfontUrl)
+        ? config?.value?.iconfontUrl
+        : [config?.value?.iconfontUrl]),
+    ];
     const wrapStyleObj = computed(() => {
       const { size, color } = props;
-      const fontSize = typeof size === 'string' ? parseInt(size) : size;
+      const fontSize = typeof size === "string" ? parseInt(size) : size;
       return {
-        fontSize: fontSize + 'px',
+        fontSize: fontSize + "px",
         color,
       };
     });
@@ -63,7 +78,7 @@ export default defineComponent({
       return () => {
         return (
           <props.iconRender
-            style={{ color: props.color, fontSize: props.size + 'px' }}
+            style={{ color: props.color, fontSize: props.size + "px" }}
           />
         );
       };

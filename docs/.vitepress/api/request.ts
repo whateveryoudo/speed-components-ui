@@ -10,8 +10,8 @@ import axios, { AxiosError } from "axios";
 import { message } from "ant-design-vue";
 // 统一配置请求返回数据类型
 export type ResponseType<T = any> = {
-  errCode: number;
-  errMessage: string;
+  code: number;
+  message: string;
   success: boolean;
   data: T;
   [key: string]: any;
@@ -63,8 +63,8 @@ request.interceptors.response.use(
         return data;
       }
       message.destroy();
-      message.error(data.errMessage || "服务器开小差啦，请稍后再试");
-      return Promise.reject(data.errMessage);
+      message.error(data.message || "服务器开小差啦，请稍后再试");
+      return Promise.reject(data.message);
     }
   },
   (error: AxiosError) => {
@@ -73,7 +73,7 @@ request.interceptors.response.use(
     if (error.response) {
       message.destroy();
       message.error(
-        (error.response.data as any)?.errMessage! ||
+        (error.response.data as any)?.message! ||
           HTTP_CODE[error.response.status as keyof typeof HTTP_CODE] ||
           "服务器开小差啦，请稍后再试"
       );

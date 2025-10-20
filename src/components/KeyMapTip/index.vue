@@ -22,7 +22,9 @@
 </template>
 
 <script setup lang="ts">
+import type { PropType } from "vue";
 import { Tooltip } from "ant-design-vue";
+import type { TooltipPlacement } from "ant-design-vue/es/tooltip";
 
 // eslint-disable-next-line no-undef
 defineOptions({
@@ -40,7 +42,7 @@ defineProps({
     default: '',
   },
   placement: {
-    type: String,
+    type: String as PropType<TooltipPlacement>,
     default: 'bottom',
   },
 })

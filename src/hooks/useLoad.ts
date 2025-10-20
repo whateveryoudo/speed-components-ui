@@ -16,7 +16,7 @@ import {
   watch,
   inject,
 } from "vue";
-import type { RequestResponse } from "..";
+import type { RequestResponse } from "../global";
 import { uniqBy } from "lodash-es";
 type OptionsType = {
   extraParams?: Record<string, any>;

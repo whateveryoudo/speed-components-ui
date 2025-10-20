@@ -5,3 +5,5 @@ export type RequestResponse<T = unknown> = {
   totalPages?: number;
   [key: string]: any;
 };
+
+declare module '@wangeditor/editor-for-vue';

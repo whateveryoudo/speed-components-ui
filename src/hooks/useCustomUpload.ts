@@ -32,7 +32,8 @@ type IUploadOption = {
   data?: Record<string, any> | ((file: File) => Record<string, any>); // 上传所需参数或返回上传参数的方法
   transformResult?: (res: any) => any; // 上传结果转换
   onPreview?: (fileId: string) => void; // 预览文件的操作
-  afterUpload?: (files: any[]) => void; // 上传完成后执行得操作
+  afterUpload?: (files: any[], res: any) => void; // 上传完成后执行得操作(这里后端有响应则会调用)
+  uploadError?: (error: any) => void; // 上传失败后执行得操作,这里为后端接口错误回调
   afterDelete?: (files: any[]) => void; // 删除完成后执行得操作
 };
 type NewFileListType = Exclude<UploadProps["fileList"], undefined>;
@@ -42,7 +43,7 @@ export function useCustomUpload(
   const files = ref<any[]>([]); // 上传文件列表
   const uploadLoading = ref(false);
   const speedComsConfig = inject("speed-components-config", ref({ apis: {} }));
-  const options = computed<IUploadOption>(() => {
+  const options = computed<any>(() => {
     if (outOptions === undefined) {
       return speedComsConfig.value?.apis
         ? { apis: speedComsConfig.value?.apis }
@@ -152,7 +153,7 @@ export function useCustomUpload(
     const uids = fileList.map(() => getRandomId());
 
     // 添加所有文件到列表，状态为uploading
-    const filesToAdd = fileList.map((f, index) => ({
+    const filesToAdd = fileList.map((f: File, index: number) => ({
       uid: uids[index],
       fileName: f.name,
       status: "uploading",
@@ -196,11 +197,9 @@ export function useCustomUpload(
           }
         });
 
-        // 调用成功回调
-        option.afterUpload?.(files.value);
       } else {
         // 更新所有文件状态为错误
-        uids.forEach((uid) => {
+        uids.forEach((uid: string) => {
           const targetIndex = files.value.findIndex(
             (item: any) => item.uid === uid
           );
@@ -214,12 +213,12 @@ export function useCustomUpload(
         options?.value?.afterUpload &&
         typeof options.value.afterUpload === "function"
       ) {
-        options.value.afterUpload(files.value);
+        options.value.afterUpload(files.value , res);
       }
     } catch (error) {
       uploadLoading.value = false;
       // 更新所有文件状态为错误
-      uids.forEach((uid) => {
+      uids.forEach((uid: string) => {
         const targetIndex = files.value.findIndex(
           (item: any) => item.uid === uid
         );
@@ -227,6 +226,7 @@ export function useCustomUpload(
           files.value[targetIndex].status = "error";
         }
       });
+      options.value?.uploadError?.(error);
     }
   };
   const viewerInstance = ref();
@@ -317,13 +317,19 @@ export function useCustomUpload(
     }
   };
   // 图片/附件下载
-  const handleDownloadFile = async (file: IFileItem) => {
+  const handleDownloadFile = async (file: IFileItem | string) => {
+    // 兼容字符串和对象传入
+    const fileInfo = {
+      id: typeof file === "string" ? file : file.id,
+      fileName: typeof file === "string" ? '' : file.fileName,
+      className: typeof file === "string" ? '' : file.className,
+    }
     const fileDownload = options.value?.apis?.fileDownload;
     if (!fileDownload || typeof fileDownload !== "function") {
       throw new Error("文件下载方法缺失或传入的fileDownload不正确");
     }
-    const res = await fileDownload(file.id);
-    handleExceptDown(res, file.fileName, file?.className);
+    const res = await fileDownload(fileInfo.id);
+    handleExceptDown(res, fileInfo?.fileName, fileInfo?.className);
   };
   return {
     beforeUpload,

@@ -24,7 +24,7 @@ const Toolbar = ref();
 const formItemContext = Form.useInjectFormItemContext();
 if (isClient) {
   import("@wangeditor/editor/dist/css/style.css");
-  import("@wangeditor/editor-for-vue").then((module) => {
+  (import("@wangeditor/editor-for-vue") as any).then((module: any) => {
     Editor.value = module.Editor;
     Toolbar.value = module.Toolbar;
   });

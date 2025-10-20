@@ -79,10 +79,10 @@ const searchVal = ref("");
 // 区分单选多选
 const handleMenuClick = (item: any) => {
   const key = item[valueKey.value];
-  const tempItem = {};
+  const tempItem: Record<string, any> = {};
   // 生成单行结果值
   Object.keys(props.fieldNames).forEach((key) => {
-    tempItem[key] = item[props.fieldNames[key]] || "";
+    tempItem[key] = item[props.fieldNames[key as keyof typeof props.fieldNames]] || "";
   });
   if (props.mode === "single") {
     // 单选
@@ -200,7 +200,7 @@ watch(
           :bordered="false"
           allow-clear
           :placeholder="search?.placeholder ?? '请输入关键字'"
-          @change="handleSearchList"
+          @change="handleSearchList as any"
         >
           <template #prefix>
             <search-outlined />

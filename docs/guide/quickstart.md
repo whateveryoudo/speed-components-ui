@@ -36,8 +36,8 @@ yarn add speed-components-ui
 ``` ts
 // 统一配置请求返回数据类型
 export type ResponseType<T = any> = {
-  errCode: number;
-  errMessage: string;
+  code: number;
+  message: string;
   success: boolean;
   data: T;
   [key: string]: any;

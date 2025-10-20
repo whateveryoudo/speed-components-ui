@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
-import dts from 'vite-plugin-dts'
+import dts from 'unplugin-dts/vite'
 import UnoCSS from '@unocss/vite'
 import { rmSync } from 'fs'
 
@@ -13,15 +13,15 @@ if (process.env.BUILD_MODE === 'lib') {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  root: 'example',
+  root: process.env.BUILD_MODE === 'lib' ? '' : 'example',
   plugins: [
     vue(),
     vueJsx(),
-    // dts({
-    //   include: ['src/**/*.ts', 'src/**/*.d.ts', 'src/**/*.tsx', 'src/**/*.vue'],
-    //   insertTypesEntry: true, // 会自动为你的入口文件生成 .d.ts
-    //   outDir: 'dist',
-    // }),
+    dts({
+      tsconfigPath: './tsconfig.json',
+      processor: 'vue',
+      copyDtsFiles: true
+    }),
     UnoCSS(),
   ],
   resolve: {

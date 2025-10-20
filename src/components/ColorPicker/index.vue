@@ -52,7 +52,7 @@ const inputHandler = (color: string) => {
 <template>
     <div >
         <Input v-if="!$slots.default" :value="color" class="addon-input" :placeholder="placeholder" :bordered="false"
-            @input="emits('update:color', $event.target.value)">
+            @input="emits('update:color', $event.target.value!)">
             <template #addonBefore>
                 <Popover :title="false" trigger="click" destroy-tooltip-on-hide
                     overlay-class-name="color-picker-popover" :placement="placement">

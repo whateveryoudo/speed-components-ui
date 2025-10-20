@@ -141,7 +141,7 @@ export const constructQueryFilterByColumns = (columns: any) => {
             label: item.title,
             fieldKey: item.dataIndex,
             fieldType: item.queryConfig,
-            props: fieldTypeMap[item.queryConfig]?.props ?? {},
+            props: fieldTypeMap[item.queryConfig as keyof typeof fieldTypeMap]?.props ?? {},
           };
         }
       } else {
