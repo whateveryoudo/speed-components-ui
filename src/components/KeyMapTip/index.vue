@@ -3,11 +3,11 @@
  * @Date: 2022-12-16 17:30:55
  * @LastEditTime: 2023-03-03 14:50:19
  * @LastEditors: your name
- * @Description: 带有快捷键tip显示
+ * @Description: 带有快捷键tip显示(支持title null传入不显示tip)
  * @FilePath: \easycube-ui\src\widgets\globalComponents\KeymapTip.vue
 -->
 <template>
-  <Tooltip v-bind="$attrs" :placement="placement">
+  <Tooltip v-bind="$attrs" :placement="placement" v-if="title !== null">
     <template #title>
       <div class="keymap-tip-wrapper">
         <span v-if="title">{{ title }}</span>
@@ -19,10 +19,10 @@
     </template>
     <slot></slot>
   </Tooltip>
+  <slot v-else></slot>
 </template>
 
 <script setup lang="ts">
-import type { PropType } from "vue";
 import { Tooltip } from "ant-design-vue";
 import type { TooltipPlacement } from "ant-design-vue/es/tooltip";
 
@@ -31,20 +31,14 @@ defineOptions({
   name: 'SKeymapTip',
   inheritAttrs: false
 })
-
-defineProps({
-  title: {
-    type: String,
-    default: '',
-  },
-  keyMap: {
-    type: String,
-    default: '',
-  },
-  placement: {
-    type: String as PropType<TooltipPlacement>,
-    default: 'bottom',
-  },
+withDefaults(defineProps<{
+  title: string | null;
+  keyMap: string | null;
+  placement: TooltipPlacement;
+}>(), {
+  title: '',
+  keyMap: '',
+  placement: 'bottom',
 })
 </script>
 

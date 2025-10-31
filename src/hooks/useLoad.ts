@@ -55,9 +55,9 @@ export const useTable = (
   );
   const transformRequestRes = speedComponentsConfig?.value?.transformRequestRes;
   const useLoadConfig = speedComponentsConfig?.value?.useLoadConfig;
-  // 整合默认配置和传入配置
+  // 整合默认配置和传入配置（优先级，option>use(xx)传入> default）
   const options = computed(() => {
-    return { ...defaultOptions, ...extraOptions.value, ...useLoadConfig };
+    return { ...defaultOptions,  ...useLoadConfig, ...extraOptions.value };
   });
   // 唯一key
   const rowKey = computed(() => {
