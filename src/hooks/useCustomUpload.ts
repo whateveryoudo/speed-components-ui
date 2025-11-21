@@ -42,15 +42,22 @@ export function useCustomUpload(
 ) {
   const files = ref<any[]>([]); // 上传文件列表
   const uploadLoading = ref(false);
-  const speedComsConfig = inject("speed-components-config", ref({ apis: {} }));
+  const speedComsConfig = inject("speed-components-config", ref({ apis: {}, transformFileItem: null }));
   const options = computed<any>(() => {
     if (outOptions === undefined) {
       return speedComsConfig.value?.apis
-        ? { apis: speedComsConfig.value?.apis }
+        ? {
+            apis: speedComsConfig.value?.apis,
+            transformResult: speedComsConfig.value?.transformFileItem,
+          }
         : {}; // 如果没有外部传入，则使用默认配置
     }
     return speedComsConfig.value?.apis
-      ? { apis: speedComsConfig.value?.apis, ...outOptions.value }
+      ? {
+          apis: speedComsConfig.value?.apis,
+          transformResult: speedComsConfig.value?.transformFileItem,
+          ...outOptions.value,
+        }
       : outOptions.value; // 整合apis选项
   });
   const beforeUpload = (
@@ -106,7 +113,7 @@ export function useCustomUpload(
         return;
       }
     }
-    
+
     let formData = new FormData();
     const { file } = option;
     let fileList = [];
@@ -196,7 +203,6 @@ export function useCustomUpload(
             files.value[targetIndex] = { ...item, status: "done" };
           }
         });
-
       } else {
         // 更新所有文件状态为错误
         uids.forEach((uid: string) => {
@@ -213,7 +219,7 @@ export function useCustomUpload(
         options?.value?.afterUpload &&
         typeof options.value.afterUpload === "function"
       ) {
-        options.value.afterUpload(files.value , res);
+        options.value.afterUpload(files.value, res);
       }
     } catch (error) {
       uploadLoading.value = false;
@@ -233,7 +239,7 @@ export function useCustomUpload(
   // 图片/附件删除
   const handleDelFile = async (file: IFileItem) => {
     const id = file.id;
-    if (!options?.value?.apis) {
+    if (!options?.value?.apis?.fileDel) {
       console.warn("未配置删除接口");
       // 仅更新files
       const delIndex = files.value.findIndex((item: any) => item.id === id);
@@ -321,9 +327,9 @@ export function useCustomUpload(
     // 兼容字符串和对象传入
     const fileInfo = {
       id: typeof file === "string" ? file : file.id,
-      fileName: typeof file === "string" ? '' : file.fileName,
-      className: typeof file === "string" ? '' : file.className,
-    }
+      fileName: typeof file === "string" ? "" : file.fileName,
+      className: typeof file === "string" ? "" : file.className,
+    };
     const fileDownload = options.value?.apis?.fileDownload;
     if (!fileDownload || typeof fileDownload !== "function") {
       throw new Error("文件下载方法缺失或传入的fileDownload不正确");

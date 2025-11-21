@@ -1,10 +1,10 @@
 import {
   _extends,
   zh_CN_default
-} from "./chunk-2RBTTVNF.js";
-import "./chunk-V4OQ3NZ2.js";
+} from "./chunk-TQIL43YH.js";
+import "./chunk-G3PMV62Z.js";
 
-// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.16_typescript@5.8.3_/node_modules/ant-design-vue/es/vc-picker/locale/zh_CN.js
+// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.24_typescript@5.9.3_/node_modules/ant-design-vue/es/vc-picker/locale/zh_CN.js
 var locale = {
   locale: "zh_CN",
   today: "今天",
@@ -35,14 +35,14 @@ var locale = {
 };
 var zh_CN_default2 = locale;
 
-// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.16_typescript@5.8.3_/node_modules/ant-design-vue/es/time-picker/locale/zh_CN.js
+// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.24_typescript@5.9.3_/node_modules/ant-design-vue/es/time-picker/locale/zh_CN.js
 var locale2 = {
   placeholder: "请选择时间",
   rangePlaceholder: ["开始时间", "结束时间"]
 };
 var zh_CN_default3 = locale2;
 
-// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.16_typescript@5.8.3_/node_modules/ant-design-vue/es/date-picker/locale/zh_CN.js
+// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.24_typescript@5.9.3_/node_modules/ant-design-vue/es/date-picker/locale/zh_CN.js
 var locale3 = {
   lang: _extends({
     placeholder: "请选择日期",
@@ -61,10 +61,10 @@ var locale3 = {
 locale3.lang.ok = "确定";
 var zh_CN_default4 = locale3;
 
-// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.16_typescript@5.8.3_/node_modules/ant-design-vue/es/calendar/locale/zh_CN.js
+// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.24_typescript@5.9.3_/node_modules/ant-design-vue/es/calendar/locale/zh_CN.js
 var zh_CN_default5 = zh_CN_default4;
 
-// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.16_typescript@5.8.3_/node_modules/ant-design-vue/es/locale/zh_CN.js
+// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.24_typescript@5.9.3_/node_modules/ant-design-vue/es/locale/zh_CN.js
 var typeTemplate = "${label}不是一个有效的${type}";
 var localeValues = {
   locale: "zh-cn",

@@ -69,7 +69,6 @@ import {
   hydrateOnVisible,
   initCustomFormatter,
   initDirectivesForSSR,
-  init_vue_runtime_esm_bundler,
   inject,
   isMemoSame,
   isProxy,
@@ -169,9 +168,8 @@ import {
   withMemo,
   withModifiers,
   withScopeId
-} from "./chunk-IQIPIT2A.js";
-import "./chunk-V4OQ3NZ2.js";
-init_vue_runtime_esm_bundler();
+} from "./chunk-2YTPUVVG.js";
+import "./chunk-G3PMV62Z.js";
 export {
   BaseTransition,
   BaseTransitionPropsValidators,

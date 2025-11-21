@@ -16,8 +16,14 @@ import {
   watch,
   inject,
 } from "vue";
-import type { RequestResponse } from "../global";
-import { uniqBy } from "lodash-es";
+
+import { uniqBy, merge } from "lodash-es";
+type RequestResponse<T> = {
+  value: T;
+  loading: boolean;
+  error: Error | null;
+  success: boolean;
+};
 type OptionsType = {
   extraParams?: Record<string, any>;
   rowKey?: string;
@@ -27,8 +33,14 @@ type OptionsType = {
   handleMultiRes?: (res: any) => any;
   fullRowsAjax?: any;
   emit?: any;
+  hasSort?: boolean;
   sortFieldKey?: string;
   sortOrderKey?: string;
+  sortValueMap?: {
+    "ascend": string,
+    "descend": string,
+  };
+ 
   [props: string]: any;
 };
 const defaultOptions = {
@@ -39,6 +51,10 @@ const defaultOptions = {
   hasSelectedRows: [],
   sortFieldKey: "sortField",
   sortOrderKey: "sortOrder",
+  sortValueMap: { 
+    "ascend": "ascend",
+    "descend": "descend",
+  },
 };
 // 默认最大50
 export const defaultPageSizeOptions = ["10", "20", "50"];
@@ -51,13 +67,13 @@ export const useTable = (
   const selectAllLoading = ref(false); // 全选请求loading
   const dataSource = ref<any[]>([]); // 选择请求返回数据
   const speedComponentsConfig = inject<RequestResponse<any>>(
-    "speed-components-config"
+    "speed-components-config",
   );
   const transformRequestRes = speedComponentsConfig?.value?.transformRequestRes;
   const useLoadConfig = speedComponentsConfig?.value?.useLoadConfig;
   // 整合默认配置和传入配置（优先级，option>use(xx)传入> default）
   const options = computed(() => {
-    return { ...defaultOptions,  ...useLoadConfig, ...extraOptions.value };
+    return merge({}, { ...defaultOptions,  ...useLoadConfig, ...extraOptions.value });
   });
   // 唯一key
   const rowKey = computed(() => {
@@ -288,9 +304,10 @@ export const useTable = (
   const handleTableChange = (
     page: { pageSize: number; current: number },
     filters: any,
-    sorter: any
+    sorter: any,
+    extra: any
   ) => {
-    console.log(filters, sorter);
+    console.log(page, filters, sorter, extra);
     pagination.value.current = page.current;
     pagination.value.pageSize = page.pageSize;
     if (filters) {
@@ -300,10 +317,12 @@ export const useTable = (
       tableHeaderSorter.value[String(options.value.sortFieldKey)] =
         sorter.field;
       tableHeaderSorter.value[String(options.value.sortOrderKey)] =
-        sorter.order;
+        options.value.sortValueMap?.[sorter.order];
     }
+    const action = extra?.action;
 
-    getList(false);
+    // 这里筛选和排序会重置页面（目前筛选和排序是无法受控的，不然需要外部配置太多的东西）
+    getList(action !== 'paginate');
   };
   // 处理列宽度变化
   const handleResizeColumn = (w: string | number, col: any) => {

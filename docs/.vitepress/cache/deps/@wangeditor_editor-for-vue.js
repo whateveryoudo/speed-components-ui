@@ -1,7 +1,6 @@
 import {
   createElementBlock,
   defineComponent,
-  init_vue_runtime_esm_bundler,
   onMounted,
   openBlock,
   ref,
@@ -9,11 +8,8 @@ import {
   toRaw,
   watch,
   watchEffect
-} from "./chunk-IQIPIT2A.js";
-import "./chunk-V4OQ3NZ2.js";
-
-// node_modules/.pnpm/@wangeditor+editor-for-vue@5.1.12_@wangeditor+editor@5.1.23_vue@3.5.16_typescript@5.8.3_/node_modules/@wangeditor/editor-for-vue/dist/index.esm.js
-init_vue_runtime_esm_bundler();
+} from "./chunk-2YTPUVVG.js";
+import "./chunk-G3PMV62Z.js";
 
 // node_modules/.pnpm/@wangeditor+editor@5.1.23/node_modules/@wangeditor/editor/dist/index.esm.js
 var e = "undefined" != typeof globalThis ? globalThis : "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : {};
@@ -24287,7 +24283,7 @@ function aye(e10) {
 }
 Zve.setSimpleToolbarConfig(oye);
 
-// node_modules/.pnpm/@wangeditor+editor-for-vue@5.1.12_@wangeditor+editor@5.1.23_vue@3.5.16_typescript@5.8.3_/node_modules/@wangeditor/editor-for-vue/dist/index.esm.js
+// node_modules/.pnpm/@wangeditor+editor-for-vue@5.1.12_@wangeditor+editor@5.1.23_vue@3.5.24_typescript@5.9.3_/node_modules/@wangeditor/editor-for-vue/dist/index.esm.js
 var __defProp = Object.defineProperty;
 var __defProps = Object.defineProperties;
 var __getOwnPropDescs = Object.getOwnPropertyDescriptors;

@@ -1,4 +1,4 @@
-// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.16_typescript@5.8.3_/node_modules/ant-design-vue/es/vc-pagination/locale/zh_CN.js
+// node_modules/.pnpm/ant-design-vue@4.2.6_vue@3.5.24_typescript@5.9.3_/node_modules/ant-design-vue/es/vc-pagination/locale/zh_CN.js
 var zh_CN_default = {
   // Options.jsx
   items_per_page: "条/页",
@@ -14,7 +14,7 @@ var zh_CN_default = {
   next_3: "向后 3 页"
 };
 
-// node_modules/.pnpm/@babel+runtime@7.27.6/node_modules/@babel/runtime/helpers/esm/extends.js
+// node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/esm/extends.js
 function _extends() {
   return _extends = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
@@ -29,4 +29,4 @@ export {
   zh_CN_default,
   _extends
 };
-//# sourceMappingURL=chunk-2RBTTVNF.js.map
+//# sourceMappingURL=chunk-TQIL43YH.js.map

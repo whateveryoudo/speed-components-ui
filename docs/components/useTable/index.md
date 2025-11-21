@@ -42,8 +42,10 @@
 | fullRowsAjax | 获取全量数据的请求函数 | `Function` | - |
 | emit | 事件发射器(可用于封装对外更新的hasSelectedRows),内部会触发`emit("update:hasSelectedRows", state.hasSelectedRows);` | `Function` | - |
 | needFullSelect | 是否需要全选功能(配套fullRowsAjax传入) | `boolean` | `false` |
-| sortFieldKey | 排序字段key | `string` | `sortField`
-| sortOrderKey | 排序方式key | `string` | `sortOrder`
+| hasSort | 是否启用排序功能 | `boolean` | `false` |
+| sortFieldKey | 排序字段key（请求参数中的字段名） | `string` | `sortField` |
+| sortOrderKey | 排序方式key（请求参数中的字段名） | `string` | `sortOrder` |
+| sortValueMap | 排序值映射（将 antd 的 ascend/descend 映射为后端需要的值） | `{ "ascend": string, "descend": string }` | `{ "ascend": "ascend", "descend": "descend" }` |
 | hasPagination | 是否启用分页（false下会隐藏分页，且去掉page,size参数） | `boolean` | `true` |
 | hasSelectedRows | 已选择的行数据（这里是全量数据集，包含跨页选择） | `any[]` | `[]` |
 
@@ -83,3 +85,28 @@
 ### 注意事项
 
 1. 内部会做倒页处理，如：第三页删除到最后一条，会向前一页请求数据。
+
+### 排序配置说明
+
+排序功能需要设置 `hasSort: true` 来启用。排序配置支持以下选项：
+
+- **hasSort**: 设置为 `true` 启用排序功能
+- **sortFieldKey**: 排序字段的参数名，默认为 `"sortField"`
+- **sortOrderKey**: 排序方式的参数名，默认为 `"sortOrder"`
+- **sortValueMap**: 排序值映射对象，用于将 antd Table 的 `ascend`/`descend` 映射为后端需要的值
+
+**使用示例：**
+
+```typescript
+const extraOptions = ref({
+  hasSort: true,
+  sortFieldKey: "orderBy",  // 自定义排序字段参数名
+  sortOrderKey: "orderType", // 自定义排序方式参数名
+  sortValueMap: {
+    "ascend": "ASC",    // 将 ascend 映射为 ASC
+    "descend": "DESC"   // 将 descend 映射为 DESC
+  }
+});
+```
+
+如果只需要自定义排序字段和排序方式，不传入 `sortValueMap`，则会使用默认映射 `{ "ascend": "ascend", "descend": "descend" }`。

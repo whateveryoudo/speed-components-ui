@@ -42,6 +42,7 @@ const uploadOption = computed(() => {
     name: props.name,
     data: props.data,
     afterUpload: (result: any[]) => {
+      debugger;
       emit("update:value", result);
       formItemContext && formItemContext.onFieldChange();
     },

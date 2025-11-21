@@ -23,6 +23,8 @@ const props = withDefaults(
     transitionAttr?: string;
     triggerMode?: "default" | "hover";
     expandDir: "left" | "right";
+    needTransition?: boolean;
+    showTriggerWhenCollapse?: boolean
   }>(),
   {
     open: false,
@@ -31,11 +33,13 @@ const props = withDefaults(
     expandAttrAfter: "flex: 0 0 320px",
     transitionAttr: "flex",
     expandDir: "left", // 展开方向，默认向左
+    needTransition: true,
+    showTriggerWhenCollapse: true
   }
 );
 const iconFlag = ref(true);
-const toggleFlag = ref(false);
-const controlPanel = ref(false); // 展开时内容延迟显示（否则会有一个宽度挤压）
+const toggleFlag = ref(props.open);
+const controlPanel = ref(props.open); // 展开时内容延迟显示（否则会有一个宽度挤压）
 const emits = defineEmits(["update:open"]);
 const toggleIcon = (type: "enter" | "leave") => {
   if (props.triggerMode === "hover") {
@@ -47,16 +51,21 @@ const handleSetToggle = () => {
   if (!toggleFlag.value) {
     toggleFlag.value = true;
     emits("update:open", true);
-    setTimeout(() => {
+    if (props.needTransition) {
+      setTimeout(() => {
+        controlPanel.value = true;
+      }, 100);
+    } else {
       controlPanel.value = true;
-    }, 100);
+    }
   } else {
     toggleFlag.value = false;
     controlPanel.value = false;
-    setTimeout(() => {
-      iconFlag.value = true; // 收起得时候显示
-    }, 100);
-
+    if (props.showTriggerWhenCollapse) {
+      setTimeout(() => {
+        iconFlag.value = true; // 收起得时候显示
+      }, 100);
+    }
     emits("update:open", false);
   }
 };
@@ -66,22 +75,24 @@ watch(
   (val: boolean) => {
     toggleFlag.value = true;
     if (val) {
-      setTimeout(() => {
+      // 如果带有过渡效果，则需要延迟显示
+      if (props.needTransition) {
+        setTimeout(() => {
+          controlPanel.value = true;
+        }, 200);
+      } else {
         controlPanel.value = true;
-      }, 200);
+      }
     } else {
       toggleFlag.value = false;
       controlPanel.value = false;
     }
   },
-  {
-    immediate: true,
-  }
 );
 watch(
   () => props.triggerMode,
   (val?: "default" | "hover") => {
-    iconFlag.value = val === "hover";
+    iconFlag.value = val === "default";
   },
   {
     immediate: true,
@@ -90,18 +101,13 @@ watch(
 </script>
 
 <template>
-  <div
-    class="collapse-horizontal-wrapper"
-    :style="[
-      toggleFlag ? expandAttrAfter : expandAttrBefore,
-      `transition: ${transitionAttr} 0.2s`,
-      'min-width: 0',
-    ]"
-    @mouseenter="toggleIcon('enter')"
-    @mouseleave="toggleIcon('leave')"
-  >
+  <div class="collapse-horizontal-wrapper" :style="[
+    toggleFlag ? expandAttrAfter : expandAttrBefore,
+    needTransition ? `transition: ${transitionAttr} 0.2s` : '',
+    'min-width: 0',
+  ]" @mouseenter="toggleIcon('enter')" @mouseleave="toggleIcon('leave')">
     <template v-if="iconFlag">
-      <slot name="trigger-render">
+      <slot name="trigger-render" :toggle-flag="toggleFlag">
         <Tooltip :placement="expandDir">
           <template #title>{{ toggleFlag ? "收起" : "展开" }}</template>
           <span :class="['toggle-icon', expandDir]" @click="handleSetToggle">
@@ -121,6 +127,7 @@ watch(
 .collapse-horizontal-wrapper {
   position: relative;
   height: 100%;
+
   .toggle-icon {
     position: absolute;
     top: 50%;
@@ -137,18 +144,22 @@ watch(
     color: #666 !important;
     left: -11px;
     z-index: 10;
+
     &:hover {
       background-color: #e8e8e8;
     }
+
     &.right {
       left: auto;
       right: -11px;
       transform: translateY(-50%) rotateZ(180deg);
+
       &.expand {
         right: -11px;
         transform: translateY(-50%) rotateZ(0);
       }
     }
+
     &.expand {
       transform: translateY(-50%) rotateZ(180deg);
     }

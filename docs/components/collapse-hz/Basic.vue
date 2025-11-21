@@ -4,12 +4,10 @@
       <div class="flex-1 border-1 border-solid border-[#efefef]">
         我是左侧内容
       </div>
-      <SCollapseHz
-        v-model:open="open"
-        :triggerMode="triggerMode"
-        expandAttrBefore="flex: 0 0 64px"
-        expandAttrAfter="flex: 0 0 200px"
-      >
+      <SCollapseHz v-model:open="open" :triggerMode="triggerMode" expandAttrBefore="flex: 0 0 64px"
+        expandAttrAfter="flex: 0 0 200px" :needTransition="false"
+        :showTriggerWhenCollapse="false"
+        >
         <template #expand-render>
           <div>我是展开的流程日志</div>
         </template>
@@ -24,13 +22,8 @@
       </SCollapseHz>
     </div>
     <div class="flex h-[300px]" v-else>
-      <SCollapseHz
-        expandDir="right"
-        :triggerMode="triggerMode"
-        v-model:open="open"
-        expandAttrBefore="flex: 0 0 64px"
-        expandAttrAfter="flex: 0 0 200px"
-      >
+      <SCollapseHz expandDir="right" :triggerMode="triggerMode" v-model:open="open" expandAttrBefore="flex: 0 0 64px"
+        expandAttrAfter="flex: 0 0 200px">
         <template #expand-render>
           <div>我是展开的流程日志</div>
         </template>
@@ -172,12 +165,15 @@ const triggerMode = ref("default");
     align-items: center;
     transition: all 0.1s;
     cursor: pointer;
+
     :deep(.ant-icon) {
       margin-bottom: 5px;
     }
+
     .text {
       font-size: 12px;
     }
+
     &:hover {
       background-color: #f5f6f8;
     }

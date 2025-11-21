@@ -7,7 +7,6 @@ import {
   createElementBlock,
   createVNode,
   defineComponent,
-  init_vue_runtime_esm_bundler,
   isRef,
   mergeProps,
   normalizeClass,
@@ -25,30 +24,29 @@ import {
   withCtx,
   withDirectives,
   withKeys
-} from "./chunk-IQIPIT2A.js";
-import "./chunk-V4OQ3NZ2.js";
+} from "./chunk-2YTPUVVG.js";
+import "./chunk-G3PMV62Z.js";
 
-// node_modules/.pnpm/vue-color@3.2.0_vue@3.5.16_typescript@5.8.3_/node_modules/vue-color/dist/vue-color.js
-init_vue_runtime_esm_bundler();
-function ue(e) {
+// node_modules/.pnpm/vue-color@3.3.3_vue@3.5.24_typescript@5.9.3_/node_modules/vue-color/dist/vue-color.js
+function be(e) {
   "@babel/helpers - typeof";
-  return ue = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(a) {
+  return be = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(a) {
     return typeof a;
   } : function(a) {
     return a && typeof Symbol == "function" && a.constructor === Symbol && a !== Symbol.prototype ? "symbol" : typeof a;
-  }, ue(e);
+  }, be(e);
 }
-var Ue = /^\s+/;
-var Oe = /\s+$/;
-function h(e, a) {
-  if (e = e || "", a = a || {}, e instanceof h)
+var ze = /^\s+/;
+var je = /\s+$/;
+function g(e, a) {
+  if (e = e || "", a = a || {}, e instanceof g)
     return e;
-  if (!(this instanceof h))
-    return new h(e, a);
-  var t = Ke(e);
+  if (!(this instanceof g))
+    return new g(e, a);
+  var t = Xe(e);
   this._originalInput = e, this._r = t.r, this._g = t.g, this._b = t.b, this._a = t.a, this._roundA = Math.round(100 * this._a) / 100, this._format = a.format || t.format, this._gradientType = a.gradientType, this._r < 1 && (this._r = Math.round(this._r)), this._g < 1 && (this._g = Math.round(this._g)), this._b < 1 && (this._b = Math.round(this._b)), this._ok = t.ok;
 }
-h.prototype = {
+g.prototype = {
   isDark: function() {
     return this.getBrightness() < 128;
   },
@@ -72,14 +70,14 @@ h.prototype = {
     return (a.r * 299 + a.g * 587 + a.b * 114) / 1e3;
   },
   getLuminance: function() {
-    var a = this.toRgb(), t, r, n, l, s, o;
-    return t = a.r / 255, r = a.g / 255, n = a.b / 255, t <= 0.03928 ? l = t / 12.92 : l = Math.pow((t + 0.055) / 1.055, 2.4), r <= 0.03928 ? s = r / 12.92 : s = Math.pow((r + 0.055) / 1.055, 2.4), n <= 0.03928 ? o = n / 12.92 : o = Math.pow((n + 0.055) / 1.055, 2.4), 0.2126 * l + 0.7152 * s + 0.0722 * o;
+    var a = this.toRgb(), t, r, l, n, i, o;
+    return t = a.r / 255, r = a.g / 255, l = a.b / 255, t <= 0.03928 ? n = t / 12.92 : n = Math.pow((t + 0.055) / 1.055, 2.4), r <= 0.03928 ? i = r / 12.92 : i = Math.pow((r + 0.055) / 1.055, 2.4), l <= 0.03928 ? o = l / 12.92 : o = Math.pow((l + 0.055) / 1.055, 2.4), 0.2126 * n + 0.7152 * i + 0.0722 * o;
   },
   setAlpha: function(a) {
-    return this._a = Be(a), this._roundA = Math.round(100 * this._a) / 100, this;
+    return this._a = Te(a), this._roundA = Math.round(100 * this._a) / 100, this;
   },
   toHsv: function() {
-    var a = Me(this._r, this._g, this._b);
+    var a = Re(this._r, this._g, this._b);
     return {
       h: a.h * 360,
       s: a.s,
@@ -88,11 +86,11 @@ h.prototype = {
     };
   },
   toHsvString: function() {
-    var a = Me(this._r, this._g, this._b), t = Math.round(a.h * 360), r = Math.round(a.s * 100), n = Math.round(a.v * 100);
-    return this._a == 1 ? "hsv(" + t + ", " + r + "%, " + n + "%)" : "hsva(" + t + ", " + r + "%, " + n + "%, " + this._roundA + ")";
+    var a = Re(this._r, this._g, this._b), t = Math.round(a.h * 360), r = Math.round(a.s * 100), l = Math.round(a.v * 100);
+    return this._a == 1 ? "hsv(" + t + ", " + r + "%, " + l + "%)" : "hsva(" + t + ", " + r + "%, " + l + "%, " + this._roundA + ")";
   },
   toHsl: function() {
-    var a = Fe(this._r, this._g, this._b);
+    var a = Me(this._r, this._g, this._b);
     return {
       h: a.h * 360,
       s: a.s,
@@ -101,17 +99,17 @@ h.prototype = {
     };
   },
   toHslString: function() {
-    var a = Fe(this._r, this._g, this._b), t = Math.round(a.h * 360), r = Math.round(a.s * 100), n = Math.round(a.l * 100);
-    return this._a == 1 ? "hsl(" + t + ", " + r + "%, " + n + "%)" : "hsla(" + t + ", " + r + "%, " + n + "%, " + this._roundA + ")";
+    var a = Me(this._r, this._g, this._b), t = Math.round(a.h * 360), r = Math.round(a.s * 100), l = Math.round(a.l * 100);
+    return this._a == 1 ? "hsl(" + t + ", " + r + "%, " + l + "%)" : "hsla(" + t + ", " + r + "%, " + l + "%, " + this._roundA + ")";
   },
   toHex: function(a) {
-    return Se(this._r, this._g, this._b, a);
+    return He(this._r, this._g, this._b, a);
   },
   toHexString: function(a) {
     return "#" + this.toHex(a);
   },
   toHex8: function(a) {
-    return Xe(this._r, this._g, this._b, this._a, a);
+    return Ze(this._r, this._g, this._b, this._a, a);
   },
   toHex8String: function(a) {
     return "#" + this.toHex8(a);
@@ -139,93 +137,93 @@ h.prototype = {
     return this._a == 1 ? "rgb(" + Math.round(L(this._r, 255) * 100) + "%, " + Math.round(L(this._g, 255) * 100) + "%, " + Math.round(L(this._b, 255) * 100) + "%)" : "rgba(" + Math.round(L(this._r, 255) * 100) + "%, " + Math.round(L(this._g, 255) * 100) + "%, " + Math.round(L(this._b, 255) * 100) + "%, " + this._roundA + ")";
   },
   toName: function() {
-    return this._a === 0 ? "transparent" : this._a < 1 ? false : lt[Se(this._r, this._g, this._b, true)] || false;
+    return this._a === 0 ? "transparent" : this._a < 1 ? false : ut[He(this._r, this._g, this._b, true)] || false;
   },
   toFilter: function(a) {
-    var t = "#" + $e(this._r, this._g, this._b, this._a), r = t, n = this._gradientType ? "GradientType = 1, " : "";
+    var t = "#" + Ve(this._r, this._g, this._b, this._a), r = t, l = this._gradientType ? "GradientType = 1, " : "";
     if (a) {
-      var l = h(a);
-      r = "#" + $e(l._r, l._g, l._b, l._a);
+      var n = g(a);
+      r = "#" + Ve(n._r, n._g, n._b, n._a);
     }
-    return "progid:DXImageTransform.Microsoft.gradient(" + n + "startColorstr=" + t + ",endColorstr=" + r + ")";
+    return "progid:DXImageTransform.Microsoft.gradient(" + l + "startColorstr=" + t + ",endColorstr=" + r + ")";
   },
   toString: function(a) {
     var t = !!a;
     a = a || this._format;
-    var r = false, n = this._a < 1 && this._a >= 0, l = !t && n && (a === "hex" || a === "hex6" || a === "hex3" || a === "hex4" || a === "hex8" || a === "name");
-    return l ? a === "name" && this._a === 0 ? this.toName() : this.toRgbString() : (a === "rgb" && (r = this.toRgbString()), a === "prgb" && (r = this.toPercentageRgbString()), (a === "hex" || a === "hex6") && (r = this.toHexString()), a === "hex3" && (r = this.toHexString(true)), a === "hex4" && (r = this.toHex8String(true)), a === "hex8" && (r = this.toHex8String()), a === "name" && (r = this.toName()), a === "hsl" && (r = this.toHslString()), a === "hsv" && (r = this.toHsvString()), r || this.toHexString());
+    var r = false, l = this._a < 1 && this._a >= 0, n = !t && l && (a === "hex" || a === "hex6" || a === "hex3" || a === "hex4" || a === "hex8" || a === "name");
+    return n ? a === "name" && this._a === 0 ? this.toName() : this.toRgbString() : (a === "rgb" && (r = this.toRgbString()), a === "prgb" && (r = this.toPercentageRgbString()), (a === "hex" || a === "hex6") && (r = this.toHexString()), a === "hex3" && (r = this.toHexString(true)), a === "hex4" && (r = this.toHex8String(true)), a === "hex8" && (r = this.toHex8String()), a === "name" && (r = this.toName()), a === "hsl" && (r = this.toHslString()), a === "hsv" && (r = this.toHsvString()), r || this.toHexString());
   },
   clone: function() {
-    return h(this.toString());
+    return g(this.toString());
   },
   _applyModification: function(a, t) {
     var r = a.apply(null, [this].concat([].slice.call(t)));
     return this._r = r._r, this._g = r._g, this._b = r._b, this.setAlpha(r._a), this;
   },
   lighten: function() {
-    return this._applyModification(Ze, arguments);
+    return this._applyModification(tt, arguments);
   },
   brighten: function() {
-    return this._applyModification(Je, arguments);
+    return this._applyModification(at, arguments);
   },
   darken: function() {
-    return this._applyModification(Qe, arguments);
+    return this._applyModification(lt, arguments);
   },
   desaturate: function() {
-    return this._applyModification(Ye, arguments);
+    return this._applyModification(Je, arguments);
   },
   saturate: function() {
-    return this._applyModification(je, arguments);
+    return this._applyModification(Qe, arguments);
   },
   greyscale: function() {
-    return this._applyModification(qe, arguments);
+    return this._applyModification(et, arguments);
   },
   spin: function() {
-    return this._applyModification(et, arguments);
+    return this._applyModification(nt, arguments);
   },
   _applyCombination: function(a, t) {
     return a.apply(null, [this].concat([].slice.call(t)));
   },
   analogous: function() {
-    return this._applyCombination(nt, arguments);
+    return this._applyCombination(st, arguments);
   },
   complement: function() {
-    return this._applyCombination(tt, arguments);
-  },
-  monochromatic: function() {
     return this._applyCombination(rt, arguments);
   },
+  monochromatic: function() {
+    return this._applyCombination(it, arguments);
+  },
   splitcomplement: function() {
-    return this._applyCombination(at, arguments);
+    return this._applyCombination(ot, arguments);
   },
   // Disabled until https://github.com/bgrins/TinyColor/issues/254
   // polyad: function (number) {
   //   return this._applyCombination(polyad, [number]);
   // },
   triad: function() {
-    return this._applyCombination(Re, [3]);
+    return this._applyCombination(Be, [3]);
   },
   tetrad: function() {
-    return this._applyCombination(Re, [4]);
+    return this._applyCombination(Be, [4]);
   }
 };
-h.fromRatio = function(e, a) {
-  if (ue(e) == "object") {
+g.fromRatio = function(e, a) {
+  if (be(e) == "object") {
     var t = {};
     for (var r in e)
-      e.hasOwnProperty(r) && (r === "a" ? t[r] = e[r] : t[r] = re(e[r]));
+      e.hasOwnProperty(r) && (r === "a" ? t[r] = e[r] : t[r] = ue(e[r]));
     e = t;
   }
-  return h(e, a);
+  return g(e, a);
 };
-function Ke(e) {
+function Xe(e) {
   var a = {
     r: 0,
     g: 0,
     b: 0
-  }, t = 1, r = null, n = null, l = null, s = false, o = false;
-  return typeof e == "string" && (e = ut(e)), ue(e) == "object" && (W(e.r) && W(e.g) && W(e.b) ? (a = Ge(e.r, e.g, e.b), s = true, o = String(e.r).substr(-1) === "%" ? "prgb" : "rgb") : W(e.h) && W(e.s) && W(e.v) ? (r = re(e.s), n = re(e.v), a = We(e.h, r, n), s = true, o = "hsv") : W(e.h) && W(e.s) && W(e.l) && (r = re(e.s), l = re(e.l), a = ze(e.h, r, l), s = true, o = "hsl"), e.hasOwnProperty("a") && (t = e.a)), t = Be(t), {
-    ok: s,
+  }, t = 1, r = null, l = null, n = null, i = false, o = false;
+  return typeof e == "string" && (e = ht(e)), be(e) == "object" && (Y(e.r) && Y(e.g) && Y(e.b) ? (a = Ye(e.r, e.g, e.b), i = true, o = String(e.r).substr(-1) === "%" ? "prgb" : "rgb") : Y(e.h) && Y(e.s) && Y(e.v) ? (r = ue(e.s), l = ue(e.v), a = We(e.h, r, l), i = true, o = "hsv") : Y(e.h) && Y(e.s) && Y(e.l) && (r = ue(e.s), n = ue(e.l), a = qe(e.h, r, n), i = true, o = "hsl"), e.hasOwnProperty("a") && (t = e.a)), t = Te(t), {
+    ok: i,
     format: e.format || o,
     r: Math.min(255, Math.max(a.r, 0)),
     g: Math.min(255, Math.max(a.g, 0)),
@@ -233,230 +231,230 @@ function Ke(e) {
     a: t
   };
 }
-function Ge(e, a, t) {
+function Ye(e, a, t) {
   return {
     r: L(e, 255) * 255,
     g: L(a, 255) * 255,
     b: L(t, 255) * 255
   };
 }
-function Fe(e, a, t) {
+function Me(e, a, t) {
   e = L(e, 255), a = L(a, 255), t = L(t, 255);
-  var r = Math.max(e, a, t), n = Math.min(e, a, t), l, s, o = (r + n) / 2;
-  if (r == n)
-    l = s = 0;
+  var r = Math.max(e, a, t), l = Math.min(e, a, t), n, i, o = (r + l) / 2;
+  if (r == l)
+    n = i = 0;
   else {
-    var c = r - n;
-    switch (s = o > 0.5 ? c / (2 - r - n) : c / (r + n), r) {
+    var f = r - l;
+    switch (i = o > 0.5 ? f / (2 - r - l) : f / (r + l), r) {
       case e:
-        l = (a - t) / c + (a < t ? 6 : 0);
+        n = (a - t) / f + (a < t ? 6 : 0);
         break;
       case a:
-        l = (t - e) / c + 2;
+        n = (t - e) / f + 2;
         break;
       case t:
-        l = (e - a) / c + 4;
+        n = (e - a) / f + 4;
         break;
     }
-    l /= 6;
+    n /= 6;
   }
   return {
-    h: l,
-    s,
+    h: n,
+    s: i,
     l: o
   };
 }
-function ze(e, a, t) {
-  var r, n, l;
+function qe(e, a, t) {
+  var r, l, n;
   e = L(e, 360), a = L(a, 100), t = L(t, 100);
-  function s(i, v, b) {
-    return b < 0 && (b += 1), b > 1 && (b -= 1), b < 1 / 6 ? i + (v - i) * 6 * b : b < 1 / 2 ? v : b < 2 / 3 ? i + (v - i) * (2 / 3 - b) * 6 : i;
+  function i(s, u, b) {
+    return b < 0 && (b += 1), b > 1 && (b -= 1), b < 1 / 6 ? s + (u - s) * 6 * b : b < 1 / 2 ? u : b < 2 / 3 ? s + (u - s) * (2 / 3 - b) * 6 : s;
   }
   if (a === 0)
-    r = n = l = t;
+    r = l = n = t;
   else {
-    var o = t < 0.5 ? t * (1 + a) : t + a - t * a, c = 2 * t - o;
-    r = s(c, o, e + 1 / 3), n = s(c, o, e), l = s(c, o, e - 1 / 3);
+    var o = t < 0.5 ? t * (1 + a) : t + a - t * a, f = 2 * t - o;
+    r = i(f, o, e + 1 / 3), l = i(f, o, e), n = i(f, o, e - 1 / 3);
   }
   return {
     r: r * 255,
-    g: n * 255,
-    b: l * 255
+    g: l * 255,
+    b: n * 255
   };
 }
-function Me(e, a, t) {
+function Re(e, a, t) {
   e = L(e, 255), a = L(a, 255), t = L(t, 255);
-  var r = Math.max(e, a, t), n = Math.min(e, a, t), l, s, o = r, c = r - n;
-  if (s = r === 0 ? 0 : c / r, r == n)
-    l = 0;
+  var r = Math.max(e, a, t), l = Math.min(e, a, t), n, i, o = r, f = r - l;
+  if (i = r === 0 ? 0 : f / r, r == l)
+    n = 0;
   else {
     switch (r) {
       case e:
-        l = (a - t) / c + (a < t ? 6 : 0);
+        n = (a - t) / f + (a < t ? 6 : 0);
         break;
       case a:
-        l = (t - e) / c + 2;
+        n = (t - e) / f + 2;
         break;
       case t:
-        l = (e - a) / c + 4;
+        n = (e - a) / f + 4;
         break;
     }
-    l /= 6;
+    n /= 6;
   }
   return {
-    h: l,
-    s,
+    h: n,
+    s: i,
     v: o
   };
 }
 function We(e, a, t) {
   e = L(e, 360) * 6, a = L(a, 100), t = L(t, 100);
-  var r = Math.floor(e), n = e - r, l = t * (1 - a), s = t * (1 - n * a), o = t * (1 - (1 - n) * a), c = r % 6, i = [t, s, l, l, o, t][c], v = [o, t, t, s, l, l][c], b = [l, l, o, t, t, s][c];
+  var r = Math.floor(e), l = e - r, n = t * (1 - a), i = t * (1 - l * a), o = t * (1 - (1 - l) * a), f = r % 6, s = [t, i, n, n, o, t][f], u = [o, t, t, i, n, n][f], b = [n, n, o, t, t, i][f];
   return {
-    r: i * 255,
-    g: v * 255,
+    r: s * 255,
+    g: u * 255,
     b: b * 255
   };
 }
-function Se(e, a, t, r) {
-  var n = [U(Math.round(e).toString(16)), U(Math.round(a).toString(16)), U(Math.round(t).toString(16))];
-  return r && n[0].charAt(0) == n[0].charAt(1) && n[1].charAt(0) == n[1].charAt(1) && n[2].charAt(0) == n[2].charAt(1) ? n[0].charAt(0) + n[1].charAt(0) + n[2].charAt(0) : n.join("");
+function He(e, a, t, r) {
+  var l = [z(Math.round(e).toString(16)), z(Math.round(a).toString(16)), z(Math.round(t).toString(16))];
+  return r && l[0].charAt(0) == l[0].charAt(1) && l[1].charAt(0) == l[1].charAt(1) && l[2].charAt(0) == l[2].charAt(1) ? l[0].charAt(0) + l[1].charAt(0) + l[2].charAt(0) : l.join("");
 }
-function Xe(e, a, t, r, n) {
-  var l = [U(Math.round(e).toString(16)), U(Math.round(a).toString(16)), U(Math.round(t).toString(16)), U(Ve(r))];
-  return n && l[0].charAt(0) == l[0].charAt(1) && l[1].charAt(0) == l[1].charAt(1) && l[2].charAt(0) == l[2].charAt(1) && l[3].charAt(0) == l[3].charAt(1) ? l[0].charAt(0) + l[1].charAt(0) + l[2].charAt(0) + l[3].charAt(0) : l.join("");
+function Ze(e, a, t, r, l) {
+  var n = [z(Math.round(e).toString(16)), z(Math.round(a).toString(16)), z(Math.round(t).toString(16)), z(Ie(r))];
+  return l && n[0].charAt(0) == n[0].charAt(1) && n[1].charAt(0) == n[1].charAt(1) && n[2].charAt(0) == n[2].charAt(1) && n[3].charAt(0) == n[3].charAt(1) ? n[0].charAt(0) + n[1].charAt(0) + n[2].charAt(0) + n[3].charAt(0) : n.join("");
 }
-function $e(e, a, t, r) {
-  var n = [U(Ve(r)), U(Math.round(e).toString(16)), U(Math.round(a).toString(16)), U(Math.round(t).toString(16))];
-  return n.join("");
+function Ve(e, a, t, r) {
+  var l = [z(Ie(r)), z(Math.round(e).toString(16)), z(Math.round(a).toString(16)), z(Math.round(t).toString(16))];
+  return l.join("");
 }
-h.equals = function(e, a) {
-  return !e || !a ? false : h(e).toRgbString() == h(a).toRgbString();
+g.equals = function(e, a) {
+  return !e || !a ? false : g(e).toRgbString() == g(a).toRgbString();
 };
-h.random = function() {
-  return h.fromRatio({
+g.random = function() {
+  return g.fromRatio({
     r: Math.random(),
     g: Math.random(),
     b: Math.random()
   });
 };
-function Ye(e, a) {
-  a = a === 0 ? 0 : a || 10;
-  var t = h(e).toHsl();
-  return t.s -= a / 100, t.s = de(t.s), h(t);
-}
-function je(e, a) {
-  a = a === 0 ? 0 : a || 10;
-  var t = h(e).toHsl();
-  return t.s += a / 100, t.s = de(t.s), h(t);
-}
-function qe(e) {
-  return h(e).desaturate(100);
-}
-function Ze(e, a) {
-  a = a === 0 ? 0 : a || 10;
-  var t = h(e).toHsl();
-  return t.l += a / 100, t.l = de(t.l), h(t);
-}
 function Je(e, a) {
   a = a === 0 ? 0 : a || 10;
-  var t = h(e).toRgb();
-  return t.r = Math.max(0, Math.min(255, t.r - Math.round(255 * -(a / 100)))), t.g = Math.max(0, Math.min(255, t.g - Math.round(255 * -(a / 100)))), t.b = Math.max(0, Math.min(255, t.b - Math.round(255 * -(a / 100)))), h(t);
+  var t = g(e).toHsl();
+  return t.s -= a / 100, t.s = ge(t.s), g(t);
 }
 function Qe(e, a) {
   a = a === 0 ? 0 : a || 10;
-  var t = h(e).toHsl();
-  return t.l -= a / 100, t.l = de(t.l), h(t);
+  var t = g(e).toHsl();
+  return t.s += a / 100, t.s = ge(t.s), g(t);
 }
-function et(e, a) {
-  var t = h(e).toHsl(), r = (t.h + a) % 360;
-  return t.h = r < 0 ? 360 + r : r, h(t);
+function et(e) {
+  return g(e).desaturate(100);
 }
-function tt(e) {
-  var a = h(e).toHsl();
-  return a.h = (a.h + 180) % 360, h(a);
+function tt(e, a) {
+  a = a === 0 ? 0 : a || 10;
+  var t = g(e).toHsl();
+  return t.l += a / 100, t.l = ge(t.l), g(t);
 }
-function Re(e, a) {
+function at(e, a) {
+  a = a === 0 ? 0 : a || 10;
+  var t = g(e).toRgb();
+  return t.r = Math.max(0, Math.min(255, t.r - Math.round(255 * -(a / 100)))), t.g = Math.max(0, Math.min(255, t.g - Math.round(255 * -(a / 100)))), t.b = Math.max(0, Math.min(255, t.b - Math.round(255 * -(a / 100)))), g(t);
+}
+function lt(e, a) {
+  a = a === 0 ? 0 : a || 10;
+  var t = g(e).toHsl();
+  return t.l -= a / 100, t.l = ge(t.l), g(t);
+}
+function nt(e, a) {
+  var t = g(e).toHsl(), r = (t.h + a) % 360;
+  return t.h = r < 0 ? 360 + r : r, g(t);
+}
+function rt(e) {
+  var a = g(e).toHsl();
+  return a.h = (a.h + 180) % 360, g(a);
+}
+function Be(e, a) {
   if (isNaN(a) || a <= 0)
     throw new Error("Argument to polyad must be a positive number");
-  for (var t = h(e).toHsl(), r = [h(e)], n = 360 / a, l = 1; l < a; l++)
-    r.push(h({
-      h: (t.h + l * n) % 360,
+  for (var t = g(e).toHsl(), r = [g(e)], l = 360 / a, n = 1; n < a; n++)
+    r.push(g({
+      h: (t.h + n * l) % 360,
       s: t.s,
       l: t.l
     }));
   return r;
 }
-function at(e) {
-  var a = h(e).toHsl(), t = a.h;
-  return [h(e), h({
+function ot(e) {
+  var a = g(e).toHsl(), t = a.h;
+  return [g(e), g({
     h: (t + 72) % 360,
     s: a.s,
     l: a.l
-  }), h({
+  }), g({
     h: (t + 216) % 360,
     s: a.s,
     l: a.l
   })];
 }
-function nt(e, a, t) {
+function st(e, a, t) {
   a = a || 6, t = t || 30;
-  var r = h(e).toHsl(), n = 360 / t, l = [h(e)];
-  for (r.h = (r.h - (n * a >> 1) + 720) % 360; --a; )
-    r.h = (r.h + n) % 360, l.push(h(r));
-  return l;
+  var r = g(e).toHsl(), l = 360 / t, n = [g(e)];
+  for (r.h = (r.h - (l * a >> 1) + 720) % 360; --a; )
+    r.h = (r.h + l) % 360, n.push(g(r));
+  return n;
 }
-function rt(e, a) {
+function it(e, a) {
   a = a || 6;
-  for (var t = h(e).toHsv(), r = t.h, n = t.s, l = t.v, s = [], o = 1 / a; a--; )
-    s.push(h({
+  for (var t = g(e).toHsv(), r = t.h, l = t.s, n = t.v, i = [], o = 1 / a; a--; )
+    i.push(g({
       h: r,
-      s: n,
-      v: l
-    })), l = (l + o) % 1;
-  return s;
+      s: l,
+      v: n
+    })), n = (n + o) % 1;
+  return i;
 }
-h.mix = function(e, a, t) {
+g.mix = function(e, a, t) {
   t = t === 0 ? 0 : t || 50;
-  var r = h(e).toRgb(), n = h(a).toRgb(), l = t / 100, s = {
-    r: (n.r - r.r) * l + r.r,
-    g: (n.g - r.g) * l + r.g,
-    b: (n.b - r.b) * l + r.b,
-    a: (n.a - r.a) * l + r.a
+  var r = g(e).toRgb(), l = g(a).toRgb(), n = t / 100, i = {
+    r: (l.r - r.r) * n + r.r,
+    g: (l.g - r.g) * n + r.g,
+    b: (l.b - r.b) * n + r.b,
+    a: (l.a - r.a) * n + r.a
   };
-  return h(s);
+  return g(i);
 };
-h.readability = function(e, a) {
-  var t = h(e), r = h(a);
+g.readability = function(e, a) {
+  var t = g(e), r = g(a);
   return (Math.max(t.getLuminance(), r.getLuminance()) + 0.05) / (Math.min(t.getLuminance(), r.getLuminance()) + 0.05);
 };
-h.isReadable = function(e, a, t) {
-  var r = h.readability(e, a), n, l;
-  switch (l = false, n = ct(t), n.level + n.size) {
+g.isReadable = function(e, a, t) {
+  var r = g.readability(e, a), l, n;
+  switch (n = false, l = vt(t), l.level + l.size) {
     case "AAsmall":
     case "AAAlarge":
-      l = r >= 4.5;
+      n = r >= 4.5;
       break;
     case "AAlarge":
-      l = r >= 3;
+      n = r >= 3;
       break;
     case "AAAsmall":
-      l = r >= 7;
+      n = r >= 7;
       break;
   }
-  return l;
+  return n;
 };
-h.mostReadable = function(e, a, t) {
-  var r = null, n = 0, l, s, o, c;
-  t = t || {}, s = t.includeFallbackColors, o = t.level, c = t.size;
-  for (var i = 0; i < a.length; i++)
-    l = h.readability(e, a[i]), l > n && (n = l, r = h(a[i]));
-  return h.isReadable(e, r, {
+g.mostReadable = function(e, a, t) {
+  var r = null, l = 0, n, i, o, f;
+  t = t || {}, i = t.includeFallbackColors, o = t.level, f = t.size;
+  for (var s = 0; s < a.length; s++)
+    n = g.readability(e, a[s]), n > l && (l = n, r = g(a[s]));
+  return g.isReadable(e, r, {
     level: o,
-    size: c
-  }) || !s ? r : (t.includeFallbackColors = false, h.mostReadable(e, ["#fff", "#000"], t));
+    size: f
+  }) || !i ? r : (t.includeFallbackColors = false, g.mostReadable(e, ["#fff", "#000"], t));
 };
-var me = h.names = {
+var xe = g.names = {
   aliceblue: "f0f8ff",
   antiquewhite: "faebd7",
   aqua: "0ff",
@@ -607,69 +605,69 @@ var me = h.names = {
   yellow: "ff0",
   yellowgreen: "9acd32"
 };
-var lt = h.hexNames = ot(me);
-function ot(e) {
+var ut = g.hexNames = dt(xe);
+function dt(e) {
   var a = {};
   for (var t in e)
     e.hasOwnProperty(t) && (a[e[t]] = t);
   return a;
 }
-function Be(e) {
+function Te(e) {
   return e = parseFloat(e), (isNaN(e) || e < 0 || e > 1) && (e = 1), e;
 }
 function L(e, a) {
-  it(e) && (e = "100%");
-  var t = st(e);
+  ct(e) && (e = "100%");
+  var t = ft(e);
   return e = Math.min(a, Math.max(0, parseFloat(e))), t && (e = parseInt(e * a, 10) / 100), Math.abs(e - a) < 1e-6 ? 1 : e % a / parseFloat(a);
 }
-function de(e) {
+function ge(e) {
   return Math.min(1, Math.max(0, e));
 }
 function P(e) {
   return parseInt(e, 16);
 }
-function it(e) {
+function ct(e) {
   return typeof e == "string" && e.indexOf(".") != -1 && parseFloat(e) === 1;
 }
-function st(e) {
+function ft(e) {
   return typeof e == "string" && e.indexOf("%") != -1;
 }
-function U(e) {
+function z(e) {
   return e.length == 1 ? "0" + e : "" + e;
 }
-function re(e) {
+function ue(e) {
   return e <= 1 && (e = e * 100 + "%"), e;
 }
-function Ve(e) {
+function Ie(e) {
   return Math.round(parseFloat(e) * 255).toString(16);
 }
-function He(e) {
+function Le(e) {
   return P(e) / 255;
 }
-var N = function() {
-  var e = "[-\\+]?\\d+%?", a = "[-\\+]?\\d*\\.\\d+%?", t = "(?:" + a + ")|(?:" + e + ")", r = "[\\s|\\(]+(" + t + ")[,|\\s]+(" + t + ")[,|\\s]+(" + t + ")\\s*\\)?", n = "[\\s|\\(]+(" + t + ")[,|\\s]+(" + t + ")[,|\\s]+(" + t + ")[,|\\s]+(" + t + ")\\s*\\)?";
+var K = function() {
+  var e = "[-\\+]?\\d+%?", a = "[-\\+]?\\d*\\.\\d+%?", t = "(?:" + a + ")|(?:" + e + ")", r = "[\\s|\\(]+(" + t + ")[,|\\s]+(" + t + ")[,|\\s]+(" + t + ")\\s*\\)?", l = "[\\s|\\(]+(" + t + ")[,|\\s]+(" + t + ")[,|\\s]+(" + t + ")[,|\\s]+(" + t + ")\\s*\\)?";
   return {
     CSS_UNIT: new RegExp(t),
     rgb: new RegExp("rgb" + r),
-    rgba: new RegExp("rgba" + n),
+    rgba: new RegExp("rgba" + l),
     hsl: new RegExp("hsl" + r),
-    hsla: new RegExp("hsla" + n),
+    hsla: new RegExp("hsla" + l),
     hsv: new RegExp("hsv" + r),
-    hsva: new RegExp("hsva" + n),
+    hsva: new RegExp("hsva" + l),
     hex3: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
     hex6: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
     hex4: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
     hex8: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/
   };
 }();
-function W(e) {
-  return !!N.CSS_UNIT.exec(e);
+function Y(e) {
+  return !!K.CSS_UNIT.exec(e);
 }
-function ut(e) {
-  e = e.replace(Ue, "").replace(Oe, "").toLowerCase();
+function ht(e) {
+  e = e.replace(ze, "").replace(je, "").toLowerCase();
   var a = false;
-  if (me[e])
-    e = me[e], a = true;
+  if (xe[e])
+    e = xe[e], a = true;
   else if (e == "transparent")
     return {
       r: 0,
@@ -679,58 +677,58 @@ function ut(e) {
       format: "name"
     };
   var t;
-  return (t = N.rgb.exec(e)) ? {
+  return (t = K.rgb.exec(e)) ? {
     r: t[1],
     g: t[2],
     b: t[3]
-  } : (t = N.rgba.exec(e)) ? {
+  } : (t = K.rgba.exec(e)) ? {
     r: t[1],
     g: t[2],
     b: t[3],
     a: t[4]
-  } : (t = N.hsl.exec(e)) ? {
+  } : (t = K.hsl.exec(e)) ? {
     h: t[1],
     s: t[2],
     l: t[3]
-  } : (t = N.hsla.exec(e)) ? {
+  } : (t = K.hsla.exec(e)) ? {
     h: t[1],
     s: t[2],
     l: t[3],
     a: t[4]
-  } : (t = N.hsv.exec(e)) ? {
+  } : (t = K.hsv.exec(e)) ? {
     h: t[1],
     s: t[2],
     v: t[3]
-  } : (t = N.hsva.exec(e)) ? {
+  } : (t = K.hsva.exec(e)) ? {
     h: t[1],
     s: t[2],
     v: t[3],
     a: t[4]
-  } : (t = N.hex8.exec(e)) ? {
+  } : (t = K.hex8.exec(e)) ? {
     r: P(t[1]),
     g: P(t[2]),
     b: P(t[3]),
-    a: He(t[4]),
+    a: Le(t[4]),
     format: a ? "name" : "hex8"
-  } : (t = N.hex6.exec(e)) ? {
+  } : (t = K.hex6.exec(e)) ? {
     r: P(t[1]),
     g: P(t[2]),
     b: P(t[3]),
     format: a ? "name" : "hex"
-  } : (t = N.hex4.exec(e)) ? {
+  } : (t = K.hex4.exec(e)) ? {
     r: P(t[1] + "" + t[1]),
     g: P(t[2] + "" + t[2]),
     b: P(t[3] + "" + t[3]),
-    a: He(t[4] + "" + t[4]),
+    a: Le(t[4] + "" + t[4]),
     format: a ? "name" : "hex8"
-  } : (t = N.hex3.exec(e)) ? {
+  } : (t = K.hex3.exec(e)) ? {
     r: P(t[1] + "" + t[1]),
     g: P(t[2] + "" + t[2]),
     b: P(t[3] + "" + t[3]),
     format: a ? "name" : "hex"
   } : false;
 }
-function ct(e) {
+function vt(e) {
   var a, t;
   return e = e || {
     level: "AA",
@@ -740,7 +738,7 @@ function ct(e) {
     size: t
   };
 }
-var Le = (e, a, t = false) => {
+var Ee = (e, a, t = false) => {
   if (t)
     switch (a) {
       case "rgb":
@@ -757,74 +755,74 @@ var Le = (e, a, t = false) => {
   else {
     let r = a;
     a === "hex" && e.getAlpha() < 1 && (r = "hex8");
-    let n = e.toString(r);
+    let l = e.toString(r);
     try {
-      n = JSON.parse(n);
+      l = JSON.parse(l);
     } catch {
     }
-    return n;
+    return l;
   }
 };
-var pe = (e, a) => !!(Object.prototype.hasOwnProperty.call(e, a) && typeof e[a] < "u");
-var ie = (e) => typeof e > "u";
-var O = ["update:tinyColor", "update:modelValue", "input"];
-function K(e, a, t) {
-  let r, n;
-  const l = computed({
+var ye = (e, a) => !!(Object.prototype.hasOwnProperty.call(e, a) && typeof e[a] < "u");
+var ve = (e) => typeof e > "u";
+var I = ["update:tinyColor", "update:modelValue", "input"];
+function U(e, a, t) {
+  let r, l;
+  const n = computed({
     get: () => {
-      const { modelValue: o, tinyColor: c, value: i } = e, v = c ?? o ?? i;
-      return ie(n) && (ie(i) || (n = h(i).getFormat()), ie(o) || (n = h(o).getFormat())), ie(r) && (typeof i == "object" && !(i instanceof h) && (r = true), typeof o == "object" && (r = true)), h(v);
+      const { modelValue: o, tinyColor: f, value: s } = e, u = f ?? o ?? s;
+      return ve(l) && (ve(s) || (l = g(s).getFormat()), ve(o) || (l = g(o).getFormat())), ve(r) && (typeof s == "object" && !(s instanceof g) && (r = true), typeof o == "object" && (r = true)), g(u);
     },
     set: (o) => {
-      s(o);
+      i(o);
     }
-  }), s = (o) => {
-    const c = h(o);
-    if (pe(e, "tinyColor") && a("update:tinyColor", c), pe(e, "modelValue")) {
-      const i = Le(c, n, r);
-      a("update:modelValue", i);
+  }), i = (o) => {
+    const f = g(o);
+    if (ye(e, "tinyColor") && a("update:tinyColor", f), ye(e, "modelValue")) {
+      const s = Ee(f, l, r);
+      a("update:modelValue", s);
     }
-    if (pe(e, "value")) {
-      const i = Le(c, n, r);
-      a("input", i);
+    if (ye(e, "value")) {
+      const s = Ee(f, l, r);
+      a("input", s);
     }
   };
-  return l;
+  return n;
 }
-var ye = (e) => {
-  var t, r, n, l;
+var Ue = (e) => {
+  var _a2, _b, _c, _d;
   const a = { x: 0, y: 0 };
-  return e instanceof MouseEvent && (a.x = e.pageX, a.y = e.pageY), typeof TouchEvent < "u" && e instanceof TouchEvent && (a.x = (t = e.touches) != null && t[0] ? e.touches[0].pageX : (r = e.changedTouches) != null && r[0] ? e.changedTouches[0].pageX : 0, a.y = (n = e.touches) != null && n[0] ? e.touches[0].pageY : (l = e.changedTouches) != null && l[0] ? e.changedTouches[0].pageY : 0), a;
+  return e instanceof MouseEvent && (a.x = e.pageX, a.y = e.pageY), typeof TouchEvent < "u" && e instanceof TouchEvent && (a.x = ((_a2 = e.touches) == null ? void 0 : _a2[0]) ? e.touches[0].pageX : ((_b = e.changedTouches) == null ? void 0 : _b[0]) ? e.changedTouches[0].pageX : 0, a.y = ((_c = e.touches) == null ? void 0 : _c[0]) ? e.touches[0].pageY : ((_d = e.changedTouches) == null ? void 0 : _d[0]) ? e.changedTouches[0].pageY : 0), a;
 };
-var dt = () => {
+var bt = () => {
   const e = window.scrollX || window.pageXOffset || document.documentElement.scrollLeft || 0, a = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
   return { x: e, y: a };
 };
-var we = (e) => {
-  const { x: a, y: t } = dt(), r = e.getBoundingClientRect();
+var Pe = (e) => {
+  const { x: a, y: t } = bt(), r = e.getBoundingClientRect();
   return {
     x: r.left + a,
     y: r.top + t
   };
 };
-var fe = (e) => e.code === "ArrowUp" || e.keyCode === 38 ? "up" : e.code === "ArrowDown" || e.keyCode === 40 ? "down" : e.code === "ArrowLeft" || e.keyCode === 37 ? "left" : e.code === "ArrowRight" || e.keyCode === 39 ? "right" : null;
-function ft(e) {
+var Fe = (e) => e.code === "ArrowUp" || e.keyCode === 38 ? "up" : e.code === "ArrowDown" || e.keyCode === 40 ? "down" : e.code === "ArrowLeft" || e.keyCode === 37 ? "left" : e.code === "ArrowRight" || e.keyCode === 39 ? "right" : null;
+function pt(e) {
   const a = e.toString();
   return a.indexOf(".") !== -1 ? a.split(".")[1].length : 0;
 }
-function ge(e, a, t) {
+function Ce(e, a, t) {
   return Math.min(Math.max(e, a), t);
 }
-var Ce = (e, a = 20) => {
-  let t, r, n;
-  return (...l) => {
+var Ge = (e, a = 20) => {
+  let t, r, l;
+  return (...n) => {
     t ? (clearTimeout(r), r = setTimeout(() => {
-      Date.now() - n >= a && (e(...l), n = Date.now());
-    }, Math.max(a - (Date.now() - n), 0))) : (e(...l), n = Date.now(), t = true);
+      Date.now() - l >= a && (e(...n), l = Date.now());
+    }, Math.max(a - (Date.now() - l), 0))) : (e(...n), l = Date.now(), t = true);
   };
 };
-var ht = ["aria-valuetext"];
-var vt = defineComponent({
+var gt = ["aria-valuetext"];
+var mt = defineComponent({
   __name: "SaturationSlider",
   props: {
     hue: {},
@@ -832,113 +830,228 @@ var vt = defineComponent({
     modelValue: {},
     value: {}
   },
-  emits: ["change"].concat(O),
+  emits: ["change"].concat(I),
   setup(e, { emit: a }) {
-    const t = a, r = e, n = ref(0), l = K(r, t), s = computed(() => l.value.toHsv()), o = computed(() => r.hue ?? s.value.h), c = computed(() => `hsl(${o.value}, 100%, 50%)`), i = computed(() => -(s.value.v * 100) + 1 + 100 + "%"), v = computed(() => s.value.v <= 0.01 ? n.value * 100 + "%" : s.value.s * 100 + "%"), b = ref(null);
-    function y(p) {
-      const m = b.value;
-      if (!m)
+    const t = a, r = e, l = ref(0), n = U(r, t), i = computed(() => n.value.toHsv()), o = computed(() => r.hue ?? i.value.h), f = computed(() => `hsl(${o.value}, 100%, 50%)`), s = computed(() => -(i.value.v * 100) + 1 + 100 + "%"), u = computed(() => i.value.v <= 0.01 ? l.value * 100 + "%" : i.value.s * 100 + "%"), b = ref(null);
+    function _(h) {
+      const v = b.value;
+      if (!v)
         return;
-      const E = m.clientWidth, Y = m.clientHeight, { x: ee, y: M } = we(m), { x: w, y: C } = ye(p), z = ge(w - ee, 0, E), ne = ge(C - M, 0, Y), Ae = z / E, De = ge(1 - ne / Y, 0, 1);
-      n.value = Ae;
-      let ve = Math.round(Ae * 100), be = Math.round(De * 100);
-      ve === 1 && (ve = 0.01), be === 1 && (be = 0.01), A({
+      const B = v.clientWidth, Z = v.clientHeight, { x: ne, y: R } = Pe(v), { x, y: F } = Ue(h), he = Ce(x - ne, 0, B), ie = Ce(F - R, 0, Z), Ae = he / B, Oe = Ce(1 - ie / Z, 0, 1);
+      l.value = Ae;
+      let me = Math.round(Ae * 100), _e = Math.round(Oe * 100);
+      me === 1 && (me = 0.01), _e === 1 && (_e = 0.01), m({
         h: o.value,
-        s: ve,
-        v: be,
-        a: s.value.a
+        s: me,
+        v: _e,
+        a: i.value.a
       });
     }
-    function A(p) {
-      l.value = p;
+    function m(h) {
+      n.value = h;
     }
-    const d = Ce(y, 20);
-    function F(p) {
-      p.type.startsWith("mouse") ? (window.addEventListener("mousemove", d), window.addEventListener("mouseup", d), window.addEventListener("mouseup", f)) : p.type.startsWith("touch") && (window.addEventListener("touchmove", d), window.addEventListener("touchend", d), window.addEventListener("touchend", f));
+    const c = Ge(_, 20);
+    function S(h) {
+      h.preventDefault(), h.type.startsWith("mouse") ? (window.addEventListener("mousemove", c), window.addEventListener("mouseup", c), window.addEventListener("mouseup", k)) : h.type.startsWith("touch") && (window.addEventListener("touchmove", c), window.addEventListener("touchend", c), window.addEventListener("touchend", k));
     }
-    function f() {
-      $();
+    function k() {
+      V();
     }
-    function $() {
-      window.removeEventListener("mousemove", d), window.removeEventListener("mouseup", d), window.removeEventListener("mouseup", f), window.removeEventListener("touchmove", d), window.removeEventListener("touchend", d), window.removeEventListener("touchend", f);
+    function V() {
+      window.removeEventListener("mousemove", c), window.removeEventListener("mouseup", c), window.removeEventListener("mouseup", k), window.removeEventListener("touchmove", c), window.removeEventListener("touchend", c), window.removeEventListener("touchend", k);
     }
-    function k(p) {
-      switch (p.preventDefault(), fe(p)) {
+    function $(h) {
+      switch (h.preventDefault(), Fe(h)) {
         case "left": {
-          const E = s.value.s - 0.01;
-          A({
-            ...s.value,
-            s: E >= 0 ? E : 0
+          const B = i.value.s - 0.01;
+          m({
+            ...i.value,
+            s: B >= 0 ? B : 0
           });
           break;
         }
         case "right": {
-          const E = s.value.s + 0.01;
-          A({
-            ...s.value,
-            s: E > 1 ? 1 : E
+          const B = i.value.s + 0.01;
+          m({
+            ...i.value,
+            s: B > 1 ? 1 : B
           });
           break;
         }
         case "up": {
-          const E = s.value.v + 0.01;
-          A({
-            ...s.value,
-            v: E > 1 ? 1 : E
+          const B = i.value.v + 0.01;
+          m({
+            ...i.value,
+            v: B > 1 ? 1 : B
           });
           break;
         }
         case "down": {
-          const E = s.value.v - 0.01;
-          A({
-            ...s.value,
-            v: E < 0 ? 0 : E
+          const B = i.value.v - 0.01;
+          m({
+            ...i.value,
+            v: B < 0 ? 0 : B
           });
           break;
         }
       }
     }
     return onUnmounted(() => {
-      $();
-    }), (p, m) => (openBlock(), createElementBlock("div", {
+      V();
+    }), (h, v) => (openBlock(), createElementBlock("div", {
       class: "vc-saturation-slider bg",
-      style: normalizeStyle({ background: c.value }),
+      style: normalizeStyle({ background: f.value }),
       ref_key: "containerRef",
       ref: b,
-      onMousedown: F,
-      onTouchstart: F,
+      onMousedown: S,
+      onTouchstart: S,
       role: "application",
       "aria-label": "Saturation and brightness picker"
     }, [
-      m[1] || (m[1] = createBaseVNode("div", { class: "bg white" }, null, -1)),
-      m[2] || (m[2] = createBaseVNode("div", { class: "bg black" }, null, -1)),
+      v[1] || (v[1] = createBaseVNode("div", { class: "bg white" }, null, -1)),
+      v[2] || (v[2] = createBaseVNode("div", { class: "bg black" }, null, -1)),
       createBaseVNode("div", {
         class: "picker-wrap",
-        style: normalizeStyle({ top: i.value, left: v.value }),
+        style: normalizeStyle({ top: s.value, left: u.value }),
         role: "slider",
         tabindex: "0",
         "aria-valuemin": "0",
         "aria-valuemax": "1",
         "aria-label": "press arrow to change saturation or brightness",
         "aria-valuenow": "?",
-        "aria-valuetext": `saturation: ${s.value.s.toFixed(0)}%, brightness: ${s.value.v.toFixed(0)}%`,
-        onKeydown: k
-      }, m[0] || (m[0] = [
+        "aria-valuetext": `saturation: ${i.value.s.toFixed(0)}%, brightness: ${i.value.v.toFixed(0)}%`,
+        onKeydown: $
+      }, v[0] || (v[0] = [
         createBaseVNode("div", { class: "picker" }, null, -1)
-      ]), 44, ht)
+      ]), 44, gt)
     ], 36));
   }
 });
-var T = (e, a) => {
+var N = (e, a) => {
   const t = e.__vccOpts || e;
-  for (const [r, n] of a)
-    t[r] = n;
+  for (const [r, l] of a)
+    t[r] = l;
   return t;
 };
-var ke = T(vt, [["__scopeId", "data-v-cf852467"]]);
-var bt = { class: "vc-hue-slider" };
-var pt = ["aria-valuenow"];
-var gt = defineComponent({
+var Se = N(mt, [["__scopeId", "data-v-4d048d6e"]]);
+var $e = (e) => typeof e < "u";
+var _t = { class: "vc-base-slider" };
+var yt = {
+  key: 0,
+  class: "background"
+};
+var Ct = ["aria-label", "aria-valuemax", "aria-valuenow"];
+var kt = defineComponent({
+  __name: "BaseSlider",
+  props: {
+    direction: { default: "horizontal" },
+    modelValue: { default: 0 },
+    value: { default: 0 },
+    max: { default: 100 },
+    step: {},
+    ariaLabel: { default: "slider" }
+  },
+  emits: ["input", "update:modelValue"],
+  setup(e, { emit: a }) {
+    const t = e, r = a, l = computed(() => t.modelValue ?? t.value), n = computed(() => {
+      let c = l.value / t.max;
+      return t.direction === "vertical" && (c = 1 - c), 100 * c + "%";
+    }), i = ref(null);
+    function o(c) {
+      $e(c) && (r("input", c), r("update:modelValue", c));
+    }
+    function f(c) {
+      const { direction: S, max: k } = t, V = i.value;
+      if (!V)
+        return;
+      const $ = V.clientWidth, h = V.clientHeight, { x: v, y: B } = Pe(V), { x: Z, y: ne } = Ue(c), R = Z - v, x = ne - B;
+      let F;
+      S === "vertical" ? x < 0 ? F = k : x > h ? F = 0 : F = (1 - x / h) * k : R < 0 ? F = 0 : R > $ ? F = k : F = R / $ * k, o(F);
+    }
+    const s = Ge(f);
+    function u(c) {
+      f(c), c.type.startsWith("mouse") ? (window.addEventListener("mousemove", s), window.addEventListener("mouseup", b)) : (window.addEventListener("touchmove", s), window.addEventListener("touchend", b));
+    }
+    function b() {
+      _();
+    }
+    function _() {
+      window.removeEventListener("mousemove", s), window.removeEventListener("mouseup", b), window.removeEventListener("touchmove", s), window.removeEventListener("touchend", b);
+    }
+    function m(c) {
+      c.preventDefault();
+      const { direction: S, max: k } = t, V = Fe(c), $ = t.step ?? k / 100, h = l.value;
+      let v;
+      switch (V) {
+        case "left": {
+          if (S !== "horizontal")
+            return;
+          v = h - $ < 0 ? 0 : h - $;
+          break;
+        }
+        case "right": {
+          if (S !== "horizontal")
+            return;
+          v = h + $ > k ? k : h + $;
+          break;
+        }
+        case "down": {
+          if (S !== "vertical")
+            return;
+          v = h - $ < 0 ? 0 : h - $;
+          break;
+        }
+        case "up": {
+          if (S !== "vertical")
+            return;
+          v = h + $ > k ? k : h + $;
+          break;
+        }
+      }
+      o(v);
+    }
+    return onUnmounted(() => {
+      _();
+    }), (c, S) => (openBlock(), createElementBlock("div", _t, [
+      c.$slots.background ? (openBlock(), createElementBlock("div", yt, [
+        renderSlot(c.$slots, "background", {}, void 0, true)
+      ])) : createCommentVNode("", true),
+      createBaseVNode("div", {
+        class: normalizeClass({
+          slider: true,
+          horizontal: c.direction === "horizontal",
+          vertical: c.direction === "vertical"
+        }),
+        ref_key: "containerRef",
+        ref: i,
+        onMousedown: u,
+        onTouchstart: u,
+        role: "slider",
+        "aria-label": c.ariaLabel,
+        "aria-valuemax": c.max,
+        "aria-valuemin": "0",
+        "aria-valuenow": l.value.toFixed(1),
+        tabindex: "0",
+        onKeydown: m
+      }, [
+        createBaseVNode("div", {
+          class: "picker-wrap",
+          style: normalizeStyle({
+            left: c.direction === "horizontal" ? n.value : 0,
+            top: c.direction === "vertical" ? n.value : 0
+          }),
+          role: "presentation"
+        }, [
+          renderSlot(c.$slots, "picker", {}, () => [
+            S[0] || (S[0] = createBaseVNode("div", { class: "picker" }, null, -1))
+          ], true)
+        ], 4)
+      ], 42, Ct)
+    ]));
+  }
+});
+var q = N(kt, [["__scopeId", "data-v-972b0fad"]]);
+var wt = defineComponent({
   __name: "HueSlider",
   props: {
     direction: { default: "horizontal" },
@@ -946,103 +1059,44 @@ var gt = defineComponent({
   },
   emits: ["update:modelValue"],
   setup(e, { emit: a }) {
-    const t = e, r = a, n = computed(() => {
-      const f = Number(t.modelValue);
-      return Number.isNaN(f) ? 0 : f;
-    }), l = ref(), s = ref(null);
-    watch(n, (f, $) => {
-      f !== 0 && f - $ > 0 && (l.value = "right"), f !== 0 && f - $ < 0 && (l.value = "left");
+    useCssVars((u) => ({
+      "2f44f39d": l.value
+    }));
+    const t = e, r = a, l = computed(() => `linear-gradient(to ${t.direction === "horizontal" ? "right" : "top"}, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%)`), n = computed(() => {
+      const u = Number(t.modelValue);
+      return Number.isNaN(u) ? 0 : u;
+    }), i = ref();
+    watch(n, (u, b) => {
+      u !== 0 && u - b > 0 && (i.value = "right"), u !== 0 && u - b < 0 && (i.value = "left");
     });
-    const o = computed(() => t.direction === "vertical" ? n.value === 0 && l.value === "right" ? 0 : -(n.value * 100 / 360) + 100 + "%" : 0), c = computed(() => t.direction === "vertical" ? 0 : n.value === 0 && l.value === "right" ? "100%" : n.value * 100 / 360 + "%");
-    function i(f) {
-      const $ = s.value;
-      if (!$)
-        return;
-      const k = $.clientWidth, p = $.clientHeight, { x: m, y: E } = we($), { x: Y, y: ee } = ye(f), M = Y - m, w = ee - E;
-      let C, z;
-      t.direction === "vertical" ? (w < 0 ? C = 360 : w > p ? C = 0 : (z = -(w * 100 / p) + 100, C = Math.round(360 * z / 100)), n.value !== C && v(C)) : (M < 0 ? C = 0 : M > k ? C = 360 : (z = M * 100 / k, C = Math.round(360 * z / 100)), n.value !== C && v(C));
+    const o = computed(() => t.direction === "vertical" ? n.value === 0 && i.value === "right" ? 0 : n.value : t.direction === "horizontal" ? n.value === 0 && i.value === "right" ? 360 : n.value : 0);
+    function f(u) {
+      s(Math.round(u));
     }
-    function v(f) {
-      r("update:modelValue", f);
+    function s(u) {
+      r("update:modelValue", u);
     }
-    const b = Ce(i);
-    function y(f) {
-      i(f), f.type.startsWith("mouse") ? (window.addEventListener("mousemove", b), window.addEventListener("mouseup", A)) : (window.addEventListener("touchmove", b), window.addEventListener("touchend", A));
-    }
-    function A() {
-      d();
-    }
-    function d() {
-      window.removeEventListener("mousemove", b), window.removeEventListener("mouseup", A), window.removeEventListener("touchmove", b), window.removeEventListener("touchend", A);
-    }
-    function F(f) {
-      f.preventDefault();
-      const $ = fe(f), k = t.direction, p = n.value;
-      let m;
-      switch ($) {
-        case "left": {
-          if (k !== "horizontal")
-            return;
-          m = p - 1 < 0 ? 0 : Math.floor(p - 1);
-          break;
-        }
-        case "right": {
-          if (k !== "horizontal")
-            return;
-          m = p + 1 > 360 ? 360 : Math.ceil(p + 1);
-          break;
-        }
-        case "down": {
-          if (k !== "vertical")
-            return;
-          m = p - 1 < 0 ? 0 : Math.floor(p - 1);
-          break;
-        }
-        case "up": {
-          if (k !== "vertical")
-            return;
-          m = p + 1 > 360 ? 360 : Math.ceil(p + 1);
-          break;
-        }
-      }
-      typeof m < "u" && v(m);
-    }
-    return onUnmounted(() => {
-      d();
-    }), (f, $) => (openBlock(), createElementBlock("div", bt, [
-      createBaseVNode("div", {
-        class: normalizeClass({
-          container: true,
-          horizontal: t.direction === "horizontal",
-          vertical: t.direction === "vertical"
-        }),
-        ref_key: "containerRef",
-        ref: s,
-        onMousedown: y,
-        onTouchstart: y,
-        onKeydown: F,
-        role: "slider",
-        "aria-valuenow": n.value,
-        "aria-valuemin": "0",
-        "aria-valuemax": "360",
-        "aria-label": "Hue",
-        tabindex: "0"
-      }, [
-        createBaseVNode("div", {
-          class: "picker-wrap",
-          style: normalizeStyle({ top: o.value, left: c.value }),
-          role: "presentation"
-        }, [
-          renderSlot(f.$slots, "default", {}, () => [
-            $[0] || ($[0] = createBaseVNode("div", { class: "picker" }, null, -1))
-          ], true)
-        ], 4)
-      ], 42, pt)
-    ]));
+    return (u, b) => (openBlock(), createBlock(q, {
+      class: "vc-hue-slider",
+      max: 360,
+      step: 1,
+      modelValue: o.value,
+      direction: u.direction,
+      "onUpdate:modelValue": f,
+      "aria-label": "Hue"
+    }, {
+      background: withCtx(() => b[0] || (b[0] = [
+        createBaseVNode("div", { class: "gradient" }, null, -1)
+      ])),
+      picker: withCtx(() => [
+        renderSlot(u.$slots, "default", {}, void 0, true)
+      ]),
+      _: 3
+    }, 8, ["modelValue", "direction"]));
   }
 });
-var le = T(gt, [["__scopeId", "data-v-02c88ac4"]]);
-var mt = defineComponent({
+var le = N(wt, [["__scopeId", "data-v-5367c985"]]);
+var xt = defineComponent({
   __name: "CheckerboardBG",
   props: {
     size: { default: 8 },
@@ -1051,118 +1105,68 @@ var mt = defineComponent({
   },
   setup(e) {
     const a = e;
-    function t(l, s, o) {
+    function t(n, i, o) {
       if (typeof document > "u")
         return null;
-      var c = document.createElement("canvas");
-      c.width = c.height = o * 2;
-      var i = c.getContext("2d");
-      return i ? (i.fillStyle = l, i.fillRect(0, 0, c.width, c.height), i.fillStyle = s, i.fillRect(0, 0, o, o), i.translate(o, o), i.fillRect(0, 0, o, o), c.toDataURL()) : null;
+      var f = document.createElement("canvas");
+      f.width = f.height = o * 2;
+      var s = f.getContext("2d");
+      return s ? (s.fillStyle = n, s.fillRect(0, 0, f.width, f.height), s.fillStyle = i, s.fillRect(0, 0, o, o), s.translate(o, o), s.fillRect(0, 0, o, o), f.toDataURL()) : null;
     }
-    function r(l, s, o) {
-      return t(l, s, o);
+    function r(n, i, o) {
+      return t(n, i, o);
     }
-    const n = computed(() => `url(${r(a.white, a.grey, a.size)})`);
-    return (l, s) => (openBlock(), createElementBlock("div", {
+    const l = computed(() => `url(${r(a.white, a.grey, a.size)})`);
+    return (n, i) => (openBlock(), createElementBlock("div", {
       class: "vc-checkerboard",
-      style: normalizeStyle({ backgroundImage: n.value })
+      style: normalizeStyle({ backgroundImage: l.value })
     }, null, 4));
   }
 });
-var ce = T(mt, [["__scopeId", "data-v-37d61ccd"]]);
-var _t = { class: "vc-alpha-slider" };
-var yt = { class: "checkerboard" };
-var wt = ["aria-valuenow"];
-var Ct = defineComponent({
+var pe = N(xt, [["__scopeId", "data-v-37d61ccd"]]);
+var $t = defineComponent({
   __name: "AlphaSlider",
   props: {
     tinyColor: {},
     modelValue: {},
     value: {}
   },
-  emits: O,
+  emits: I,
   setup(e, { emit: a }) {
-    const n = K(e, a), l = computed(() => {
-      const d = n.value.toRgb(), F = [d.r, d.g, d.b].join(",");
-      return "linear-gradient(to right, rgba(" + F + ", 0) 0%, rgba(" + F + ", 1) 100%)";
-    }), s = computed(() => n.value.getAlpha()), o = ref(null);
-    function c(d) {
-      const F = o.value;
-      if (!F)
-        return;
-      const f = F.clientWidth, { x: $ } = we(F), { x: k } = ye(d), p = k - $;
-      let m;
-      p < 0 ? m = 0 : p > f ? m = 1 : m = Math.round(p * 100 / f) / 100, s.value !== m && (n.value = n.value.setAlpha(m).clone());
+    const l = U(e, a), n = computed(() => {
+      const f = l.value.toRgb(), s = [f.r, f.g, f.b].join(",");
+      return "linear-gradient(to right, rgba(" + s + ", 0) 0%, rgba(" + s + ", 1) 100%)";
+    }), i = computed(() => l.value.getAlpha());
+    function o(f) {
+      l.value = l.value.setAlpha(f).clone();
     }
-    const i = Ce(c);
-    function v(d) {
-      c(d), d.type.startsWith("mouse") ? (window.addEventListener("mousemove", i), window.addEventListener("mouseup", b)) : (window.addEventListener("touchmove", i), window.addEventListener("touchend", b));
-    }
-    function b() {
-      y();
-    }
-    function y() {
-      window.removeEventListener("mousemove", i), window.removeEventListener("mouseup", b), window.removeEventListener("touchmove", i), window.removeEventListener("touchend", b);
-    }
-    function A(d) {
-      d.preventDefault();
-      const F = fe(d), f = s.value;
-      let $;
-      switch (F) {
-        case "left": {
-          $ = f - 0.1 < 0 ? 0 : f - 0.1;
-          break;
-        }
-        case "right": {
-          $ = f + 0.1 > 1 ? 1 : f + 0.1;
-          break;
-        }
-      }
-      typeof $ < "u" && (n.value = n.value.setAlpha($).clone());
-    }
-    return onUnmounted(() => {
-      y();
-    }), (d, F) => (openBlock(), createElementBlock("div", _t, [
-      createBaseVNode("div", yt, [
-        createVNode(ce)
-      ]),
-      createBaseVNode("div", {
-        class: "gradient",
-        style: normalizeStyle({ background: l.value })
-      }, null, 4),
-      createBaseVNode("div", {
-        class: "slider",
-        ref_key: "containerRef",
-        ref: o,
-        onMousedown: v,
-        onTouchstart: v,
-        role: "slider",
-        "aria-label": "Transparency",
-        "aria-valuemax": "1",
-        "aria-valuemin": "0",
-        "aria-valuenow": s.value.toFixed(1),
-        tabindex: "0",
-        onKeydown: A
-      }, [
+    return (f, s) => (openBlock(), createBlock(q, {
+      class: "vc-alpha-slider",
+      modelValue: i.value,
+      max: 1,
+      "aria-label": "Transparency",
+      "onUpdate:modelValue": o
+    }, {
+      background: withCtx(() => [
+        createVNode(pe),
         createBaseVNode("div", {
-          class: "picker-wrap",
-          style: normalizeStyle({ left: s.value * 100 + "%" })
-        }, F[0] || (F[0] = [
-          createBaseVNode("div", { class: "picker" }, null, -1)
-        ]), 4)
-      ], 40, wt)
-    ]));
+          class: "gradient",
+          style: normalizeStyle({ background: n.value })
+        }, null, 4)
+      ]),
+      _: 1
+    }, 8, ["modelValue"]));
   }
 });
-var xe = T(Ct, [["__scopeId", "data-v-7528096e"]]);
-var kt = { class: "vc-editable-input" };
-var xt = ["value", "aria-label"];
+var oe = N($t, [["__scopeId", "data-v-07dd346b"]]);
+var Ft = { class: "vc-editable-input" };
+var St = ["value", "aria-label"];
 var At = {
   key: 0,
   class: "vc-input-desc",
   "aria-hidden": "true"
 };
-var Ft = defineComponent({
+var Mt = defineComponent({
   __name: "EditableInput",
   props: {
     value: {},
@@ -1173,85 +1177,134 @@ var Ft = defineComponent({
     step: { default: 1 },
     a11y: {}
   },
-  emits: ["change"],
+  emits: ["change", "blur"],
   setup(e, { emit: a }) {
-    var i;
-    const t = e, r = a, n = ((i = t.a11y) == null ? void 0 : i.label) ?? t.label, l = `input__label__${n}__${Math.random().toString().slice(2, 5)}`;
-    function s(v) {
-      if (t.max && +v > t.max) {
-        r("change", t.max);
+    var _a2;
+    const t = e, r = a, l = ((_a2 = t.a11y) == null ? void 0 : _a2.label) ?? t.label, n = `input__label__${l}__${Math.random().toString().slice(2, 5)}`;
+    function i(u) {
+      const { min: b, max: _ } = t;
+      if ($e(_) && +u > _) {
+        r("change", _);
         return;
       }
-      if (t.min && +v < t.min) {
-        r("change", t.min);
+      if ($e(b) && +u < b) {
+        r("change", b);
         return;
       }
-      r("change", v);
+      r("change", u);
     }
-    function o(v) {
-      var b;
-      s((b = v.target) == null ? void 0 : b.value);
+    function o(u) {
+      var _a3;
+      i((_a3 = u.target) == null ? void 0 : _a3.value);
     }
-    function c(v) {
+    function f(u) {
+      r("blur", u);
+    }
+    function s(u) {
       let b = Number(t.value);
       if (!isNaN(b)) {
-        let y = t.step;
-        const A = ft(y), d = fe(v);
-        d === "up" && (s((b + y).toFixed(A)), v.preventDefault()), d === "down" && (s((b - y).toFixed(A)), v.preventDefault());
+        let _ = t.step;
+        const m = pt(_), c = Fe(u);
+        c === "up" && (i((b + _).toFixed(m)), u.preventDefault()), c === "down" && (i((b - _).toFixed(m)), u.preventDefault());
       }
     }
-    return (v, b) => (openBlock(), createElementBlock("div", kt, [
+    return (u, b) => (openBlock(), createElementBlock("div", Ft, [
       createBaseVNode("input", {
         class: "vc-input-input",
         value: t.value,
-        onKeydown: c,
+        onKeydown: s,
         onInput: o,
-        "aria-label": unref(n),
-        id: l
-      }, null, 40, xt),
+        onBlur: f,
+        "aria-label": unref(l),
+        id: n
+      }, null, 40, St),
       createBaseVNode("label", {
-        for: l,
+        for: n,
         class: "vc-input-label",
         "aria-hidden": "true"
       }, toDisplayString(t.label), 1),
-      v.desc ? (openBlock(), createElementBlock("span", At, toDisplayString(v.desc), 1)) : createCommentVNode("", true)
+      u.desc ? (openBlock(), createElementBlock("span", At, toDisplayString(u.desc), 1)) : createCommentVNode("", true)
     ]));
   }
 });
-var R = T(Ft, [["__scopeId", "data-v-8d017502"]]);
-function Mt() {
+var M = N(Mt, [["__scopeId", "data-v-9c267b2b"]]);
+var De = (e) => g(e).isValid();
+var Rt = (e) => g(e).getAlpha() === 0;
+var fe = defineComponent({
+  __name: "HexInput",
+  props: {
+    value: {},
+    label: {},
+    desc: {},
+    a11y: {},
+    type: { default: "hex" },
+    withHash: { type: Boolean, default: false }
+  },
+  emits: ["change"],
+  setup(e, { emit: a }) {
+    const t = e, r = a, l = {
+      label: t.type === "hex" ? "Hex" : "Hex with transparency",
+      ...t.a11y
+    }, n = (s, u = "hex") => {
+      let b = "";
+      return u === "hex" && (b = g(s).toHexString()), u === "hex8" && (b = g(s).toHex8String()), t.withHash !== true && (b = b.replace("#", "")), b;
+    }, i = ref(n(t.value, t.type));
+    watch(
+      () => t.value,
+      (s) => {
+        g.equals(s, i.value) || (i.value = n(s, t.type));
+      }
+    );
+    const o = (s) => {
+      if (!s)
+        return;
+      i.value = s;
+      let u = s.length;
+      s[0] === "#" && (u = u - 1), !(t.type === "hex" && u % 3 !== 0 && u !== 8) && (t.type === "hex8" && u !== 8 || De(s) && r("change", s));
+    }, f = () => {
+      let s = i.value.length;
+      i.value[0] === "#" && (s = s - 1), !(De(i.value) && (t.type === "hex" && s === 6 || t.type === "hex8" && s === 8)) && (i.value = n(t.value, t.type));
+    };
+    return (s, u) => (openBlock(), createBlock(M, {
+      label: t.label,
+      a11y: l,
+      value: i.value,
+      onChange: o,
+      onBlur: f
+    }, null, 8, ["label", "value"]));
+  }
+});
+function Ht() {
   const e = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   return e.charAt(Math.floor(Math.random() * e.length)) + e.charAt(Math.floor(Math.random() * e.length));
 }
-var he = (e) => {
-  const a = ref(0), t = `__from__vc__hue__${Mt()}`;
-  return watch(e, (n) => {
-    if (n[t])
+var se = (e) => {
+  const a = ref(0), t = `__from__vc__hue__${Ht()}`;
+  return watch(e, (l) => {
+    if (l[t])
       return;
-    const l = n.toHsl().h;
-    l === 0 && a.value !== 0 || (a.value = l);
-  }, { immediate: true }), { hueRef: a, updateHueRef: (n) => {
-    const l = h({
+    const n = l.toHsl().h;
+    n === 0 && a.value !== 0 || (a.value = n);
+  }, { immediate: true }), { hueRef: a, updateHueRef: (l) => {
+    const n = g({
       ...e.value.toHsl(),
-      h: n
+      h: l
     });
-    l[t] = true, e.value = l, a.value = n;
+    n[t] = true, e.value = n, a.value = l;
   } };
 };
-var oe = (e) => h(e).isValid();
-var St = (e) => h(e).getAlpha() === 0;
-var $t = { class: "saturation" };
-var Rt = { class: "body" };
-var Ht = { class: "controls" };
-var Lt = { class: "color-wrap" };
-var Et = ["aria-label"];
-var Bt = { class: "sliders" };
-var Vt = { class: "hue-wrap" };
-var Dt = {
+var Vt = { class: "saturation" };
+var Bt = { class: "body" };
+var Lt = { class: "controls" };
+var Et = { class: "color-wrap" };
+var Dt = ["aria-label"];
+var Nt = { class: "sliders" };
+var Tt = { class: "hue-wrap" };
+var It = {
   key: 0,
   class: "alpha-wrap"
 };
-var Tt = {
+var Ut = {
   key: 0,
   class: "fieldsWrap",
   "data-testid": "fields"
@@ -1260,42 +1313,42 @@ var Pt = {
   key: 0,
   class: "fields"
 };
-var It = { class: "field" };
-var Nt = { class: "field" };
-var Ut = { class: "field" };
-var Ot = {
+var Gt = { class: "field" };
+var Ot = { class: "field" };
+var Kt = { class: "field" };
+var zt = {
   key: 0,
   class: "field"
 };
-var Kt = {
+var jt = {
   key: 1,
   class: "fields"
 };
-var Gt = { class: "field" };
-var zt = {
+var Xt = { class: "field" };
+var Yt = {
   key: 2,
   class: "fields"
 };
+var qt = { class: "field" };
 var Wt = { class: "field" };
-var Xt = { class: "field" };
-var Yt = { class: "field" };
-var jt = {
+var Zt = { class: "field" };
+var Jt = {
   key: 0,
   class: "field"
 };
-var qt = {
+var Qt = {
   class: "toggle-icon",
   role: "presentation"
 };
-var Zt = {
+var ea = {
   style: { width: "24px", height: "24px" },
   viewBox: "0 0 24 24"
 };
-var Jt = {
+var ta = {
   class: "toggle-icon_highlighted",
   role: "presentation"
 };
-var Qt = defineComponent({
+var aa = defineComponent({
   __name: "ChromePicker",
   props: {
     disableAlpha: { type: Boolean },
@@ -1305,225 +1358,218 @@ var Qt = defineComponent({
     modelValue: {},
     value: {}
   },
-  emits: O,
+  emits: I,
   setup(e, { emit: a }) {
-    const t = e, n = K(t, a), { hueRef: l, updateHueRef: s } = he(n), o = ref(0);
-    let c = ref(false);
-    const i = computed(() => {
-      const M = n.value.toRgb();
-      return "rgba(" + [M.r, M.g, M.b, n.value.getAlpha()].join(",") + ")";
-    }), v = computed(() => {
-      const { h: M, s: w, l: C } = n.value.toHsl();
+    const t = e, l = U(t, a), { hueRef: n, updateHueRef: i } = se(l), o = ref(0);
+    let f = ref(false);
+    const s = computed(() => {
+      const R = l.value.toRgb();
+      return "rgba(" + [R.r, R.g, R.b, l.value.getAlpha()].join(",") + ")";
+    }), u = computed(() => {
+      const { h: R, s: x, l: F } = l.value.toHsl();
       return {
-        h: M.toFixed(),
-        s: `${(w * 100).toFixed()}%`,
-        l: `${(C * 100).toFixed()}%`
+        h: R.toFixed(),
+        s: `${(x * 100).toFixed()}%`,
+        l: `${(F * 100).toFixed()}%`
       };
-    }), b = computed(() => n.value.toRgb()), y = computed(() => Number(n.value.getAlpha().toFixed(2))), A = /* @__PURE__ */ new Set(["hex", "hsl", "rgb"]), d = computed(() => {
-      const M = /* @__PURE__ */ new Set(), w = [], C = t.formats;
-      for (const z of C)
-        if (A.has(z)) {
-          const ne = z;
-          M.has(ne) || (M.add(ne), w.push(ne));
+    }), b = computed(() => l.value.toRgb()), _ = computed(() => Number(l.value.getAlpha().toFixed(2))), m = /* @__PURE__ */ new Set(["hex", "hsl", "rgb"]), c = computed(() => {
+      const R = /* @__PURE__ */ new Set(), x = [], F = t.formats;
+      for (const he of F)
+        if (m.has(he)) {
+          const ie = he;
+          R.has(ie) || (R.add(ie), x.push(ie));
         }
-      return w;
-    }), F = computed(() => {
-      const { disableFields: M, formats: w } = t;
-      return !(M === true || !Array.isArray(w) || d.value.length === 0);
-    }), f = (M) => d.value.includes(M), $ = (M) => d.value.indexOf(M), k = (M) => {
-      M && oe(M) && (n.value = M);
-    }, p = (M, w) => {
-      if (!w || isNaN(Number(w)))
+      return x;
+    }), S = computed(() => {
+      const { disableFields: R, formats: x } = t;
+      return !(R === true || !Array.isArray(x) || c.value.length === 0);
+    }), k = (R) => c.value.includes(R), V = (R) => c.value.indexOf(R), $ = (R) => {
+      l.value = R;
+    }, h = (R, x) => {
+      if (!x || isNaN(Number(x)))
         return;
-      const C = { [M]: w };
-      n.value = {
+      const F = { [R]: x };
+      l.value = {
         ...b.value,
-        a: y.value,
-        ...C
+        a: _.value,
+        ...F
       };
-    }, m = (M, w) => {
-      if (!w)
+    }, v = (R, x) => {
+      if (!x)
         return;
-      const C = { [M]: +w };
-      (M === "s" || M === "l") && (C[M] = +w.replace("%", "") / 100), n.value = {
-        ...n.value.toHsl(),
-        a: y.value,
-        ...C
+      const F = { [R]: +x };
+      (R === "s" || R === "l") && (F[R] = +x.replace("%", "") / 100), l.value = {
+        ...l.value.toHsl(),
+        a: _.value,
+        ...F
       };
-    }, E = () => {
-      if (o.value === d.value.length - 1) {
+    }, B = () => {
+      if (o.value === c.value.length - 1) {
         o.value = 0;
         return;
       }
       o.value++;
-    }, Y = () => {
-      c.value = true;
-    }, ee = () => {
-      c.value = false;
+    }, Z = () => {
+      f.value = true;
+    }, ne = () => {
+      f.value = false;
     };
-    return (M, w) => (openBlock(), createElementBlock("div", {
+    return (R, x) => (openBlock(), createElementBlock("div", {
       role: "application",
       "aria-label": "Chrome Color Picker",
-      class: normalizeClass(["vc-chrome-picker", M.disableAlpha ? "alpha-disabled" : ""])
+      class: normalizeClass(["vc-chrome-picker", R.disableAlpha ? "alpha-disabled" : ""])
     }, [
-      createBaseVNode("div", $t, [
-        createVNode(ke, {
-          tinyColor: unref(n),
-          "onUpdate:tinyColor": w[0] || (w[0] = (C) => isRef(n) ? n.value = C : null),
-          hue: unref(l)
+      createBaseVNode("div", Vt, [
+        createVNode(Se, {
+          tinyColor: unref(l),
+          "onUpdate:tinyColor": x[0] || (x[0] = (F) => isRef(l) ? l.value = F : null),
+          hue: unref(n)
         }, null, 8, ["tinyColor", "hue"])
       ]),
-      createBaseVNode("div", Rt, [
-        createBaseVNode("div", Ht, [
-          createBaseVNode("div", Lt, [
+      createBaseVNode("div", Bt, [
+        createBaseVNode("div", Lt, [
+          createBaseVNode("div", Et, [
             createBaseVNode("div", {
               class: "active-color",
-              style: normalizeStyle({ backgroundColor: i.value }),
+              style: normalizeStyle({ backgroundColor: s.value }),
               role: "presentation",
               "aria-live": "polite",
-              "aria-label": `Current color is ${i.value}`
-            }, null, 12, Et),
-            t.disableAlpha ? createCommentVNode("", true) : (openBlock(), createBlock(ce, { key: 0 }))
+              "aria-label": `Current color is ${s.value}`
+            }, null, 12, Dt),
+            t.disableAlpha ? createCommentVNode("", true) : (openBlock(), createBlock(pe, { key: 0 }))
           ]),
-          createBaseVNode("div", Bt, [
-            createBaseVNode("div", Vt, [
+          createBaseVNode("div", Nt, [
+            createBaseVNode("div", Tt, [
               createVNode(le, {
-                modelValue: unref(l),
-                "onUpdate:modelValue": unref(s)
+                modelValue: unref(n),
+                "onUpdate:modelValue": unref(i)
               }, null, 8, ["modelValue", "onUpdate:modelValue"])
             ]),
-            t.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Dt, [
-              createVNode(xe, {
-                tinyColor: unref(n),
-                "onUpdate:tinyColor": w[1] || (w[1] = (C) => isRef(n) ? n.value = C : null)
+            t.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", It, [
+              createVNode(oe, {
+                tinyColor: unref(l),
+                "onUpdate:tinyColor": x[1] || (x[1] = (F) => isRef(l) ? l.value = F : null)
               }, null, 8, ["tinyColor"])
             ]))
           ])
         ]),
-        F.value ? (openBlock(), createElementBlock("div", Tt, [
-          f("rgb") ? withDirectives((openBlock(), createElementBlock("div", Pt, [
-            createBaseVNode("div", It, [
-              createVNode(R, {
+        S.value ? (openBlock(), createElementBlock("div", Ut, [
+          k("rgb") ? withDirectives((openBlock(), createElementBlock("div", Pt, [
+            createBaseVNode("div", Gt, [
+              createVNode(M, {
                 label: "r",
                 value: b.value.r,
-                onChange: w[2] || (w[2] = (C) => p("r", C)),
+                onChange: x[2] || (x[2] = (F) => h("r", F)),
                 a11y: { label: "Red" }
               }, null, 8, ["value"])
             ]),
-            createBaseVNode("div", Nt, [
-              createVNode(R, {
+            createBaseVNode("div", Ot, [
+              createVNode(M, {
                 label: "g",
                 value: b.value.g,
-                onChange: w[3] || (w[3] = (C) => p("g", C)),
+                onChange: x[3] || (x[3] = (F) => h("g", F)),
                 a11y: { label: "Green" }
               }, null, 8, ["value"])
             ]),
-            createBaseVNode("div", Ut, [
-              createVNode(R, {
+            createBaseVNode("div", Kt, [
+              createVNode(M, {
                 label: "b",
                 value: b.value.b,
-                onChange: w[4] || (w[4] = (C) => p("b", C)),
+                onChange: x[4] || (x[4] = (F) => h("b", F)),
                 a11y: { label: "Blue" }
               }, null, 8, ["value"])
             ]),
-            M.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Ot, [
-              createVNode(R, {
+            R.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", zt, [
+              createVNode(M, {
                 label: "a",
-                value: y.value,
+                value: _.value,
                 step: 0.01,
                 max: 1,
-                onChange: w[5] || (w[5] = (C) => p("a", C)),
+                onChange: x[5] || (x[5] = (F) => h("a", F)),
                 a11y: { label: "Transparency" }
               }, null, 8, ["value"])
             ]))
           ], 512)), [
-            [vShow, o.value === $("rgb")]
+            [vShow, o.value === V("rgb")]
           ]) : createCommentVNode("", true),
-          f("hex") ? withDirectives((openBlock(), createElementBlock("div", Kt, [
-            createBaseVNode("div", Gt, [
-              y.value === 1 ? (openBlock(), createBlock(R, {
-                key: 0,
+          k("hex") ? withDirectives((openBlock(), createElementBlock("div", jt, [
+            createBaseVNode("div", Xt, [
+              createVNode(fe, {
+                type: _.value === 1 ? "hex" : "hex8",
                 label: "hex",
-                value: unref(n).toHexString(),
-                onChange: k,
-                a11y: { label: "Hex" }
-              }, null, 8, ["value"])) : createCommentVNode("", true),
-              y.value !== 1 ? (openBlock(), createBlock(R, {
-                key: 1,
-                label: "hex",
-                value: unref(n).toHex8String(),
-                onChange: k,
-                a11y: { label: "Hex with transparency" }
-              }, null, 8, ["value"])) : createCommentVNode("", true)
+                value: unref(l).toHex8String(),
+                onChange: $,
+                "with-hash": true
+              }, null, 8, ["type", "value"])
             ])
           ], 512)), [
-            [vShow, o.value === $("hex")]
+            [vShow, o.value === V("hex")]
           ]) : createCommentVNode("", true),
-          f("hsl") ? withDirectives((openBlock(), createElementBlock("div", zt, [
-            createBaseVNode("div", Wt, [
-              createVNode(R, {
+          k("hsl") ? withDirectives((openBlock(), createElementBlock("div", Yt, [
+            createBaseVNode("div", qt, [
+              createVNode(M, {
                 label: "h",
-                value: unref(l).toFixed(),
-                onChange: w[6] || (w[6] = (C) => m("h", C)),
+                value: unref(n).toFixed(),
+                onChange: x[6] || (x[6] = (F) => v("h", F)),
                 a11y: { label: "Hue" }
               }, null, 8, ["value"])
             ]),
-            createBaseVNode("div", Xt, [
-              createVNode(R, {
+            createBaseVNode("div", Wt, [
+              createVNode(M, {
                 label: "s",
-                value: v.value.s,
-                onChange: w[7] || (w[7] = (C) => m("s", C)),
+                value: u.value.s,
+                onChange: x[7] || (x[7] = (F) => v("s", F)),
                 a11y: { label: "Saturation" }
               }, null, 8, ["value"])
             ]),
-            createBaseVNode("div", Yt, [
-              createVNode(R, {
+            createBaseVNode("div", Zt, [
+              createVNode(M, {
                 label: "l",
-                value: v.value.l,
-                onChange: w[8] || (w[8] = (C) => m("l", C)),
+                value: u.value.l,
+                onChange: x[8] || (x[8] = (F) => v("l", F)),
                 a11y: { label: "Lightness" }
               }, null, 8, ["value"])
             ]),
-            M.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", jt, [
-              createVNode(R, {
+            R.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Jt, [
+              createVNode(M, {
                 label: "a",
-                value: y.value,
+                value: _.value,
                 step: 0.01,
                 max: 1,
-                onChange: w[9] || (w[9] = (C) => m("a", C)),
+                onChange: x[9] || (x[9] = (F) => v("a", F)),
                 a11y: { label: "Transparency" }
               }, null, 8, ["value"])
             ]))
           ], 512)), [
-            [vShow, o.value === $("hsl")]
+            [vShow, o.value === V("hsl")]
           ]) : createCommentVNode("", true),
-          d.value.length > 1 ? (openBlock(), createElementBlock("div", {
+          c.value.length > 1 ? (openBlock(), createElementBlock("div", {
             key: 3,
             class: "toggle-btn",
-            onClick: E,
+            onClick: B,
             onKeydown: [
-              withKeys(E, ["enter"]),
-              withKeys(E, ["space"])
+              withKeys(B, ["enter"]),
+              withKeys(B, ["space"])
             ],
-            onMouseover: Y,
-            onMouseenter: Y,
-            onMouseout: ee,
-            onFocus: Y,
-            onBlur: ee,
+            onMouseover: Z,
+            onMouseenter: Z,
+            onMouseout: ne,
+            onFocus: Z,
+            onBlur: ne,
             role: "button",
             "aria-label": "Change color format",
             tabindex: "0"
           }, [
-            createBaseVNode("div", qt, [
-              (openBlock(), createElementBlock("svg", Zt, w[10] || (w[10] = [
+            createBaseVNode("div", Qt, [
+              (openBlock(), createElementBlock("svg", ea, x[10] || (x[10] = [
                 createBaseVNode("path", {
                   fill: "currentColor",
                   d: "M12,18.17L8.83,15L7.42,16.41L12,21L16.59,16.41L15.17,15M12,5.83L15.17,9L16.58,7.59L12,3L7.41,7.59L8.83,9L12,5.83Z"
                 }, null, -1)
               ])))
             ]),
-            withDirectives(createBaseVNode("div", Jt, null, 512), [
-              [vShow, unref(c)]
+            withDirectives(createBaseVNode("div", ta, null, 512), [
+              [vShow, unref(f)]
             ])
           ], 32)) : createCommentVNode("", true)
         ])) : createCommentVNode("", true)
@@ -1531,21 +1577,21 @@ var Qt = defineComponent({
     ], 2));
   }
 });
-var Wn = T(Qt, [["__scopeId", "data-v-abf90852"]]);
-var ea = {
+var gn = N(aa, [["__scopeId", "data-v-dfdde7e0"]]);
+var la = {
   class: "vc-compact-picker",
   role: "application",
   "aria-label": "Compact color picker",
   tabindex: "0"
 };
-var ta = {
+var na = {
   class: "colors",
   role: "listbox",
   "aria-label": "Pick a color"
 };
-var aa = ["onClick", "aria-label", "aria-selected", "title", "onKeydown"];
-var na = { class: "dot" };
-var ra = [
+var ra = ["onClick", "aria-label", "aria-selected", "title", "onKeydown"];
+var oa = { class: "dot" };
+var sa = [
   "#4D4D4D",
   "#999999",
   "#FFFFFF",
@@ -1583,56 +1629,56 @@ var ra = [
   "#653294",
   "#AB149E"
 ];
-var la = defineComponent({
+var ia = defineComponent({
   __name: "CompactPicker",
   props: {
-    palette: { default: () => ra },
+    palette: { default: () => sa },
     tinyColor: {},
     modelValue: {},
     value: {}
   },
-  emits: ["change"].concat(O),
+  emits: ["change"].concat(I),
   setup(e, { emit: a }) {
-    const t = e, n = K(t, a), l = computed(() => n.value.toHexString().toUpperCase()), s = (o) => {
-      n.value = o;
+    const t = e, l = U(t, a), n = computed(() => l.value.toHexString().toUpperCase()), i = (o) => {
+      l.value = o;
     };
-    return (o, c) => (openBlock(), createElementBlock("div", ea, [
-      createBaseVNode("ul", ta, [
-        (openBlock(true), createElementBlock(Fragment, null, renderList(t.palette, (i) => (openBlock(), createElementBlock("li", {
-          key: i,
-          class: normalizeClass({ "color-item_white": i === "#FFFFFF", "color-item": true }),
-          style: normalizeStyle({ background: i }),
-          onClick: (v) => s(i),
+    return (o, f) => (openBlock(), createElementBlock("div", la, [
+      createBaseVNode("ul", na, [
+        (openBlock(true), createElementBlock(Fragment, null, renderList(t.palette, (s) => (openBlock(), createElementBlock("li", {
+          key: s,
+          class: normalizeClass({ "color-item_white": s === "#FFFFFF", "color-item": true }),
+          style: normalizeStyle({ background: s }),
+          onClick: (u) => i(s),
           role: "option",
-          "aria-label": "color:" + i,
-          "aria-selected": i.toUpperCase() === l.value,
-          title: i,
-          onKeydown: withKeys((v) => s(i), ["space"]),
+          "aria-label": "color:" + s,
+          "aria-selected": s.toUpperCase() === n.value,
+          title: s,
+          onKeydown: withKeys((u) => i(s), ["space"]),
           tabindex: "0"
         }, [
-          withDirectives(createBaseVNode("div", na, null, 512), [
-            [vShow, i.toUpperCase() === l.value]
+          withDirectives(createBaseVNode("div", oa, null, 512), [
+            [vShow, s.toUpperCase() === n.value]
           ])
-        ], 46, aa))), 128))
+        ], 46, ra))), 128))
       ])
     ]));
   }
 });
-var Xn = T(la, [["__scopeId", "data-v-17eda10a"]]);
-var oa = {
+var mn = N(ia, [["__scopeId", "data-v-91d11fa7"]]);
+var ua = {
   role: "application",
   "aria-label": "Grayscale color picker",
   class: "vc-grayscale-picker"
 };
-var ia = {
+var da = {
   class: "colors",
   role: "listbox",
   "aria-label": "Select a grayscale color",
   tabindex: "0"
 };
-var sa = ["onClick", "aria-label", "aria-selected", "title", "onKeydown"];
-var ua = { class: "dot" };
-var ca = [
+var ca = ["onClick", "aria-label", "aria-selected", "title", "onKeydown"];
+var fa = { class: "dot" };
+var ha = [
   "#FFFFFF",
   "#F2F2F2",
   "#E6E6E6",
@@ -1654,101 +1700,101 @@ var ca = [
   "#0D0D0D",
   "#000000"
 ];
-var da = defineComponent({
+var va = defineComponent({
   __name: "GrayscalePicker",
   props: {
-    palette: { default: () => ca },
+    palette: { default: () => ha },
     tinyColor: {},
     modelValue: {},
     value: {}
   },
-  emits: ["change"].concat(O),
+  emits: ["change"].concat(I),
   setup(e, { emit: a }) {
-    const n = K(e, a), l = computed(() => n.value.toHexString().toUpperCase()), s = (o) => {
-      n.value = o;
+    const l = U(e, a), n = computed(() => l.value.toHexString().toUpperCase()), i = (o) => {
+      l.value = o;
     };
-    return (o, c) => (openBlock(), createElementBlock("div", oa, [
-      createBaseVNode("ul", ia, [
-        (openBlock(true), createElementBlock(Fragment, null, renderList(o.palette, (i) => (openBlock(), createElementBlock("li", {
-          key: i,
-          class: normalizeClass({ "color-item_white": i === "#FFFFFF", "color-item": true }),
-          style: normalizeStyle({ background: i }),
-          onClick: (v) => s(i),
+    return (o, f) => (openBlock(), createElementBlock("div", ua, [
+      createBaseVNode("ul", da, [
+        (openBlock(true), createElementBlock(Fragment, null, renderList(o.palette, (s) => (openBlock(), createElementBlock("li", {
+          key: s,
+          class: normalizeClass({ "color-item_white": s === "#FFFFFF", "color-item": true }),
+          style: normalizeStyle({ background: s }),
+          onClick: (u) => i(s),
           role: "option",
-          "aria-label": "color:" + i,
-          "aria-selected": i.toUpperCase() === l.value,
-          title: i,
-          onKeydown: withKeys((v) => s(i), ["space"]),
+          "aria-label": "color:" + s,
+          "aria-selected": s.toUpperCase() === n.value,
+          title: s,
+          onKeydown: withKeys((u) => i(s), ["space"]),
           tabindex: "0"
         }, [
-          withDirectives(createBaseVNode("div", ua, null, 512), [
-            [vShow, i.toUpperCase() === l.value]
+          withDirectives(createBaseVNode("div", fa, null, 512), [
+            [vShow, s.toUpperCase() === n.value]
           ])
-        ], 46, sa))), 128))
+        ], 46, ca))), 128))
       ])
     ]));
   }
 });
-var Yn = T(da, [["__scopeId", "data-v-85f108e1"]]);
-var fa = {
+var _n = N(va, [["__scopeId", "data-v-631223a5"]]);
+var ba = {
   role: "application",
   "aria-label": "Material color inputs",
   class: "vc-material-picker"
 };
-var ha = { class: "rgb" };
-var va = { class: "color" };
-var ba = { class: "color" };
-var pa = { class: "color" };
-var ga = defineComponent({
+var pa = { class: "rgb" };
+var ga = { class: "color" };
+var ma = { class: "color" };
+var _a = { class: "color" };
+var ya = defineComponent({
   __name: "MaterialPicker",
   props: {
     tinyColor: {},
     modelValue: {},
     value: {}
   },
-  emits: O,
+  emits: I,
   setup(e, { emit: a }) {
-    const n = K(e, a), l = computed(() => n.value.toRgb());
-    function s(c) {
-      oe(c) && (n.value = c);
+    const l = U(e, a), n = computed(() => l.value.toRgb());
+    function i(f) {
+      l.value = f;
     }
-    function o(c, i) {
-      n.value = {
-        ...l.value,
-        [c]: i
+    function o(f, s) {
+      l.value = {
+        ...n.value,
+        [f]: s
       };
     }
-    return (c, i) => (openBlock(), createElementBlock("div", fa, [
-      createVNode(R, {
+    return (f, s) => (openBlock(), createElementBlock("div", ba, [
+      createVNode(fe, {
         class: "hex",
         label: "hex",
-        value: unref(n).toHexString(),
-        style: normalizeStyle({ borderColor: unref(n).toHexString() }),
-        onChange: s,
-        a11y: { label: "Hex" }
+        value: unref(l).toHexString(),
+        style: normalizeStyle({ borderColor: unref(l).toHexString() }),
+        onChange: i,
+        "with-hash": true
       }, null, 8, ["value", "style"]),
-      createBaseVNode("div", ha, [
-        createBaseVNode("div", va, [
-          createVNode(R, {
+      createBaseVNode("div", pa, [
+        createBaseVNode("div", ga, [
+          createVNode(M, {
             label: "r",
-            value: l.value.r,
-            onChange: i[0] || (i[0] = (v) => o("r", v)),
+            value: n.value.r,
+            onChange: s[0] || (s[0] = (u) => o("r", u)),
             a11y: { label: "Red" }
           }, null, 8, ["value"])
         ]),
-        createBaseVNode("div", ba, [
-          createVNode(R, {
+        createBaseVNode("div", ma, [
+          createVNode(M, {
             label: "g",
-            value: l.value.g,
-            onChange: i[1] || (i[1] = (v) => o("g", v)),
+            value: n.value.g,
+            onChange: s[1] || (s[1] = (u) => o("g", u)),
             a11y: { label: "Green" }
           }, null, 8, ["value"])
         ]),
-        createBaseVNode("div", pa, [
-          createVNode(R, {
+        createBaseVNode("div", _a, [
+          createVNode(M, {
             label: "b",
-            value: l.value.b,
-            onChange: i[2] || (i[2] = (v) => o("b", v)),
+            value: n.value.b,
+            onChange: s[2] || (s[2] = (u) => o("b", u)),
             a11y: { label: "Blue" }
           }, null, 8, ["value"])
         ])
@@ -1756,34 +1802,34 @@ var ga = defineComponent({
     ]));
   }
 });
-var jn = T(ga, [["__scopeId", "data-v-4e39f856"]]);
-var ma = {
+var yn = N(ya, [["__scopeId", "data-v-8f86229c"]]);
+var Ca = {
   class: "title",
   "aria-hidden": "true"
 };
-var _a = { class: "body" };
-var ya = { class: "saturation" };
-var wa = { class: "hue" };
-var Ca = { class: "preview" };
-var ka = {
+var ka = { class: "body" };
+var wa = { class: "saturation" };
+var xa = { class: "hue" };
+var $a = { class: "preview" };
+var Fa = {
   class: "preview-label",
   "aria-hidden": "true"
 };
-var xa = { class: "preview-swatches" };
+var Sa = { class: "preview-swatches" };
 var Aa = ["aria-label"];
-var Fa = ["aria-label"];
-var Ma = {
+var Ma = ["aria-label"];
+var Ra = {
   class: "preview-label",
   "aria-hidden": "true"
 };
-var Sa = {
+var Ha = {
   key: 0,
   class: "actions"
 };
-var $a = ["aria-label"];
-var Ra = { class: "fields" };
-var Ha = ["aria-label"];
-var La = defineComponent({
+var Va = ["aria-label"];
+var Ba = { class: "fields" };
+var La = ["aria-label"];
+var Ea = defineComponent({
   __name: "PhotoshopPicker",
   props: {
     title: { default: "Color picker" },
@@ -1799,59 +1845,59 @@ var La = defineComponent({
     modelValue: {},
     value: {}
   },
-  emits: O.concat(["ok", "cancel", "reset"]),
+  emits: I.concat(["ok", "cancel", "reset"]),
   setup(e, { emit: a }) {
-    const t = e, r = a, n = K(t, r), { hueRef: l, updateHueRef: s } = he(n), o = ref(t.currentColor), c = computed(() => n.value.toHsv()), i = computed(() => {
-      const k = n.value.toHexString();
-      return k && k.replace("#", "");
-    }), v = computed(() => n.value.toRgb()), b = () => {
-      n.value = o.value;
-    }, y = (k) => {
-      k && oe(k) && (n.value = k);
-    }, A = (k, p) => {
-      if (!p || isNaN(Number(p)))
+    const t = e, r = a, l = U(t, r), { hueRef: n, updateHueRef: i } = se(l), o = ref(t.currentColor), f = computed(() => l.value.toHsv()), s = computed(() => {
+      const $ = l.value.toHexString();
+      return $ && $.replace("#", "");
+    }), u = computed(() => l.value.toRgb()), b = () => {
+      l.value = o.value;
+    }, _ = ($) => {
+      l.value = $;
+    }, m = ($, h) => {
+      if (!h || isNaN(Number(h)))
         return;
-      const m = { [k]: p };
-      n.value = {
-        ...v.value,
-        ...m
+      const v = { [$]: h };
+      l.value = {
+        ...u.value,
+        ...v
       };
-    }, d = (k, p) => {
-      if (!p || isNaN(Number(p)))
+    }, c = ($, h) => {
+      if (!h || isNaN(Number(h)))
         return;
-      const m = { [k]: Number(p) };
-      n.value = {
-        ...c.value,
-        ...m
+      const v = { [$]: Number(h) };
+      l.value = {
+        ...f.value,
+        ...v
       };
-    }, F = () => {
+    }, S = () => {
       r("ok");
-    }, f = () => {
+    }, k = () => {
       r("cancel");
-    }, $ = () => {
+    }, V = () => {
       r("reset");
     };
-    return (k, p) => (openBlock(), createElementBlock("div", {
+    return ($, h) => (openBlock(), createElementBlock("div", {
       role: "application",
       "aria-label": "PhotoShop color picker",
-      class: normalizeClass(["vc-photoshop-picker", k.disableFields ? "fields_disabled" : ""])
+      class: normalizeClass(["vc-photoshop-picker", $.disableFields ? "fields_disabled" : ""])
     }, [
-      createBaseVNode("div", ma, toDisplayString(k.title), 1),
-      createBaseVNode("div", _a, [
-        createBaseVNode("div", ya, [
-          createVNode(ke, {
-            tinyColor: unref(n),
-            "onUpdate:tinyColor": p[0] || (p[0] = (m) => isRef(n) ? n.value = m : null),
-            hue: unref(l)
+      createBaseVNode("div", Ca, toDisplayString($.title), 1),
+      createBaseVNode("div", ka, [
+        createBaseVNode("div", wa, [
+          createVNode(Se, {
+            tinyColor: unref(l),
+            "onUpdate:tinyColor": h[0] || (h[0] = (v) => isRef(l) ? l.value = v : null),
+            hue: unref(n)
           }, null, 8, ["tinyColor", "hue"])
         ]),
-        createBaseVNode("div", wa, [
+        createBaseVNode("div", xa, [
           createVNode(le, {
             direction: "vertical",
-            modelValue: unref(l),
-            "onUpdate:modelValue": unref(s)
+            modelValue: unref(n),
+            "onUpdate:modelValue": unref(i)
           }, {
-            default: withCtx(() => p[7] || (p[7] = [
+            default: withCtx(() => h[7] || (h[7] = [
               createBaseVNode("div", { class: "hue-picker" }, [
                 createBaseVNode("i", { class: "hue-picker-left" }),
                 createBaseVNode("i", { class: "hue-picker-right" })
@@ -1862,15 +1908,15 @@ var La = defineComponent({
           }, 8, ["modelValue", "onUpdate:modelValue"])
         ]),
         createBaseVNode("div", {
-          class: normalizeClass(["controls", k.disableFields ? "controls_fields_disabled" : ""])
+          class: normalizeClass(["controls", $.disableFields ? "controls_fields_disabled" : ""])
         }, [
-          createBaseVNode("div", Ca, [
-            createBaseVNode("div", ka, toDisplayString(k.newLabel), 1),
-            createBaseVNode("div", xa, [
+          createBaseVNode("div", $a, [
+            createBaseVNode("div", Fa, toDisplayString($.newLabel), 1),
+            createBaseVNode("div", Sa, [
               createBaseVNode("div", {
                 class: "preview-color",
-                "aria-label": `New color is #${i.value}`,
-                style: normalizeStyle({ background: `#${i.value}` })
+                "aria-label": `New color is #${s.value}`,
+                style: normalizeStyle({ background: `#${s.value}` })
               }, null, 12, Aa),
               createBaseVNode("div", {
                 class: "preview-color",
@@ -1880,127 +1926,126 @@ var La = defineComponent({
                 "aria-label": `Current color is ${o.value}`,
                 onKeydown: withKeys(b, ["space"]),
                 tabindex: "0"
-              }, null, 44, Fa)
+              }, null, 44, Ma)
             ]),
-            createBaseVNode("div", Ma, toDisplayString(k.currentLabel), 1)
+            createBaseVNode("div", Ra, toDisplayString($.currentLabel), 1)
           ]),
-          k.disableFields ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Sa, [
+          $.disableFields ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Ha, [
             createBaseVNode("div", {
               class: "action-btn",
               role: "button",
               "aria-label": "Click to apply new color",
-              onClick: F,
+              onClick: S,
               onKeydown: withKeys(b, ["space"]),
               tabindex: "0"
-            }, toDisplayString(k.okLabel), 33),
+            }, toDisplayString($.okLabel), 33),
             createBaseVNode("div", {
               class: "action-btn",
               role: "button",
-              "aria-label": k.cancelLabel,
-              onClick: f,
+              "aria-label": $.cancelLabel,
+              onClick: k,
               onKeydown: withKeys(b, ["space"]),
               tabindex: "0"
-            }, toDisplayString(k.cancelLabel), 41, $a),
-            createBaseVNode("div", Ra, [
-              createVNode(R, {
+            }, toDisplayString($.cancelLabel), 41, Va),
+            createBaseVNode("div", Ba, [
+              createVNode(M, {
                 label: "h",
                 desc: "°",
-                value: c.value.h.toFixed(),
-                onChange: p[1] || (p[1] = (m) => d("h", m)),
+                value: f.value.h.toFixed(),
+                onChange: h[1] || (h[1] = (v) => c("h", v)),
                 a11y: { label: "Hue" }
               }, null, 8, ["value"]),
-              createVNode(R, {
+              createVNode(M, {
                 label: "s",
                 desc: "%",
-                value: (c.value.s * 100).toFixed(),
+                value: (f.value.s * 100).toFixed(),
                 min: 0,
                 max: 100,
-                onChange: p[2] || (p[2] = (m) => d("s", m)),
+                onChange: h[2] || (h[2] = (v) => c("s", v)),
                 a11y: { label: "Saturation" }
               }, null, 8, ["value"]),
-              createVNode(R, {
+              createVNode(M, {
                 label: "v",
                 desc: "%",
-                value: (c.value.v * 100).toFixed(),
+                value: (f.value.v * 100).toFixed(),
                 min: 0,
                 max: 100,
-                onChange: p[3] || (p[3] = (m) => d("v", m)),
+                onChange: h[3] || (h[3] = (v) => c("v", v)),
                 a11y: { label: "Value" }
               }, null, 8, ["value"]),
-              p[8] || (p[8] = createBaseVNode("div", { class: "fields-divider" }, null, -1)),
-              createVNode(R, {
+              h[8] || (h[8] = createBaseVNode("div", { class: "fields-divider" }, null, -1)),
+              createVNode(M, {
                 label: "r",
-                value: v.value.r,
-                onChange: p[4] || (p[4] = (m) => A("r", m)),
+                value: u.value.r,
+                onChange: h[4] || (h[4] = (v) => m("r", v)),
                 a11y: { label: "Red" }
               }, null, 8, ["value"]),
-              createVNode(R, {
+              createVNode(M, {
                 label: "g",
-                value: v.value.g,
-                onChange: p[5] || (p[5] = (m) => A("g", m)),
+                value: u.value.g,
+                onChange: h[5] || (h[5] = (v) => m("g", v)),
                 a11y: { label: "Green" }
               }, null, 8, ["value"]),
-              createVNode(R, {
+              createVNode(M, {
                 label: "b",
-                value: v.value.b,
-                onChange: p[6] || (p[6] = (m) => A("b", m)),
+                value: u.value.b,
+                onChange: h[6] || (h[6] = (v) => m("b", v)),
                 a11y: { label: "Blue" }
               }, null, 8, ["value"]),
-              p[9] || (p[9] = createBaseVNode("div", { class: "fields-divider" }, null, -1)),
-              createVNode(R, {
+              h[9] || (h[9] = createBaseVNode("div", { class: "fields-divider" }, null, -1)),
+              createVNode(fe, {
                 label: "#",
                 class: "hex",
-                value: i.value,
-                onChange: y,
-                a11y: { label: "Hex" }
+                value: s.value,
+                onChange: _
               }, null, 8, ["value"])
             ]),
-            k.hasResetButton ? (openBlock(), createElementBlock("div", {
+            $.hasResetButton ? (openBlock(), createElementBlock("div", {
               key: 0,
               class: "action-btn",
-              onClick: $,
+              onClick: V,
               role: "button",
-              "aria-label": k.resetLabel,
-              onKeydown: withKeys($, ["space"]),
+              "aria-label": $.resetLabel,
+              onKeydown: withKeys(V, ["space"]),
               tabindex: "0"
-            }, toDisplayString(k.resetLabel), 41, Ha)) : createCommentVNode("", true)
+            }, toDisplayString($.resetLabel), 41, La)) : createCommentVNode("", true)
           ]))
         ], 2)
       ])
     ], 2));
   }
 });
-var qn = T(La, [["__scopeId", "data-v-bc374c28"]]);
-var Ea = { class: "saturation" };
-var Ba = { class: "controls" };
-var Va = { class: "sliders" };
-var Da = { class: "hue" };
-var Ta = {
+var Cn = N(Ea, [["__scopeId", "data-v-b69df0e5"]]);
+var Da = { class: "saturation" };
+var Na = { class: "controls" };
+var Ta = { class: "sliders" };
+var Ia = { class: "hue" };
+var Ua = {
   key: 0,
   class: "alpha"
 };
 var Pa = { class: "color" };
-var Ia = ["aria-label"];
-var Na = {
+var Ga = ["aria-label"];
+var Oa = {
   key: 0,
   class: "field"
 };
-var Ua = { class: "field_double" };
-var Oa = { class: "field_single" };
-var Ka = { class: "field_single" };
-var Ga = { class: "field_single" };
-var za = {
+var Ka = { class: "field_double" };
+var za = { class: "field_single" };
+var ja = { class: "field_single" };
+var Xa = { class: "field_single" };
+var Ya = {
   key: 0,
   class: "field_single"
 };
-var Wa = {
+var qa = {
   class: "presets",
   role: "listbox",
   "aria-label": "A color preset, pick one to set as current color"
 };
-var Xa = ["onClick", "title", "aria-label", "aria-selected", "onKeydown"];
-var Ya = ["onClick", "aria-selected", "title", "onKeydown"];
-var ja = [
+var Wa = ["onClick", "title", "aria-label", "aria-selected", "onKeydown"];
+var Za = ["onClick", "aria-selected", "title", "onKeydown"];
+var Ja = [
   "#D0021B",
   "#F5A623",
   "#F8E71C",
@@ -2018,301 +2063,301 @@ var ja = [
   "#FFFFFF",
   "rgba(0,0,0,0)"
 ];
-var qa = defineComponent({
+var Qa = defineComponent({
   __name: "SketchPicker",
   props: {
-    presetColors: { default: () => ja },
+    presetColors: { default: () => Ja },
     disableAlpha: { type: Boolean, default: false },
     disableFields: { type: Boolean, default: false },
     tinyColor: {},
     modelValue: {},
     value: {}
   },
-  emits: ["change"].concat(O),
+  emits: ["change"].concat(I),
   setup(e, { emit: a }) {
-    const t = e, n = K(t, a), { hueRef: l, updateHueRef: s } = he(n), o = computed(() => Number(n.value.getAlpha().toFixed(2))), c = computed(() => {
-      let d;
-      return o.value < 1 ? d = n.value.toHex8String() : d = n.value.toHexString(), d.replace("#", "");
-    }), i = computed(() => n.value.toRgb()), v = (d) => {
-      d && oe(d) && (n.value = d);
-    }, b = (d, F) => {
-      if (!F || isNaN(Number(F)))
+    const t = e, l = U(t, a), { hueRef: n, updateHueRef: i } = se(l), o = computed(() => Number(l.value.getAlpha().toFixed(2))), f = computed(() => {
+      let c;
+      return o.value < 1 ? c = l.value.toHex8String() : c = l.value.toHexString(), c.replace("#", "");
+    }), s = computed(() => l.value.toRgb()), u = (c) => {
+      l.value = c;
+    }, b = (c, S) => {
+      if (!S || isNaN(Number(S)))
         return;
-      const f = { [d]: F };
-      n.value = {
-        ...i.value,
-        ...f
+      const k = { [c]: S };
+      l.value = {
+        ...s.value,
+        ...k
       };
-    }, y = (d) => {
-      !d || isNaN(Number(d)) || (n.value = n.value.setAlpha(d).clone());
-    }, A = (d) => {
-      n.value = d;
+    }, _ = (c) => {
+      !c || isNaN(Number(c)) || (l.value = l.value.setAlpha(c).clone());
+    }, m = (c) => {
+      l.value = c;
     };
-    return (d, F) => (openBlock(), createElementBlock("div", {
+    return (c, S) => (openBlock(), createElementBlock("div", {
       role: "application",
       "aria-label": "Sketch color picker",
-      class: normalizeClass(["vc-sketch-picker", d.disableAlpha ? "alpha-disabled" : ""])
+      class: normalizeClass(["vc-sketch-picker", c.disableAlpha ? "alpha-disabled" : ""])
     }, [
-      createBaseVNode("div", Ea, [
-        createVNode(ke, {
-          hue: unref(l),
-          tinyColor: unref(n),
-          "onUpdate:tinyColor": F[0] || (F[0] = (f) => isRef(n) ? n.value = f : null)
+      createBaseVNode("div", Da, [
+        createVNode(Se, {
+          hue: unref(n),
+          tinyColor: unref(l),
+          "onUpdate:tinyColor": S[0] || (S[0] = (k) => isRef(l) ? l.value = k : null)
         }, null, 8, ["hue", "tinyColor"])
       ]),
-      createBaseVNode("div", Ba, [
-        createBaseVNode("div", Va, [
-          createBaseVNode("div", Da, [
+      createBaseVNode("div", Na, [
+        createBaseVNode("div", Ta, [
+          createBaseVNode("div", Ia, [
             createVNode(le, {
-              modelValue: unref(l),
-              "onUpdate:modelValue": unref(s)
+              modelValue: unref(n),
+              "onUpdate:modelValue": unref(i)
             }, null, 8, ["modelValue", "onUpdate:modelValue"])
           ]),
-          d.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Ta, [
-            createVNode(xe, {
-              tinyColor: unref(n),
-              "onUpdate:tinyColor": F[1] || (F[1] = (f) => isRef(n) ? n.value = f : null)
+          c.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Ua, [
+            createVNode(oe, {
+              tinyColor: unref(l),
+              "onUpdate:tinyColor": S[1] || (S[1] = (k) => isRef(l) ? l.value = k : null)
             }, null, 8, ["tinyColor"])
           ]))
         ]),
         createBaseVNode("div", Pa, [
           createBaseVNode("div", {
-            "aria-label": `Current color is ${unref(n).toRgbString()}`,
+            "aria-label": `Current color is ${unref(l).toRgbString()}`,
             class: "active-color",
-            style: normalizeStyle({ background: unref(n).toRgbString() })
-          }, null, 12, Ia),
-          createVNode(ce)
+            style: normalizeStyle({ background: unref(l).toRgbString() })
+          }, null, 12, Ga),
+          createVNode(pe)
         ])
       ]),
-      d.disableFields ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Na, [
-        createBaseVNode("div", Ua, [
-          createVNode(R, {
+      c.disableFields ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Oa, [
+        createBaseVNode("div", Ka, [
+          createVNode(fe, {
             label: "hex",
-            value: c.value,
-            onChange: v,
-            a11y: { label: "Hex" }
-          }, null, 8, ["value"])
+            value: f.value,
+            onChange: u,
+            type: o.value < 1 ? "hex8" : "hex"
+          }, null, 8, ["value", "type"])
         ]),
-        createBaseVNode("div", Oa, [
-          createVNode(R, {
+        createBaseVNode("div", za, [
+          createVNode(M, {
             label: "r",
-            value: i.value.r,
-            onChange: F[2] || (F[2] = (f) => b("r", f)),
+            value: s.value.r,
+            onChange: S[2] || (S[2] = (k) => b("r", k)),
             a11y: { label: "Red" }
           }, null, 8, ["value"])
         ]),
-        createBaseVNode("div", Ka, [
-          createVNode(R, {
+        createBaseVNode("div", ja, [
+          createVNode(M, {
             label: "g",
-            value: i.value.g,
-            onChange: F[3] || (F[3] = (f) => b("g", f)),
+            value: s.value.g,
+            onChange: S[3] || (S[3] = (k) => b("g", k)),
             a11y: { label: "Green" }
           }, null, 8, ["value"])
         ]),
-        createBaseVNode("div", Ga, [
-          createVNode(R, {
+        createBaseVNode("div", Xa, [
+          createVNode(M, {
             label: "b",
-            value: i.value.b,
-            onChange: F[4] || (F[4] = (f) => b("b", f)),
+            value: s.value.b,
+            onChange: S[4] || (S[4] = (k) => b("b", k)),
             a11y: { label: "Blue" }
           }, null, 8, ["value"])
         ]),
-        d.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", za, [
-          createVNode(R, {
+        c.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Ya, [
+          createVNode(M, {
             label: "a",
             value: o.value,
             step: 0.01,
             max: 1,
-            onChange: y,
+            onChange: _,
             a11y: { label: "Transparency" }
           }, null, 8, ["value"])
         ]))
       ])),
-      createBaseVNode("div", Wa, [
-        (openBlock(true), createElementBlock(Fragment, null, renderList(t.presetColors, (f) => (openBlock(), createElementBlock(Fragment, null, [
-          unref(St)(f) ? (openBlock(), createElementBlock("div", {
-            key: f,
+      createBaseVNode("div", qa, [
+        (openBlock(true), createElementBlock(Fragment, null, renderList(t.presetColors, (k) => (openBlock(), createElementBlock(Fragment, null, [
+          unref(Rt)(k) ? (openBlock(), createElementBlock("div", {
+            key: k,
             class: "preset-color",
-            onClick: ($) => A(f),
+            onClick: (V) => m(k),
             "aria-label": "Color: transparency",
             "aria-selected": o.value === 0,
             role: "option",
             tabindex: "0",
-            title: f,
-            onKeydown: withKeys(($) => A(f), ["space"])
+            title: k,
+            onKeydown: withKeys((V) => m(k), ["space"])
           }, [
-            createVNode(ce)
-          ], 40, Ya)) : (openBlock(), createElementBlock("div", {
+            createVNode(pe)
+          ], 40, Za)) : (openBlock(), createElementBlock("div", {
             class: "preset-color",
-            key: f + "-color",
-            style: normalizeStyle({ background: f }),
-            onClick: ($) => A(f),
-            title: f,
-            "aria-label": "Color:" + f,
-            "aria-selected": `#${c.value.toLowerCase()}` === f.toLowerCase(),
+            key: k + "-color",
+            style: normalizeStyle({ background: k }),
+            onClick: (V) => m(k),
+            title: k,
+            "aria-label": "Color:" + k,
+            "aria-selected": `#${f.value.toLowerCase()}` === k.toLowerCase(),
             role: "option",
             tabindex: "0",
-            onKeydown: withKeys(($) => A(f), ["space"])
-          }, null, 44, Xa))
+            onKeydown: withKeys((V) => m(k), ["space"])
+          }, null, 44, Wa))
         ], 64))), 256))
       ])
     ], 2));
   }
 });
-var Zn = T(qa, [["__scopeId", "data-v-4a59b29b"]]);
-var Za = {
+var kn = N(Qa, [["__scopeId", "data-v-fdb7d989"]]);
+var el = {
   role: "application",
   "aria-label": "Slider color picker",
   class: "vc-slider-picker"
 };
-var Ja = { class: "hue" };
-var Qa = {
+var tl = { class: "hue" };
+var al = {
   key: 0,
   class: "alpha"
 };
-var en = {
+var ll = {
   key: 1,
   class: "swatches",
   role: "listbox",
   "aria-label": "Color segments in different shades of one color",
   tabindex: "0"
 };
-var tn = ["onClick", "aria-label", "title", "onKeydown", "aria-selected"];
-var te = 0.5;
-var an = [
-  { s: te, l: 0.8 },
-  { s: te, l: 0.65 },
-  { s: te, l: 0.5 },
-  { s: te, l: 0.35 },
-  { s: te, l: 0.2 }
+var nl = ["onClick", "aria-label", "title", "onKeydown", "aria-selected"];
+var re = 0.5;
+var rl = [
+  { s: re, l: 0.8 },
+  { s: re, l: 0.65 },
+  { s: re, l: 0.5 },
+  { s: re, l: 0.35 },
+  { s: re, l: 0.2 }
 ];
-var nn = defineComponent({
+var ol = defineComponent({
   __name: "SliderPicker",
   props: {
-    swatches: { default: () => an },
+    swatches: { default: () => rl },
     alpha: { type: Boolean },
     tinyColor: {},
     modelValue: {},
     value: {}
   },
-  emits: O,
+  emits: I,
   setup(e, { emit: a }) {
-    const t = e, n = K(t, a), { hueRef: l, updateHueRef: s } = he(n), o = computed(() => n.value.toHsl()), c = computed(() => n.value.toHexString()), i = computed(() => t.swatches.map((A) => typeof A == "string" ? {
-      s: te,
-      l: Number(A)
-    } : A)), v = (y) => o.value.l === 1 && y.l === 1 || o.value.l === 0 && y.l === 0 ? true : Math.abs(o.value.l - y.l) < 0.01 && Math.abs(o.value.s - y.s) < 0.01, b = (y) => {
-      n.value = {
+    const t = e, l = U(t, a), { hueRef: n, updateHueRef: i } = se(l), o = computed(() => l.value.toHsl()), f = computed(() => l.value.toHexString()), s = computed(() => t.swatches.map((m) => typeof m == "string" ? {
+      s: re,
+      l: Number(m)
+    } : m)), u = (_) => o.value.l === 1 && _.l === 1 || o.value.l === 0 && _.l === 0 ? true : Math.abs(o.value.l - _.l) < 0.01 && Math.abs(o.value.s - _.s) < 0.01, b = (_) => {
+      l.value = {
         h: o.value.h,
-        s: y.s,
-        l: y.l
+        s: _.s,
+        l: _.l
       };
     };
-    return (y, A) => (openBlock(), createElementBlock("div", Za, [
-      createBaseVNode("div", Ja, [
+    return (_, m) => (openBlock(), createElementBlock("div", el, [
+      createBaseVNode("div", tl, [
         createVNode(le, {
-          modelValue: unref(l),
-          "onUpdate:modelValue": unref(s)
+          modelValue: unref(n),
+          "onUpdate:modelValue": unref(i)
         }, null, 8, ["modelValue", "onUpdate:modelValue"])
       ]),
-      t.alpha ? (openBlock(), createElementBlock("div", Qa, [
-        createVNode(xe, {
-          tinyColor: unref(n),
-          "onUpdate:tinyColor": A[0] || (A[0] = (d) => isRef(n) ? n.value = d : null)
+      t.alpha ? (openBlock(), createElementBlock("div", al, [
+        createVNode(oe, {
+          tinyColor: unref(l),
+          "onUpdate:tinyColor": m[0] || (m[0] = (c) => isRef(l) ? l.value = c : null)
         }, null, 8, ["tinyColor"])
       ])) : createCommentVNode("", true),
-      i.value.length > 0 ? (openBlock(), createElementBlock("div", en, [
-        (openBlock(true), createElementBlock(Fragment, null, renderList(i.value, (d, F) => (openBlock(), createElementBlock("div", {
+      s.value.length > 0 ? (openBlock(), createElementBlock("div", ll, [
+        (openBlock(true), createElementBlock(Fragment, null, renderList(s.value, (c, S) => (openBlock(), createElementBlock("div", {
           class: "swatch",
-          key: F,
+          key: S,
           "data-index": "index",
-          onClick: (f) => b(d),
+          onClick: (k) => b(c),
           role: "option",
-          "aria-label": "Color:" + c.value,
-          title: c.value,
-          onKeydown: withKeys((f) => b(d), ["space"]),
-          "aria-selected": v(d),
+          "aria-label": "Color:" + f.value,
+          title: f.value,
+          onKeydown: withKeys((k) => b(c), ["space"]),
+          "aria-selected": u(c),
           tabindex: "0"
         }, [
           createBaseVNode("div", {
             class: normalizeClass({
               picker: true,
-              picker_active: v(d),
-              picker_white: d.l === 1
+              picker_active: u(c),
+              picker_white: c.l === 1
             }),
-            style: normalizeStyle({ background: "hsl(" + o.value.h + ", " + d.s * 100 + "%, " + d.l * 100 + "%)" })
+            style: normalizeStyle({ background: "hsl(" + o.value.h + ", " + c.s * 100 + "%, " + c.l * 100 + "%)" })
           }, null, 6)
-        ], 40, tn))), 128))
+        ], 40, nl))), 128))
       ])) : createCommentVNode("", true)
     ]));
   }
 });
-var Jn = T(nn, [["__scopeId", "data-v-675d6988"]]);
-var rn = { 50: "#ffebee", 100: "#ffcdd2", 200: "#ef9a9a", 300: "#e57373", 400: "#ef5350", 500: "#f44336", 600: "#e53935", 700: "#d32f2f", 800: "#c62828", 900: "#b71c1c", a100: "#ff8a80", a200: "#ff5252", a400: "#ff1744", a700: "#d50000" };
-var ln = { 50: "#fce4ec", 100: "#f8bbd0", 200: "#f48fb1", 300: "#f06292", 400: "#ec407a", 500: "#e91e63", 600: "#d81b60", 700: "#c2185b", 800: "#ad1457", 900: "#880e4f", a100: "#ff80ab", a200: "#ff4081", a400: "#f50057", a700: "#c51162" };
-var on = { 50: "#f3e5f5", 100: "#e1bee7", 200: "#ce93d8", 300: "#ba68c8", 400: "#ab47bc", 500: "#9c27b0", 600: "#8e24aa", 700: "#7b1fa2", 800: "#6a1b9a", 900: "#4a148c", a100: "#ea80fc", a200: "#e040fb", a400: "#d500f9", a700: "#aa00ff" };
-var sn = { 50: "#ede7f6", 100: "#d1c4e9", 200: "#b39ddb", 300: "#9575cd", 400: "#7e57c2", 500: "#673ab7", 600: "#5e35b1", 700: "#512da8", 800: "#4527a0", 900: "#311b92", a100: "#b388ff", a200: "#7c4dff", a400: "#651fff", a700: "#6200ea" };
-var un = { 50: "#e8eaf6", 100: "#c5cae9", 200: "#9fa8da", 300: "#7986cb", 400: "#5c6bc0", 500: "#3f51b5", 600: "#3949ab", 700: "#303f9f", 800: "#283593", 900: "#1a237e", a100: "#8c9eff", a200: "#536dfe", a400: "#3d5afe", a700: "#304ffe" };
-var cn = { 50: "#e3f2fd", 100: "#bbdefb", 200: "#90caf9", 300: "#64b5f6", 400: "#42a5f5", 500: "#2196f3", 600: "#1e88e5", 700: "#1976d2", 800: "#1565c0", 900: "#0d47a1", a100: "#82b1ff", a200: "#448aff", a400: "#2979ff", a700: "#2962ff" };
-var dn = { 50: "#e1f5fe", 100: "#b3e5fc", 200: "#81d4fa", 300: "#4fc3f7", 400: "#29b6f6", 500: "#03a9f4", 600: "#039be5", 700: "#0288d1", 800: "#0277bd", 900: "#01579b", a100: "#80d8ff", a200: "#40c4ff", a400: "#00b0ff", a700: "#0091ea" };
-var fn = { 50: "#e0f7fa", 100: "#b2ebf2", 200: "#80deea", 300: "#4dd0e1", 400: "#26c6da", 500: "#00bcd4", 600: "#00acc1", 700: "#0097a7", 800: "#00838f", 900: "#006064", a100: "#84ffff", a200: "#18ffff", a400: "#00e5ff", a700: "#00b8d4" };
-var hn = { 50: "#e0f2f1", 100: "#b2dfdb", 200: "#80cbc4", 300: "#4db6ac", 400: "#26a69a", 500: "#009688", 600: "#00897b", 700: "#00796b", 800: "#00695c", 900: "#004d40", a100: "#a7ffeb", a200: "#64ffda", a400: "#1de9b6", a700: "#00bfa5" };
-var vn = { 50: "#e8f5e9", 100: "#c8e6c9", 200: "#a5d6a7", 300: "#81c784", 400: "#66bb6a", 500: "#4caf50", 600: "#43a047", 700: "#388e3c", 800: "#2e7d32", 900: "#1b5e20", a100: "#b9f6ca", a200: "#69f0ae", a400: "#00e676", a700: "#00c853" };
-var bn = { 50: "#f1f8e9", 100: "#dcedc8", 200: "#c5e1a5", 300: "#aed581", 400: "#9ccc65", 500: "#8bc34a", 600: "#7cb342", 700: "#689f38", 800: "#558b2f", 900: "#33691e", a100: "#ccff90", a200: "#b2ff59", a400: "#76ff03", a700: "#64dd17" };
-var pn = { 50: "#f9fbe7", 100: "#f0f4c3", 200: "#e6ee9c", 300: "#dce775", 400: "#d4e157", 500: "#cddc39", 600: "#c0ca33", 700: "#afb42b", 800: "#9e9d24", 900: "#827717", a100: "#f4ff81", a200: "#eeff41", a400: "#c6ff00", a700: "#aeea00" };
-var gn = { 50: "#fffde7", 100: "#fff9c4", 200: "#fff59d", 300: "#fff176", 400: "#ffee58", 500: "#ffeb3b", 600: "#fdd835", 700: "#fbc02d", 800: "#f9a825", 900: "#f57f17", a100: "#ffff8d", a200: "#ffff00", a400: "#ffea00", a700: "#ffd600" };
-var mn = { 50: "#fff8e1", 100: "#ffecb3", 200: "#ffe082", 300: "#ffd54f", 400: "#ffca28", 500: "#ffc107", 600: "#ffb300", 700: "#ffa000", 800: "#ff8f00", 900: "#ff6f00", a100: "#ffe57f", a200: "#ffd740", a400: "#ffc400", a700: "#ffab00" };
-var _n = { 50: "#fff3e0", 100: "#ffe0b2", 200: "#ffcc80", 300: "#ffb74d", 400: "#ffa726", 500: "#ff9800", 600: "#fb8c00", 700: "#f57c00", 800: "#ef6c00", 900: "#e65100", a100: "#ffd180", a200: "#ffab40", a400: "#ff9100", a700: "#ff6d00" };
-var yn = { 50: "#fbe9e7", 100: "#ffccbc", 200: "#ffab91", 300: "#ff8a65", 400: "#ff7043", 500: "#ff5722", 600: "#f4511e", 700: "#e64a19", 800: "#d84315", 900: "#bf360c", a100: "#ff9e80", a200: "#ff6e40", a400: "#ff3d00", a700: "#dd2c00" };
-var wn = { 50: "#efebe9", 100: "#d7ccc8", 200: "#bcaaa4", 300: "#a1887f", 400: "#8d6e63", 500: "#795548", 600: "#6d4c41", 700: "#5d4037", 800: "#4e342e", 900: "#3e2723" };
-var Cn = { 50: "#fafafa", 100: "#f5f5f5", 200: "#eeeeee", 300: "#e0e0e0", 400: "#bdbdbd", 500: "#9e9e9e", 600: "#757575", 700: "#616161", 800: "#424242", 900: "#212121" };
-var kn = { 50: "#eceff1", 100: "#cfd8dc", 200: "#b0bec5", 300: "#90a4ae", 400: "#78909c", 500: "#607d8b", 600: "#546e7a", 700: "#455a64", 800: "#37474f", 900: "#263238" };
-var xn = { primary: "rgba(0, 0, 0, 0.87)", secondary: "rgba(0, 0, 0, 0.54)", disabled: "rgba(0, 0, 0, 0.38)", dividers: "rgba(0, 0, 0, 0.12)" };
-var An = { primary: "rgba(255, 255, 255, 1)", secondary: "rgba(255, 255, 255, 0.7)", disabled: "rgba(255, 255, 255, 0.5)", dividers: "rgba(255, 255, 255, 0.12)" };
-var Fn = { active: "rgba(0, 0, 0, 0.54)", inactive: "rgba(0, 0, 0, 0.38)" };
-var Mn = { active: "rgba(255, 255, 255, 1)", inactive: "rgba(255, 255, 255, 0.5)" };
-var Sn = "#ffffff";
-var $n = "#000000";
-var Rn = {
-  red: rn,
-  pink: ln,
-  purple: on,
-  deepPurple: sn,
-  indigo: un,
-  blue: cn,
-  lightBlue: dn,
-  cyan: fn,
-  teal: hn,
-  green: vn,
-  lightGreen: bn,
-  lime: pn,
-  yellow: gn,
-  amber: mn,
-  orange: _n,
-  deepOrange: yn,
-  brown: wn,
-  grey: Cn,
-  blueGrey: kn,
-  darkText: xn,
-  lightText: An,
-  darkIcons: Fn,
-  lightIcons: Mn,
-  white: Sn,
-  black: $n
+var wn = N(ol, [["__scopeId", "data-v-675d6988"]]);
+var sl = { 50: "#ffebee", 100: "#ffcdd2", 200: "#ef9a9a", 300: "#e57373", 400: "#ef5350", 500: "#f44336", 600: "#e53935", 700: "#d32f2f", 800: "#c62828", 900: "#b71c1c", a100: "#ff8a80", a200: "#ff5252", a400: "#ff1744", a700: "#d50000" };
+var il = { 50: "#fce4ec", 100: "#f8bbd0", 200: "#f48fb1", 300: "#f06292", 400: "#ec407a", 500: "#e91e63", 600: "#d81b60", 700: "#c2185b", 800: "#ad1457", 900: "#880e4f", a100: "#ff80ab", a200: "#ff4081", a400: "#f50057", a700: "#c51162" };
+var ul = { 50: "#f3e5f5", 100: "#e1bee7", 200: "#ce93d8", 300: "#ba68c8", 400: "#ab47bc", 500: "#9c27b0", 600: "#8e24aa", 700: "#7b1fa2", 800: "#6a1b9a", 900: "#4a148c", a100: "#ea80fc", a200: "#e040fb", a400: "#d500f9", a700: "#aa00ff" };
+var dl = { 50: "#ede7f6", 100: "#d1c4e9", 200: "#b39ddb", 300: "#9575cd", 400: "#7e57c2", 500: "#673ab7", 600: "#5e35b1", 700: "#512da8", 800: "#4527a0", 900: "#311b92", a100: "#b388ff", a200: "#7c4dff", a400: "#651fff", a700: "#6200ea" };
+var cl = { 50: "#e8eaf6", 100: "#c5cae9", 200: "#9fa8da", 300: "#7986cb", 400: "#5c6bc0", 500: "#3f51b5", 600: "#3949ab", 700: "#303f9f", 800: "#283593", 900: "#1a237e", a100: "#8c9eff", a200: "#536dfe", a400: "#3d5afe", a700: "#304ffe" };
+var fl = { 50: "#e3f2fd", 100: "#bbdefb", 200: "#90caf9", 300: "#64b5f6", 400: "#42a5f5", 500: "#2196f3", 600: "#1e88e5", 700: "#1976d2", 800: "#1565c0", 900: "#0d47a1", a100: "#82b1ff", a200: "#448aff", a400: "#2979ff", a700: "#2962ff" };
+var hl = { 50: "#e1f5fe", 100: "#b3e5fc", 200: "#81d4fa", 300: "#4fc3f7", 400: "#29b6f6", 500: "#03a9f4", 600: "#039be5", 700: "#0288d1", 800: "#0277bd", 900: "#01579b", a100: "#80d8ff", a200: "#40c4ff", a400: "#00b0ff", a700: "#0091ea" };
+var vl = { 50: "#e0f7fa", 100: "#b2ebf2", 200: "#80deea", 300: "#4dd0e1", 400: "#26c6da", 500: "#00bcd4", 600: "#00acc1", 700: "#0097a7", 800: "#00838f", 900: "#006064", a100: "#84ffff", a200: "#18ffff", a400: "#00e5ff", a700: "#00b8d4" };
+var bl = { 50: "#e0f2f1", 100: "#b2dfdb", 200: "#80cbc4", 300: "#4db6ac", 400: "#26a69a", 500: "#009688", 600: "#00897b", 700: "#00796b", 800: "#00695c", 900: "#004d40", a100: "#a7ffeb", a200: "#64ffda", a400: "#1de9b6", a700: "#00bfa5" };
+var pl = { 50: "#e8f5e9", 100: "#c8e6c9", 200: "#a5d6a7", 300: "#81c784", 400: "#66bb6a", 500: "#4caf50", 600: "#43a047", 700: "#388e3c", 800: "#2e7d32", 900: "#1b5e20", a100: "#b9f6ca", a200: "#69f0ae", a400: "#00e676", a700: "#00c853" };
+var gl = { 50: "#f1f8e9", 100: "#dcedc8", 200: "#c5e1a5", 300: "#aed581", 400: "#9ccc65", 500: "#8bc34a", 600: "#7cb342", 700: "#689f38", 800: "#558b2f", 900: "#33691e", a100: "#ccff90", a200: "#b2ff59", a400: "#76ff03", a700: "#64dd17" };
+var ml = { 50: "#f9fbe7", 100: "#f0f4c3", 200: "#e6ee9c", 300: "#dce775", 400: "#d4e157", 500: "#cddc39", 600: "#c0ca33", 700: "#afb42b", 800: "#9e9d24", 900: "#827717", a100: "#f4ff81", a200: "#eeff41", a400: "#c6ff00", a700: "#aeea00" };
+var _l = { 50: "#fffde7", 100: "#fff9c4", 200: "#fff59d", 300: "#fff176", 400: "#ffee58", 500: "#ffeb3b", 600: "#fdd835", 700: "#fbc02d", 800: "#f9a825", 900: "#f57f17", a100: "#ffff8d", a200: "#ffff00", a400: "#ffea00", a700: "#ffd600" };
+var yl = { 50: "#fff8e1", 100: "#ffecb3", 200: "#ffe082", 300: "#ffd54f", 400: "#ffca28", 500: "#ffc107", 600: "#ffb300", 700: "#ffa000", 800: "#ff8f00", 900: "#ff6f00", a100: "#ffe57f", a200: "#ffd740", a400: "#ffc400", a700: "#ffab00" };
+var Cl = { 50: "#fff3e0", 100: "#ffe0b2", 200: "#ffcc80", 300: "#ffb74d", 400: "#ffa726", 500: "#ff9800", 600: "#fb8c00", 700: "#f57c00", 800: "#ef6c00", 900: "#e65100", a100: "#ffd180", a200: "#ffab40", a400: "#ff9100", a700: "#ff6d00" };
+var kl = { 50: "#fbe9e7", 100: "#ffccbc", 200: "#ffab91", 300: "#ff8a65", 400: "#ff7043", 500: "#ff5722", 600: "#f4511e", 700: "#e64a19", 800: "#d84315", 900: "#bf360c", a100: "#ff9e80", a200: "#ff6e40", a400: "#ff3d00", a700: "#dd2c00" };
+var wl = { 50: "#efebe9", 100: "#d7ccc8", 200: "#bcaaa4", 300: "#a1887f", 400: "#8d6e63", 500: "#795548", 600: "#6d4c41", 700: "#5d4037", 800: "#4e342e", 900: "#3e2723" };
+var xl = { 50: "#fafafa", 100: "#f5f5f5", 200: "#eeeeee", 300: "#e0e0e0", 400: "#bdbdbd", 500: "#9e9e9e", 600: "#757575", 700: "#616161", 800: "#424242", 900: "#212121" };
+var $l = { 50: "#eceff1", 100: "#cfd8dc", 200: "#b0bec5", 300: "#90a4ae", 400: "#78909c", 500: "#607d8b", 600: "#546e7a", 700: "#455a64", 800: "#37474f", 900: "#263238" };
+var Fl = { primary: "rgba(0, 0, 0, 0.87)", secondary: "rgba(0, 0, 0, 0.54)", disabled: "rgba(0, 0, 0, 0.38)", dividers: "rgba(0, 0, 0, 0.12)" };
+var Sl = { primary: "rgba(255, 255, 255, 1)", secondary: "rgba(255, 255, 255, 0.7)", disabled: "rgba(255, 255, 255, 0.5)", dividers: "rgba(255, 255, 255, 0.12)" };
+var Al = { active: "rgba(0, 0, 0, 0.54)", inactive: "rgba(0, 0, 0, 0.38)" };
+var Ml = { active: "rgba(255, 255, 255, 1)", inactive: "rgba(255, 255, 255, 0.5)" };
+var Rl = "#ffffff";
+var Hl = "#000000";
+var Vl = {
+  red: sl,
+  pink: il,
+  purple: ul,
+  deepPurple: dl,
+  indigo: cl,
+  blue: fl,
+  lightBlue: hl,
+  cyan: vl,
+  teal: bl,
+  green: pl,
+  lightGreen: gl,
+  lime: ml,
+  yellow: _l,
+  amber: yl,
+  orange: Cl,
+  deepOrange: kl,
+  brown: wl,
+  grey: xl,
+  blueGrey: $l,
+  darkText: Fl,
+  lightText: Sl,
+  darkIcons: Al,
+  lightIcons: Ml,
+  white: Rl,
+  black: Hl
 };
-var Hn = ["data-pick"];
-var Ln = {
+var Bl = ["data-pick"];
+var Ll = {
   class: "box",
   role: "listbox",
   "aria-label": "Pick a color",
   tabindex: "0"
 };
-var En = ["data-color", "onClick", "aria-label", "aria-selected", "title", "onKeydown"];
-var Bn = { class: "picker" };
-var Vn = {
+var El = ["data-color", "onClick", "aria-label", "aria-selected", "title", "onKeydown"];
+var Dl = { class: "picker" };
+var Nl = {
   style: { width: "24px", height: "24px" },
   viewBox: "0 0 24 24"
 };
-var Dn = [
+var Tl = [
   "red",
   "pink",
   "purple",
@@ -2333,76 +2378,76 @@ var Dn = [
   "blueGrey",
   "black"
 ];
-var Tn = ["900", "700", "500", "300", "100"];
-var Pn = (() => {
+var Il = ["900", "700", "500", "300", "100"];
+var Ul = (() => {
   const e = [];
-  return Dn.forEach((a) => {
+  return Tl.forEach((a) => {
     let t = [];
-    a.toLowerCase() === "black" || a.toLowerCase() === "white" ? t = t.concat(["#000000", "#FFFFFF"]) : Tn.forEach((r) => {
-      const n = Rn[a][r];
-      t.push(n.toUpperCase());
+    a.toLowerCase() === "black" || a.toLowerCase() === "white" ? t = t.concat(["#000000", "#FFFFFF"]) : Il.forEach((r) => {
+      const l = Vl[a][r];
+      t.push(l.toUpperCase());
     }), e.push(t);
   }), e;
 })();
-var In = defineComponent({
+var Pl = defineComponent({
   __name: "SwatchesPicker",
   props: {
-    palette: { default: () => Pn },
+    palette: { default: () => Ul },
     tinyColor: {},
     modelValue: {},
     value: {}
   },
-  emits: O,
+  emits: I,
   setup(e, { emit: a }) {
-    const n = K(e, a), l = computed(() => n.value.toHexString()), s = (c) => c.toLowerCase() === l.value.toLowerCase(), o = (c) => {
-      n.value = c;
+    const l = U(e, a), n = computed(() => l.value.toHexString()), i = (f) => f.toLowerCase() === n.value.toLowerCase(), o = (f) => {
+      l.value = f;
     };
-    return (c, i) => (openBlock(), createElementBlock("div", {
+    return (f, s) => (openBlock(), createElementBlock("div", {
       role: "application",
       "aria-label": "Swatches color picker",
       class: "vc-swatches-picker",
-      "data-pick": l.value
+      "data-pick": n.value
     }, [
-      createBaseVNode("div", Ln, [
-        (openBlock(true), createElementBlock(Fragment, null, renderList(c.palette, (v, b) => (openBlock(), createElementBlock("div", {
+      createBaseVNode("div", Ll, [
+        (openBlock(true), createElementBlock(Fragment, null, renderList(f.palette, (u, b) => (openBlock(), createElementBlock("div", {
           class: "colorGroup",
           key: b
         }, [
-          (openBlock(true), createElementBlock(Fragment, null, renderList(v, (y) => (openBlock(), createElementBlock("div", {
-            class: normalizeClass(["color", { color_white: y === "#FFFFFF" }]),
-            key: y,
-            "data-color": y,
-            style: normalizeStyle({ background: y }),
-            onClick: (A) => o(y),
+          (openBlock(true), createElementBlock(Fragment, null, renderList(u, (_) => (openBlock(), createElementBlock("div", {
+            class: normalizeClass(["color", { color_white: _ === "#FFFFFF" }]),
+            key: _,
+            "data-color": _,
+            style: normalizeStyle({ background: _ }),
+            onClick: (m) => o(_),
             role: "option",
-            "aria-label": "Color:" + y,
-            "aria-selected": s(y),
-            title: y,
-            onKeydown: withKeys((A) => o(y), ["space"]),
+            "aria-label": "Color:" + _,
+            "aria-selected": i(_),
+            title: _,
+            onKeydown: withKeys((m) => o(_), ["space"]),
             tabindex: "0"
           }, [
-            withDirectives(createBaseVNode("div", Bn, [
-              (openBlock(), createElementBlock("svg", Vn, i[0] || (i[0] = [
+            withDirectives(createBaseVNode("div", Dl, [
+              (openBlock(), createElementBlock("svg", Nl, s[0] || (s[0] = [
                 createBaseVNode("path", { d: "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" }, null, -1)
               ])))
             ], 512), [
-              [vShow, s(y)]
+              [vShow, i(_)]
             ])
-          ], 46, En))), 128))
+          ], 46, El))), 128))
         ]))), 128))
       ])
-    ], 8, Hn));
+    ], 8, Bl));
   }
 });
-var Qn = T(In, [["__scopeId", "data-v-3427cb2a"]]);
-var Nn = {
+var xn = N(Pl, [["__scopeId", "data-v-3427cb2a"]]);
+var Gl = {
   class: "body",
   role: "listbox",
   tabindex: "0",
   "aria-label": "Select a color"
 };
-var Un = ["onClick", "aria-label", "title", "aria-selected", "onKeydown"];
-var On = [
+var Ol = ["onClick", "aria-label", "title", "aria-selected", "onKeydown"];
+var Kl = [
   "#FF6900",
   "#FCB900",
   "#7BDCB5",
@@ -2414,24 +2459,24 @@ var On = [
   "#F78DA7",
   "#9900EF"
 ];
-var Kn = defineComponent({
+var zl = defineComponent({
   __name: "TwitterPicker",
   props: {
     width: { default: 276 },
-    presetColors: { default: () => On },
+    presetColors: { default: () => Kl },
     triangle: { default: "top-left" },
     tinyColor: {},
     modelValue: {},
     value: {}
   },
-  emits: O,
+  emits: I,
   setup(e, { emit: a }) {
-    const t = e, n = K(t, a), l = computed(() => n.value.toHexString()), s = (i) => i.toLowerCase() === l.value.toLowerCase(), o = (i) => {
-      n.value = i;
-    }, c = (i) => {
-      oe(i) && (n.value = i);
+    const t = e, l = U(t, a), n = computed(() => l.value.toHexString()), i = (s) => s.toLowerCase() === n.value.toLowerCase(), o = (s) => {
+      l.value = s;
+    }, f = (s) => {
+      l.value = s;
     };
-    return (i, v) => (openBlock(), createElementBlock("div", {
+    return (s, u) => (openBlock(), createElementBlock("div", {
       class: normalizeClass(["vc-twitter-picker", {
         tri_hide: t.triangle === "hide",
         tri_top_left: t.triangle === "top-left",
@@ -2443,40 +2488,39 @@ var Kn = defineComponent({
       role: "application",
       "aria-label": "Twitter color picker"
     }, [
-      v[2] || (v[2] = createBaseVNode("div", { class: "triangle_shadow" }, null, -1)),
-      v[3] || (v[3] = createBaseVNode("div", { class: "triangle" }, null, -1)),
-      createBaseVNode("div", Nn, [
-        (openBlock(true), createElementBlock(Fragment, null, renderList(i.presetColors, (b, y) => (openBlock(), createElementBlock("span", {
-          key: y,
+      u[2] || (u[2] = createBaseVNode("div", { class: "triangle_shadow" }, null, -1)),
+      u[3] || (u[3] = createBaseVNode("div", { class: "triangle" }, null, -1)),
+      createBaseVNode("div", Gl, [
+        (openBlock(true), createElementBlock(Fragment, null, renderList(s.presetColors, (b, _) => (openBlock(), createElementBlock("span", {
+          key: _,
           class: "swatch",
           style: normalizeStyle({
             background: b,
-            boxShadow: `0 0 4px ${s(b) ? b : "transparent"}`
+            boxShadow: `0 0 4px ${i(b) ? b : "transparent"}`
           }),
-          onClick: (A) => o(b),
+          onClick: (m) => o(b),
           role: "option",
           "aria-label": "color:" + b,
           title: b,
-          "aria-selected": s(b),
-          onKeydown: withKeys((A) => o(b), ["space"]),
+          "aria-selected": i(b),
+          onKeydown: withKeys((m) => o(b), ["space"]),
           tabindex: "0"
-        }, null, 44, Un))), 128)),
-        v[0] || (v[0] = createBaseVNode("div", {
+        }, null, 44, Ol))), 128)),
+        u[0] || (u[0] = createBaseVNode("div", {
           class: "hash",
           "aria-hidden": "true"
         }, "#", -1)),
-        createVNode(R, {
-          value: l.value.replace("#", ""),
-          onChange: c,
-          a11y: { label: "Hex" }
+        createVNode(fe, {
+          value: n.value,
+          onChange: f
         }, null, 8, ["value"]),
-        v[1] || (v[1] = createBaseVNode("div", { class: "clear" }, null, -1))
+        u[1] || (u[1] = createBaseVNode("div", { class: "clear" }, null, -1))
       ])
     ], 6));
   }
 });
-var er = T(Kn, [["__scopeId", "data-v-4652e193"]]);
-var Gn = defineComponent({
+var $n = N(zl, [["__scopeId", "data-v-e74ac697"]]);
+var jl = defineComponent({
   __name: "HueSlider",
   props: {
     modelValue: {},
@@ -2485,30 +2529,482 @@ var Gn = defineComponent({
   emits: ["input", "update:modelValue"],
   setup(e, { emit: a }) {
     useCssVars((o) => ({
-      "612877b1": s.value
+      "46ac36b6": i.value
     }));
-    const t = a, r = e, n = computed(() => r.modelValue ?? r.value ?? 0), l = (o) => {
+    const t = a, r = e, l = computed(() => r.modelValue ?? r.value ?? 0), n = (o) => {
       t("input", o), t("update:modelValue", o);
-    }, s = computed(() => `hsl(${n.value}, 100%, 50%)`);
-    return (o, c) => (openBlock(), createBlock(le, mergeProps({ class: "vc-hue-wrap" }, o.$attrs, {
-      modelValue: n.value,
-      "onUpdate:modelValue": l
+    }, i = computed(() => `hsl(${l.value}, 100%, 50%)`);
+    return (o, f) => (openBlock(), createBlock(le, mergeProps({ class: "vc-hue-wrap" }, o.$attrs, {
+      modelValue: l.value,
+      "onUpdate:modelValue": n
     }), null, 16, ["modelValue"]));
   }
 });
-var tr = T(Gn, [["__scopeId", "data-v-e8f2ce6c"]]);
+var Fn = N(jl, [["__scopeId", "data-v-b3ac1ab2"]]);
+var Xl = { class: "vc-hsl-sliders" };
+var Yl = { class: "slider-wrap h-slider" };
+var ql = { class: "slider-wrap s-slider" };
+var Wl = { class: "slider-wrap l-slider" };
+var Zl = {
+  key: 0,
+  class: "slider-wrap a-slider"
+};
+function Jl(e, a) {
+  return `linear-gradient(to right,
+    hsl(${e} 0% ${a}%),
+    hsl(${e} 50% ${a}%),
+    hsl(${e} 100% ${a}%)
+  )`;
+}
+function Ql(e, a) {
+  return `linear-gradient(to right,
+    hsl(${e} ${a}% 0%),
+    hsl(${e} ${a}% 10%),
+    hsl(${e} ${a}% 20%),
+    hsl(${e} ${a}% 30%),
+    hsl(${e} ${a}% 40%),
+    hsl(${e} ${a}% 50%),
+    hsl(${e} ${a}% 60%),
+    hsl(${e} ${a}% 70%),
+    hsl(${e} ${a}% 80%),
+    hsl(${e} ${a}% 90%),
+    hsl(${e} ${a}% 100%)
+  )`;
+}
+var en = defineComponent({
+  __name: "HSLSliders",
+  props: {
+    disableAlpha: { type: Boolean, default: false },
+    disableFields: { type: Boolean, default: false },
+    tinyColor: {},
+    modelValue: {},
+    value: {}
+  },
+  emits: I,
+  setup(e, { emit: a }) {
+    useCssVars((h) => ({
+      "41b5b6d0": V.value,
+      "05fbe691": $.value
+    }));
+    const l = U(e, a), { hueRef: n, updateHueRef: i } = se(l), o = computed(() => l.value.toHsl()), f = computed(() => l.value.getAlpha()), s = ref(o.value.s * 100), u = ref(o.value.l * 100);
+    watch(o, () => {
+      s.value = o.value.s * 100, u.value = o.value.l * 100;
+    });
+    const b = (h) => {
+      h && i(Number(h));
+    }, _ = (h) => {
+      const v = Number(h);
+      s.value = v, l.value = {
+        ...o.value,
+        s: v / 100
+      };
+    }, m = (h) => {
+      const v = Number(h);
+      u.value = v, l.value = {
+        ...o.value,
+        l: v / 100
+      };
+    }, c = (h) => {
+      const v = Number(h);
+      l.value = {
+        ...o.value,
+        a: v
+      };
+    }, S = computed(
+      () => Jl(n.value, u.value)
+    ), k = computed(
+      () => Ql(n.value, s.value)
+    ), V = computed(() => `hsl(${n.value}, 100%, 50%)`), $ = computed(() => `hsl(${n.value}, ${s.value}%, ${u.value}%)`);
+    return (h, v) => (openBlock(), createElementBlock("div", Xl, [
+      createBaseVNode("div", Yl, [
+        v[1] || (v[1] = createBaseVNode("span", { class: "label" }, "H", -1)),
+        createVNode(le, {
+          modelValue: unref(n),
+          "onUpdate:modelValue": unref(i)
+        }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+        h.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: Number(unref(n)).toFixed(),
+          onChange: b,
+          a11y: { label: "hue" }
+        }, null, 8, ["value"]))
+      ]),
+      createBaseVNode("div", ql, [
+        v[2] || (v[2] = createBaseVNode("span", { class: "label" }, "S", -1)),
+        createVNode(q, {
+          "aria-label": "saturation",
+          modelValue: s.value,
+          "onUpdate:modelValue": _
+        }, {
+          background: withCtx(() => [
+            createBaseVNode("div", {
+              class: "gradient",
+              style: normalizeStyle({ background: S.value })
+            }, null, 4)
+          ]),
+          _: 1
+        }, 8, ["modelValue"]),
+        h.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: s.value.toFixed(),
+          onChange: _,
+          a11y: { label: "saturation" },
+          min: 0,
+          max: 100
+        }, null, 8, ["value"]))
+      ]),
+      createBaseVNode("div", Wl, [
+        v[3] || (v[3] = createBaseVNode("span", { class: "label" }, "L", -1)),
+        createVNode(q, {
+          "aria-label": "lightness",
+          modelValue: u.value,
+          "onUpdate:modelValue": m
+        }, {
+          background: withCtx(() => [
+            createBaseVNode("div", {
+              class: "gradient",
+              style: normalizeStyle({ background: k.value })
+            }, null, 4)
+          ]),
+          _: 1
+        }, 8, ["modelValue"]),
+        h.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: u.value.toFixed(),
+          onChange: m,
+          a11y: { label: "lightness" },
+          min: 0,
+          max: 100
+        }, null, 8, ["value"]))
+      ]),
+      h.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", Zl, [
+        v[4] || (v[4] = createBaseVNode("span", { class: "label" }, "A", -1)),
+        createVNode(oe, {
+          tinyColor: unref(l),
+          "onUpdate:tinyColor": v[0] || (v[0] = (B) => isRef(l) ? l.value = B : null)
+        }, null, 8, ["tinyColor"]),
+        h.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: f.value.toFixed(2),
+          onChange: c,
+          a11y: { label: "alpha" },
+          min: 0,
+          max: 1,
+          step: 0.01
+        }, null, 8, ["value"]))
+      ]))
+    ]));
+  }
+});
+var Sn = N(en, [["__scopeId", "data-v-2e071f54"]]);
+var tn = { class: "vc-hsv-sliders" };
+var an = { class: "slider-wrap h-slider" };
+var ln = { class: "slider-wrap s-slider" };
+var nn = { class: "slider-wrap b-slider" };
+var rn = {
+  key: 0,
+  class: "slider-wrap"
+};
+function on(e, a) {
+  const r = [];
+  for (let l = 0; l <= 10; l++) {
+    let n = l / 10;
+    const i = { h: e, s: n, v: a / 100 }, o = g(i).toRgb();
+    if (o) {
+      const f = Math.round(o.r), s = Math.round(o.g), u = Math.round(o.b);
+      r.push(`rgb(${f} ${s} ${u})`);
+    }
+  }
+  return `linear-gradient(to right, ${r.join(", ")})`;
+}
+function sn(e, a) {
+  const r = [];
+  for (let l = 0; l <= 10; l++) {
+    let n = l / 10;
+    const i = { h: e, s: a / 100, v: n }, o = g(i).toRgb();
+    if (o) {
+      const f = Math.round(o.r), s = Math.round(o.g), u = Math.round(o.b);
+      r.push(`rgb(${f} ${s} ${u})`);
+    }
+  }
+  return `linear-gradient(to right, ${r.join(", ")})`;
+}
+var un = defineComponent({
+  __name: "HSVSliders",
+  props: {
+    disableAlpha: { type: Boolean, default: false },
+    disableFields: { type: Boolean, default: false },
+    tinyColor: {},
+    modelValue: {},
+    value: {}
+  },
+  emits: I,
+  setup(e, { emit: a }) {
+    useCssVars((h) => ({
+      f666f450: V.value,
+      "46b90cce": $.value
+    }));
+    const l = U(e, a), { hueRef: n, updateHueRef: i } = se(l), o = computed(() => l.value.toHsv()), f = computed(() => l.value.getAlpha()), s = ref(o.value.s * 100), u = ref(o.value.v * 100);
+    watch(o, () => {
+      s.value = o.value.s * 100, u.value = o.value.v * 100;
+    });
+    const b = computed(() => on(n.value, u.value)), _ = computed(() => sn(n.value, s.value)), m = (h) => {
+      h && i(Number(h));
+    }, c = (h) => {
+      const v = Number(h);
+      s.value = v, l.value = {
+        ...o.value,
+        s: v / 100
+      };
+    }, S = (h) => {
+      const v = Number(h);
+      u.value = v, l.value = {
+        ...o.value,
+        v: v / 100
+      };
+    }, k = (h) => {
+      const v = Number(h);
+      l.value = {
+        ...o.value,
+        a: v
+      };
+    }, V = computed(() => `hsl(${n.value}, 100%, 50%)`), $ = computed(() => g({
+      ...o.value,
+      a: 1
+    }).toHslString());
+    return (h, v) => (openBlock(), createElementBlock("div", tn, [
+      createBaseVNode("div", an, [
+        v[1] || (v[1] = createBaseVNode("span", { class: "label" }, "H", -1)),
+        createVNode(le, {
+          modelValue: unref(n),
+          "onUpdate:modelValue": unref(i)
+        }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+        h.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: Number(unref(n)).toFixed(),
+          onChange: m,
+          a11y: { label: "hue" }
+        }, null, 8, ["value"]))
+      ]),
+      createBaseVNode("div", ln, [
+        v[2] || (v[2] = createBaseVNode("span", { class: "label" }, "S", -1)),
+        createVNode(q, {
+          "aria-label": "saturation",
+          modelValue: s.value,
+          "onUpdate:modelValue": c
+        }, {
+          background: withCtx(() => [
+            createBaseVNode("div", {
+              class: "gradient",
+              style: normalizeStyle({ background: b.value })
+            }, null, 4)
+          ]),
+          _: 1
+        }, 8, ["modelValue"]),
+        h.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: s.value.toFixed(),
+          onChange: c,
+          a11y: { label: "saturation" },
+          min: 0,
+          max: 100
+        }, null, 8, ["value"]))
+      ]),
+      createBaseVNode("div", nn, [
+        v[3] || (v[3] = createBaseVNode("span", { class: "label" }, "V", -1)),
+        createVNode(q, {
+          "aria-label": "brightness",
+          modelValue: u.value,
+          "onUpdate:modelValue": S
+        }, {
+          background: withCtx(() => [
+            createBaseVNode("div", {
+              class: "gradient",
+              style: normalizeStyle({ background: _.value })
+            }, null, 4)
+          ]),
+          _: 1
+        }, 8, ["modelValue"]),
+        h.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: u.value.toFixed(),
+          onChange: S,
+          a11y: { label: "brightness" },
+          min: 0,
+          max: 100
+        }, null, 8, ["value"]))
+      ]),
+      h.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", rn, [
+        v[4] || (v[4] = createBaseVNode("span", { class: "label" }, "A", -1)),
+        createVNode(oe, {
+          tinyColor: unref(l),
+          "onUpdate:tinyColor": v[0] || (v[0] = (B) => isRef(l) ? l.value = B : null)
+        }, null, 8, ["tinyColor"]),
+        h.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: f.value.toFixed(2),
+          onChange: k,
+          a11y: { label: "alpha" },
+          min: 0,
+          max: 1,
+          step: 0.01
+        }, null, 8, ["value"]))
+      ]))
+    ]));
+  }
+});
+var An = N(un, [["__scopeId", "data-v-d6cfe1d9"]]);
+var dn = { class: "vc-rgb-sliders" };
+var cn = { class: "slider-wrap" };
+var fn = { class: "slider-wrap" };
+var hn = { class: "slider-wrap" };
+var vn = {
+  key: 0,
+  class: "slider-wrap a-slider"
+};
+var ke = (e, a) => {
+  const r = [];
+  for (let l = 1; l <= 255; l++) {
+    const { r: n, g: i, b: o } = {
+      ...a,
+      [e]: l
+    };
+    r.push(`rgb(${n}, ${i}, ${o})`);
+  }
+  return `linear-gradient(to right, ${r.join(", ")})`;
+};
+var bn = defineComponent({
+  __name: "RGBSliders",
+  props: {
+    disableAlpha: { type: Boolean, default: false },
+    disableFields: { type: Boolean, default: false },
+    tinyColor: {},
+    modelValue: {},
+    value: {}
+  },
+  emits: I,
+  setup(e, { emit: a }) {
+    useCssVars((_) => ({
+      "5f730604": b.value
+    }));
+    const l = U(e, a), n = computed(() => l.value.toRgb()), i = computed(() => l.value.getAlpha()), o = computed(() => ke("r", n.value)), f = computed(() => ke("g", n.value)), s = computed(() => ke("b", n.value)), u = (_, m) => {
+      const c = Number(m);
+      l.value = {
+        ...n.value,
+        [_]: c
+      };
+    }, b = computed(() => `#${l.value.toHex()}`);
+    return (_, m) => (openBlock(), createElementBlock("div", dn, [
+      createBaseVNode("div", cn, [
+        m[8] || (m[8] = createBaseVNode("span", { class: "label" }, "R", -1)),
+        createVNode(q, {
+          "aria-label": "red",
+          modelValue: n.value.r,
+          "onUpdate:modelValue": m[0] || (m[0] = (c) => u("r", c)),
+          max: 255
+        }, {
+          background: withCtx(() => [
+            createBaseVNode("div", {
+              class: "gradient",
+              style: normalizeStyle({ background: o.value })
+            }, null, 4)
+          ]),
+          _: 1
+        }, 8, ["modelValue"]),
+        _.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: n.value.r,
+          onChange: m[1] || (m[1] = (c) => u("r", c)),
+          a11y: { label: "red" },
+          min: 0,
+          max: 255
+        }, null, 8, ["value"]))
+      ]),
+      createBaseVNode("div", fn, [
+        m[9] || (m[9] = createBaseVNode("span", { class: "label" }, "G", -1)),
+        createVNode(q, {
+          "aria-label": "green",
+          modelValue: n.value.g,
+          "onUpdate:modelValue": m[2] || (m[2] = (c) => u("g", c)),
+          max: 255
+        }, {
+          background: withCtx(() => [
+            createBaseVNode("div", {
+              class: "gradient",
+              style: normalizeStyle({ background: f.value })
+            }, null, 4)
+          ]),
+          _: 1
+        }, 8, ["modelValue"]),
+        _.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: n.value.g,
+          onChange: m[3] || (m[3] = (c) => u("g", c)),
+          a11y: { label: "green" },
+          min: 0,
+          max: 255
+        }, null, 8, ["value"]))
+      ]),
+      createBaseVNode("div", hn, [
+        m[10] || (m[10] = createBaseVNode("span", { class: "label" }, "B", -1)),
+        createVNode(q, {
+          "aria-label": "blue",
+          modelValue: n.value.b,
+          "onUpdate:modelValue": m[4] || (m[4] = (c) => u("b", c)),
+          max: 255
+        }, {
+          background: withCtx(() => [
+            createBaseVNode("div", {
+              class: "gradient",
+              style: normalizeStyle({ background: s.value })
+            }, null, 4)
+          ]),
+          _: 1
+        }, 8, ["modelValue"]),
+        _.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: n.value.b,
+          onChange: m[5] || (m[5] = (c) => u("b", c)),
+          a11y: { label: "blue" },
+          min: 0,
+          max: 255
+        }, null, 8, ["value"]))
+      ]),
+      _.disableAlpha ? createCommentVNode("", true) : (openBlock(), createElementBlock("div", vn, [
+        m[11] || (m[11] = createBaseVNode("span", { class: "label" }, "A", -1)),
+        createVNode(oe, {
+          tinyColor: unref(l),
+          "onUpdate:tinyColor": m[6] || (m[6] = (c) => isRef(l) ? l.value = c : null)
+        }, null, 8, ["tinyColor"]),
+        _.disableFields ? createCommentVNode("", true) : (openBlock(), createBlock(M, {
+          key: 0,
+          value: i.value.toFixed(2),
+          onChange: m[7] || (m[7] = (c) => u("a", c)),
+          a11y: { label: "alpha" },
+          min: 0,
+          max: 1,
+          step: 0.01
+        }, null, 8, ["value"]))
+      ]))
+    ]));
+  }
+});
+var Mn = N(bn, [["__scopeId", "data-v-98b3b212"]]);
 export {
-  xe as AlphaSlider,
-  Wn as ChromePicker,
-  Xn as CompactPicker,
-  Yn as GrayscalePicker,
-  tr as HueSlider,
-  jn as MaterialPicker,
-  qn as PhotoshopPicker,
-  Zn as SketchPicker,
-  Jn as SliderPicker,
-  Qn as SwatchesPicker,
-  er as TwitterPicker,
-  h as tinycolor
+  oe as AlphaSlider,
+  gn as ChromePicker,
+  mn as CompactPicker,
+  _n as GrayscalePicker,
+  Sn as HSLSliders,
+  An as HSVSliders,
+  Fn as HueSlider,
+  yn as MaterialPicker,
+  Cn as PhotoshopPicker,
+  Mn as RGBSliders,
+  kn as SketchPicker,
+  wn as SliderPicker,
+  xn as SwatchesPicker,
+  $n as TwitterPicker,
+  g as tinycolor
 };
 //# sourceMappingURL=vue-color.js.map

@@ -1,13 +1,13 @@
 import {
   require_dayjs_min
-} from "./chunk-XHZ4MJIK.js";
+} from "./chunk-FLV72MKY.js";
 import {
   __commonJS
-} from "./chunk-V4OQ3NZ2.js";
+} from "./chunk-G3PMV62Z.js";
 
-// node_modules/.pnpm/dayjs@1.11.13/node_modules/dayjs/locale/zh-cn.js
+// node_modules/.pnpm/dayjs@1.11.19/node_modules/dayjs/locale/zh-cn.js
 var require_zh_cn = __commonJS({
-  "node_modules/.pnpm/dayjs@1.11.13/node_modules/dayjs/locale/zh-cn.js"(exports, module) {
+  "node_modules/.pnpm/dayjs@1.11.19/node_modules/dayjs/locale/zh-cn.js"(exports, module) {
     !function(e, _) {
       "object" == typeof exports && "undefined" != typeof module ? module.exports = _(require_dayjs_min()) : "function" == typeof define && define.amd ? define(["dayjs"], _) : (e = "undefined" != typeof globalThis ? globalThis : e || self).dayjs_locale_zh_cn = _(e.dayjs);
     }(exports, function(e) {

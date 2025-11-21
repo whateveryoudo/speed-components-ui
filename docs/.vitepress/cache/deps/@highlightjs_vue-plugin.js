@@ -1,26 +1,22 @@
 import {
   require_core
-} from "./chunk-GMQUY4BE.js";
+} from "./chunk-4WYE2GUT.js";
 import {
   computed,
   defineComponent,
   h,
-  init_vue_runtime_esm_bundler,
   ref,
   watch
-} from "./chunk-IQIPIT2A.js";
+} from "./chunk-2YTPUVVG.js";
 import {
   __toESM
-} from "./chunk-V4OQ3NZ2.js";
-
-// node_modules/.pnpm/@highlightjs+vue-plugin@2.1.2_highlight.js@11.11.1_vue@3.5.16_typescript@5.8.3_/node_modules/@highlightjs/vue-plugin/dist/highlightjs-vue.esm.min.js
-init_vue_runtime_esm_bundler();
+} from "./chunk-G3PMV62Z.js";
 
 // node_modules/.pnpm/highlight.js@11.11.1/node_modules/highlight.js/es/core.js
 var import_core = __toESM(require_core());
 var core_default = import_core.default;
 
-// node_modules/.pnpm/@highlightjs+vue-plugin@2.1.2_highlight.js@11.11.1_vue@3.5.16_typescript@5.8.3_/node_modules/@highlightjs/vue-plugin/dist/highlightjs-vue.esm.min.js
+// node_modules/.pnpm/@highlightjs+vue-plugin@2.1.2_highlight.js@11.11.1_vue@3.5.24_typescript@5.9.3_/node_modules/@highlightjs/vue-plugin/dist/highlightjs-vue.esm.min.js
 var r = defineComponent({ props: { code: { type: String, required: true }, language: { type: String, default: "" }, autodetect: { type: Boolean, default: true }, ignoreIllegals: { type: Boolean, default: true } }, setup: function(e) {
   var n = ref(e.language);
   watch(function() {

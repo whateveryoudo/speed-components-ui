@@ -23,6 +23,11 @@ export default defineComponent({
       type: Function,
       default: null,
     },
+    // 雪碧图模式
+    svgSprite: {
+      type: Boolean,
+      default: false,
+    },
     type: {
       type: String as PropType<string>,
       default: "",
@@ -49,7 +54,7 @@ export default defineComponent({
     },
     imgStyle: {
       type: Object,
-      default: () => {},
+      default: () => { },
     },
   },
   setup(props, { attrs }) {
@@ -80,6 +85,16 @@ export default defineComponent({
           <props.iconRender
             style={{ color: props.color, fontSize: props.size + "px" }}
           />
+        );
+      };
+    }
+    // 兼容svg图标
+    if (props.svgSprite) {
+      return () => {
+        return (
+          <svg aria-hidden="true" style={{ color: props.color, fontSize: props.size + "px" }} {...attrs}>
+            <use xlinkHref={`#${props.type}`} />
+          </svg>
         );
       };
     }

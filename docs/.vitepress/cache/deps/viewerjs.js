@@ -1,4 +1,4 @@
-import "./chunk-V4OQ3NZ2.js";
+import "./chunk-G3PMV62Z.js";
 
 // node_modules/.pnpm/viewerjs@1.11.7/node_modules/viewerjs/dist/viewer.esm.js
 function _classCallCheck(a, n) {
