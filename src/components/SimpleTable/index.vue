@@ -1,7 +1,7 @@
 <!-- 基于 useTable 封装的简单表格组件 -->
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
-import { useTable } from "@/hooks";
+import { useTable } from "@sc/hooks";
 import QueryFilter from "../QueryFilter/index.vue";
 import {
   constructQueryFilterByColumns,

@@ -1,11 +1,14 @@
 <script lang="ts" setup>
-import { computed, inject, Ref, ref, watch } from "vue";
-import { useCustomUpload, type IFileItem } from "@/hooks/useCustomUpload";
+import { computed, inject, type Ref, watch } from "vue";
+import { useCustomUpload, type IFileItem } from "@sc/hooks/useCustomUpload";
 import { Form } from "ant-design-vue";
+import type { UploadProps } from "ant-design-vue";
 import { cloneDeep } from "lodash-es";
 import { acceptToMimeMap } from "./const";
 import { Upload, Button } from "ant-design-vue";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons-vue";
+import { SPEED_COMPONENTS_CONFIG_TOKEN } from "../../tokens";
+import { currentConfig, type GlobalConfig } from "../../config";
 defineOptions({
   name: "SCustomUpload",
 });
@@ -42,7 +45,6 @@ const uploadOption = computed(() => {
     name: props.name,
     data: props.data,
     afterUpload: (result: any[]) => {
-      debugger;
       emit("update:value", result);
       formItemContext && formItemContext.onFieldChange();
     },
@@ -60,10 +62,10 @@ const {
   handleDownloadFile,
   handlePreviewFile,
 } = useCustomUpload(uploadOption);
-const speedComsConfig = inject(
-  "speed-components-config",
-  ref({ apis: {} })
-) as Ref<any>;
+const speedComsConfig = inject<Ref<GlobalConfig>>(
+  SPEED_COMPONENTS_CONFIG_TOKEN,
+  currentConfig as Ref<GlobalConfig>
+);
 // 内置规则， 图片追加内置， 文件则不限制规则
 const invokeAccept = computed(() => {
   return props.type === "picture" ? [".jpg", ".png", ".jpeg", '.svg'] : [];
@@ -79,27 +81,44 @@ const accept = computed(() => {
     )
     .join(",");
 });
-const previewFiles = computed(() => {
+const previewFiles = computed<UploadProps["fileList"]>(() => {
   // 追加一个路径
   const getPreviewUrl = speedComsConfig.value?.apis?.getPreviewUrl;
   return files.value.map((item: IFileItem) => {
+    const url = String(
+      (getPreviewUrl ? getPreviewUrl(item.id) : item.previewUrl) || ""
+    );
     return {
       ...item,
       uid: item.id,
       name: item.fileName,
-      url: (getPreviewUrl ? getPreviewUrl(item.id) : item.previewUrl) || "",
+      url,
     };
   });
 });
-const handleCustomRequest = (option: any) => {
+const handleCustomRequest: UploadProps["customRequest"] = (option) => {
   const { file } = option;
-  const valid = beforeUpload(file); // 这里调用拦截
+  const valid = beforeUpload(file as any); // 这里调用拦截
   if (!valid) {
     return;
   }
-  customRequest(option);
+  customRequest(option as any);
 };
-
+const handleRemove: UploadProps["onRemove"] = async (file) => {
+  await handleDelFile(file as unknown as IFileItem);
+  return false;
+};
+const handlePreview: UploadProps["onPreview"] = async (file) => {
+  await handlePreviewFile(file as unknown as IFileItem);
+};
+const handleDownload: UploadProps["onDownload"] = async (file) => {
+  await handleDownloadFile(file as unknown as IFileItem);
+};
+const uploadBind = computed(() => ({
+  ...props,
+  type: undefined,
+  data: props.data as any,
+}));
 const emit = defineEmits(["update:value"]);
 watch(
   () => props.value,
@@ -114,7 +133,7 @@ watch(
 <template>
   <div>
     <Upload
-      v-bind="props"
+      v-bind="uploadBind"
       :file-list="previewFiles"
       :accept="accept"
       :disabled="disabled"
@@ -122,9 +141,9 @@ watch(
       :custom-request="handleCustomRequest"
       :max-count="maxCount"
       :multiple="multiple"
-      @preview="handlePreviewFile"
-      @remove="handleDelFile"
-      @download="handleDownloadFile"
+      @preview="handlePreview"
+      @remove="handleRemove"
+      @download="handleDownload"
     >
       <template v-if="files.length < maxCount">
         <slot name="trigger" v-if="$slots.trigger" />

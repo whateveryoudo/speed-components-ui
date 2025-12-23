@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { CheckOutlined } from "@ant-design/icons-vue";
 import { computed, nextTick, ref, watch } from "vue";
-import { useLoadMore } from "@/hooks";
+import { useLoadMore } from "@sc/hooks";
 import { debounce } from "lodash-es";
 import { Popover, Input, Spin, Empty, Form, Menu, MenuItem, Tag } from "ant-design-vue";
 // eslint-disable-next-line no-undef

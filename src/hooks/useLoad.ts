@@ -18,12 +18,8 @@ import {
 } from "vue";
 
 import { uniqBy, merge } from "lodash-es";
-type RequestResponse<T> = {
-  value: T;
-  loading: boolean;
-  error: Error | null;
-  success: boolean;
-};
+import { SPEED_COMPONENTS_CONFIG_TOKEN } from "../tokens";
+import { currentConfig, type GlobalConfig } from "../config";
 type OptionsType = {
   extraParams?: Record<string, any>;
   rowKey?: string;
@@ -66,10 +62,11 @@ export const useTable = (
   const loading = ref(false); // 通用请求loading
   const selectAllLoading = ref(false); // 全选请求loading
   const dataSource = ref<any[]>([]); // 选择请求返回数据
-  const speedComponentsConfig = inject<RequestResponse<any>>(
-    "speed-components-config",
+  const speedComponentsConfig = inject<Ref<GlobalConfig>>(
+    SPEED_COMPONENTS_CONFIG_TOKEN,
+    currentConfig as Ref<GlobalConfig>
   );
-  const transformRequestRes = speedComponentsConfig?.value?.transformRequestRes;
+  const transformRequestRes = speedComponentsConfig?.value?.transformRequsRes;
   const useLoadConfig = speedComponentsConfig?.value?.useLoadConfig;
   // 整合默认配置和传入配置（优先级，option>use(xx)传入> default）
   const options = computed(() => {
@@ -224,7 +221,7 @@ export const useTable = (
         options.value.hasPagination
           ? {
               [options.value.pageKey]: pagination.value.current,
-              [options.value.pageSizeKey]: pagination.value.pageSize,
+              [options.value.pageSizekey ?? "pageSize"]: pagination.value.pageSize,
               ...baseParams,
             }
           : baseParams
@@ -317,7 +314,9 @@ export const useTable = (
       tableHeaderSorter.value[String(options.value.sortFieldKey)] =
         sorter.field;
       tableHeaderSorter.value[String(options.value.sortOrderKey)] =
-        options.value.sortValueMap?.[sorter.order];
+        options.value.sortValueMap?.[
+          sorter.order as keyof typeof options.value.sortValueMap
+        ];
     }
     const action = extra?.action;
 
@@ -355,10 +354,11 @@ export const useLoadMore = (
   })
 ) => {
   const ajaxFnVal = unref(ajaxFn);
-  const speedComponentsConfig = inject<RequestResponse<any>>(
-    "speed-components-config"
+  const speedComponentsConfig = inject<Ref<GlobalConfig>>(
+    SPEED_COMPONENTS_CONFIG_TOKEN,
+    currentConfig as Ref<GlobalConfig>
   );
-  const transformRequestRes = speedComponentsConfig?.value?.transformRequestRes;
+  const transformRequestRes = speedComponentsConfig?.value?.transformRequsRes;
   const useLoadConfig = speedComponentsConfig?.value?.useLoadConfig;
   // 整合默认配置和传入配置
   const options = computed(() => {

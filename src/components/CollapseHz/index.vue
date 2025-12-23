@@ -25,6 +25,7 @@ const props = withDefaults(
     expandDir: "left" | "right";
     needTransition?: boolean;
     showTriggerWhenCollapse?: boolean
+    fixedTriggerExpandAfter?: boolean // 收起后是否固定触发器
   }>(),
   {
     open: false,
@@ -34,7 +35,8 @@ const props = withDefaults(
     transitionAttr: "flex",
     expandDir: "left", // 展开方向，默认向左
     needTransition: true,
-    showTriggerWhenCollapse: true
+    showTriggerWhenCollapse: true,
+    fixedTriggerExpandAfter: false
   }
 );
 const iconFlag = ref(true);
@@ -43,7 +45,7 @@ const controlPanel = ref(props.open); // 展开时内容延迟显示（否则会
 const emits = defineEmits(["update:open"]);
 const toggleIcon = (type: "enter" | "leave") => {
   if (props.triggerMode === "hover") {
-    iconFlag.value = type === "enter";
+    iconFlag.value = (!props.open && props.fixedTriggerExpandAfter) ? true : type === "enter";
   }
 };
 // 展开时候添加下延迟
@@ -69,7 +71,9 @@ const handleSetToggle = () => {
     emits("update:open", false);
   }
 };
-
+if (!props.open && props.fixedTriggerExpandAfter) {
+  iconFlag.value = true;
+}
 watch(
   () => props.open,
   (val: boolean) => {
@@ -92,7 +96,7 @@ watch(
 watch(
   () => props.triggerMode,
   (val?: "default" | "hover") => {
-    iconFlag.value = val === "default";
+    iconFlag.value = (!props.open && props.fixedTriggerExpandAfter) ? true : val === "default";
   },
   {
     immediate: true,

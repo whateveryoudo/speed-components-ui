@@ -53,7 +53,7 @@ const generateCssVars = (themeConfig: ThemeConfig) => {
  */
 export const useAntdCssVars = (initialTheme: ThemeConfig = {}) => {
   const themeConfig = ref<ThemeConfig>(initialTheme);
-  let styleElement: HTMLStyleElement | null = null;
+  let styleElement: HTMLStyleElement | null = document.getElementById('antd-css-vars') as HTMLStyleElement | null;
 
   // 更新 CSS 变量的函数
   const updateCssVars = (config: ThemeConfig) => {

@@ -9,13 +9,15 @@
 
 import {
   type PropType,
+  type Ref,
   defineComponent,
   computed,
   unref,
   inject,
-  ref,
 } from "vue";
 import { createFromIconfontCN } from "@ant-design/icons-vue";
+import { SPEED_COMPONENTS_CONFIG_TOKEN } from "../../tokens";
+import { currentConfig, type GlobalConfig } from "../../config";
 export default defineComponent({
   name: "SIconFont",
   props: {
@@ -58,18 +60,19 @@ export default defineComponent({
     },
   },
   setup(props, { attrs }) {
-    const config = inject(
-      "speed-components-config",
-      ref({
-        iconfontUrl: "",
-      })
+    const config = inject<Ref<GlobalConfig>>(
+      SPEED_COMPONENTS_CONFIG_TOKEN,
+      currentConfig as Ref<GlobalConfig>
     );
-    // 这里加入内置的图标(兼容数组注入)
-    let scriptUrls = [
-      "//at.alicdn.com/t/c/font_4946230_7d6dp217fih.js",
-      ...(Array.isArray(config?.value?.iconfontUrl)
+    const mergedIconfonts = (
+      Array.isArray(config?.value?.iconfontUrl)
         ? config?.value?.iconfontUrl
-        : [config?.value?.iconfontUrl]),
+        : [config?.value?.iconfontUrl]
+    ).filter((i): i is string => typeof i === "string");
+    // 这里加入内置的图标(兼容数组注入)
+    let scriptUrls: string[] = [
+      "//at.alicdn.com/t/c/font_4946230_7d6dp217fih.js",
+      ...mergedIconfonts,
     ];
     const wrapStyleObj = computed(() => {
       const { size, color } = props;
@@ -102,7 +105,7 @@ export default defineComponent({
     let MyIconfontComponent = createFromIconfontCN({
       scriptUrl: scriptUrls,
     });
-    if (props.scriptUrl) {
+    if (props.scriptUrl?.length) {
       //整合外界传入的地址
       scriptUrls = [...new Set(scriptUrls.concat(props.scriptUrl))];
       MyIconfontComponent = createFromIconfontCN({

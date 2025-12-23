@@ -11,7 +11,7 @@ import {
 } from "vue";
 import type { Ref } from "vue";
 import { Form } from "ant-design-vue";
-import { useCustomUpload } from "@/hooks/useCustomUpload";
+import { useCustomUpload } from "@sc/hooks/useCustomUpload";
 // 是否在客户端环境
 const isClient = typeof window !== "undefined";
 
@@ -71,10 +71,12 @@ const uploadOption = computed(() => {
 });
 const { customRequest: handleUpload } = useCustomUpload(uploadOption);
 type InsertFnType = (url: string, alt: string, href: string) => void;
-const speedComsConfig = inject(
-  "speed-components-config",
-  ref({ apis: {} })
-) as Ref<any>;
+import { SPEED_COMPONENTS_CONFIG_TOKEN } from "../../tokens";
+import { currentConfig, type GlobalConfig } from "../../config";
+const speedComsConfig = inject<Ref<GlobalConfig>>(
+  SPEED_COMPONENTS_CONFIG_TOKEN,
+  currentConfig as Ref<GlobalConfig>
+);
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef();
 // 内容 HTML

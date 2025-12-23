@@ -6,7 +6,6 @@
  * @Description:
  */
 import type { App, Component } from "vue";
-import { computed, ref } from "vue";
 import FullModal from "./FullModal/index.vue";
 import CollapseHz from "./CollapseHz/index.vue";
 import FilePreviewItem from "./FilePreviewItem/index.vue";
@@ -22,15 +21,20 @@ import QuestionTip from "./QuestionTip/index.vue";
 import ApiSelect from "./ApiSelect/index.vue";
 import ToggleInput from "./ToggleInput/index.vue";
 import ContentEditor from "./ContentEditor/index.vue";
-import CustomUpload from './CustomUpload/index.vue'
-import CustomTag from './CustomTag/index.vue'
-import ColorPicker from './ColorPicker/index.vue'
+import CustomUpload from "./CustomUpload/index.vue";
+import CustomTag from "./CustomTag/index.vue";
+import ColorPicker from "./ColorPicker/index.vue";
 import { useAntdCssVars, type ThemeConfig } from "../hooks/useAntdCssVars";
 import { vFocus, vCopy, vView, vSelect, vLinkTransform } from "../directives";
-import type { RequestResponse } from "../global";
+import {
+  currentConfig,
+  setConfig,
+  type GlobalConfig,
+} from "../config";
+import { SPEED_COMPONENTS_CONFIG_TOKEN } from "../tokens";
 // 导入 UnoCSS 样式
-import 'uno.css'
-import 'vue-color/style.css'
+import "uno.css";
+import "vue-color/style.css";
 // 组件列表
 const components: Component[] = [
   FullModal,
@@ -50,54 +54,10 @@ const components: Component[] = [
   QuestionTip,
   CustomTag,
   CustomUpload,
-  ColorPicker
+  ColorPicker,
 ];
 
-// AJAX 方法类型
-type AjaxMethod = (params?: any) => Promise<any>;
-
-// 全局配置类型
-export interface GlobalConfig {
-  iconfontUrl?: string;
-  themeConfig?: ThemeConfig;
-  registerGlobal?: boolean; // 是否注册为全局组件
-  apis?: {
-    [key: string]: AjaxMethod;
-  };
-  // 全局转换请求响应（框架接收响应范式为：RequestResponse，可自行转换,能和后端协商最好）
-  transformRequsRes?: (res: any) => RequestResponse<any>;
-  // 使用useTable, useLoadMore的 一些配置
-  useLoadConfig: {
-    pageKey: string; // 全局page参数名，默认 page
-    pageSizekey: string; // 全局pageSize参数名 默认  pageSize
-  };
-}
-
-// 默认配置
-const defaultConfig: GlobalConfig = {
-  registerGlobal: true,
-  iconfontUrl: import.meta.env.VITE_ICONFONT_URL,
-  apis: {},
-  useLoadConfig: {
-    pageKey: "page",
-    pageSizekey: "size",
-  },
-};
-
-// 使用 ref 创建响应式配置
-const configRef = ref<GlobalConfig>({ ...defaultConfig });
-
-// 使用 computed 包装配置，确保响应式
-const currentConfig = computed(() => configRef.value);
-
-// 设置全局配置
-export const setConfig = (config: Partial<GlobalConfig>) => {
-  configRef.value = {
-    ...configRef.value,
-    ...config,
-  };
-};
-
+const THEME_FLAG = '__speed_components_theme_applied__'
 // 主题相关
 let themeInstance: ReturnType<typeof useAntdCssVars> | null = null;
 
@@ -107,7 +67,13 @@ export const updateTheme = (config: ThemeConfig) => {
     themeInstance.updateTheme(config);
   }
 };
-
+const directives = [
+  ["focus", vFocus],
+  ["copy", vCopy],
+  ["view", vView],
+  ["select", vSelect],
+  ["link-transform", vLinkTransform],
+];
 const install = (app: App, config?: Partial<GlobalConfig>) => {
   // 合并配置
   if (config) {
@@ -117,20 +83,29 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
   // 注册组件
   if (currentConfig.value.registerGlobal) {
     components.forEach((component) => {
-      app.component(component.name as string, component as any);
+      const name = component.name as string;
+      // 已经注册过就跳过，避免重复注册警告
+      if (!app.component(name)) {
+        app.component(name, component as any);
+      }
     });
   }
   // 注入响应式配置
-  app.provide("speed-components-config", currentConfig);
+  app.provide(SPEED_COMPONENTS_CONFIG_TOKEN, currentConfig);
+  // 兼容旧版字符串 key
+  // app.provide("speed-components-config", currentConfig);
 
   // 使用 Ant Design Vue CSS 变量
-  themeInstance = useAntdCssVars(config?.themeConfig);
+  if (!app.config.globalProperties[THEME_FLAG]) {
+    themeInstance = useAntdCssVars(config?.themeConfig)
+    app.config.globalProperties[THEME_FLAG] = true
+  }
   // 注册一些指令
-  app.directive("focus", vFocus);
-  app.directive("copy", vCopy);
-  app.directive("view", vView);
-  app.directive("select", vSelect);
-  app.directive("link-transform", vLinkTransform);
+  directives.forEach(([name, dir]: any) => {
+    if (!app.directive(name)) {
+      app.directive(name, dir);
+    }
+  });
   // 在应用卸载时清理
   app.unmount = () => {
     themeInstance?.cleanup?.();
@@ -156,6 +131,9 @@ export { default as QuestionTip } from "./QuestionTip/index.vue";
 export { default as CustomUpload } from "./CustomUpload/index.vue";
 export { default as STag } from "./CustomTag/index.vue";
 export { default as ColorPicker } from "./ColorPicker/index.vue";
+export { setConfig } from "../config";
+export type { GlobalConfig } from "../config";
+export { SPEED_COMPONENTS_CONFIG_TOKEN } from "../tokens";
 
 export default {
   install,

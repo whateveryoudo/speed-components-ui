@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { cloneDeep } from "lodash-es";
-import { isNumEmpty } from "@/utils";
+import { isNumEmpty } from "@sc/utils";
 import { InputNumber } from "ant-design-vue";
 
 // eslint-disable-next-line no-undef

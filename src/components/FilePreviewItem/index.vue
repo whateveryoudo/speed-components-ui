@@ -7,7 +7,7 @@
       mode === 'list-simple' && 'simple',
     ]"
   >
-    <img ref="imgRef" :src="showPlacePic()" alt="" />
+    <img :src="showPlacePic()" alt="" />
     <div class="info-wrapper">
       <div
         class="overflow-hidden-one title"
@@ -56,7 +56,7 @@
 
   <Tooltip v-else :title="file.fileName" placement="top">
     <div class="file-preview-item-wrapper">
-      <img ref="imgRef" :src="showPlacePic()" alt="" />
+      <img :src="showPlacePic()" alt="" />
       <span class="actions-wrapper">
         <EyeOutlined title="预览" @click.stop="handlePreview" />
         <!-- 仅有附件支持下载 -->
@@ -82,18 +82,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, inject, type Ref } from "vue";
-import { formatFileSize } from "@/utils";
+import { computed, inject, type Ref } from "vue";
+import { formatFileSize } from "@sc/utils";
 import "viewerjs/dist/viewer.css";
-import excelImg from "@/assets/image/excel.png";
-import fileImg from "@/assets/image/file.png";
-import musicImg from "@/assets/image/music.png";
-import pptImg from "@/assets/image/ppt.png";
-import videoImg from "@/assets/image/video.png";
-import wordImg from "@/assets/image/word.png";
-import zipImg from "@/assets/image/zip.png";
-import { GlobalConfig } from "..";
-import { useCustomUpload } from "@/hooks";
+import excelImg from "@sc/assets/image/excel.png";
+import fileImg from "@sc/assets/image/file.png";
+import musicImg from "@sc/assets/image/music.png";
+import pptImg from "@sc/assets/image/ppt.png";
+import videoImg from "@sc/assets/image/video.png";
+import wordImg from "@sc/assets/image/word.png";
+import zipImg from "@sc/assets/image/zip.png";
+import { currentConfig, type GlobalConfig } from "../../config";
+import { SPEED_COMPONENTS_CONFIG_TOKEN } from "../../tokens";
+import { useCustomUpload } from "@sc/hooks";
 import { EyeOutlined, DownloadOutlined } from "@ant-design/icons-vue";
 import { Space, Tooltip } from "ant-design-vue";
 export type IFileItem = {
@@ -104,7 +105,6 @@ export type IFileItem = {
   fileSize?: string | number;
   status?: "done" | "error" | "uploading";
 };
-const imgRef = ref();
 const props = withDefaults(
   defineProps<{
     mode?: "card" | "list" | "list-simple";
@@ -122,10 +122,10 @@ const props = withDefaults(
 );
 // 这里仅使用hook的一些公共方法
 const { handlePreviewFile, handleDownloadFile } = useCustomUpload();
-const globalConfig = inject(
-  "speed-components-config",
-  ref({})
-) as Ref<GlobalConfig>;
+const globalConfig = inject<Ref<GlobalConfig>>(
+  SPEED_COMPONENTS_CONFIG_TOKEN,
+  currentConfig as Ref<GlobalConfig>
+);
 const emits = defineEmits(["on-delete"]);
 const showDownLoad = computed(() => {
   if (!props.file.fileName) {

@@ -2,9 +2,11 @@
 import type { UploadProps } from "ant-design-vue";
 import { ref, type Ref, type ComputedRef, inject, computed } from "vue";
 import { message } from "ant-design-vue";
-import { getRandomId } from "@/utils";
-import { handleExceptDown } from "@/hooks/useDownload";
+import { getRandomId } from "@sc/utils";
+import { handleExceptDown } from "@sc/hooks/useDownload";
 import Viewer from "viewerjs";
+import { SPEED_COMPONENTS_CONFIG_TOKEN } from "../tokens";
+import { currentConfig, type GlobalConfig } from "../config";
 import "viewerjs/dist/viewer.css";
 export type IFileItem = {
   id: string;
@@ -42,7 +44,10 @@ export function useCustomUpload(
 ) {
   const files = ref<any[]>([]); // 上传文件列表
   const uploadLoading = ref(false);
-  const speedComsConfig = inject("speed-components-config", ref({ apis: {}, transformFileItem: null }));
+  const speedComsConfig = inject<Ref<GlobalConfig>>(
+    SPEED_COMPONENTS_CONFIG_TOKEN,
+    currentConfig as Ref<GlobalConfig>
+  );
   const options = computed<any>(() => {
     if (outOptions === undefined) {
       return speedComsConfig.value?.apis
