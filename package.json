@@ -18,6 +18,9 @@
       "import": "./dist/components.es.js",
       "types": "./dist/components/index.d.ts"
     },
+    "./debug/hooks": {
+      "import": "./src/hooks/index.ts"
+    },
     "./debug": {
       "import": "./src/components/index.ts"
     }

@@ -45,6 +45,8 @@ const defaultOptions = {
   hasPagination: true,
   hasSort: false,
   hasSelectedRows: [],
+  pageKey: 'page',
+  pageSizekey: 'size',
   sortFieldKey: "sortField",
   sortOrderKey: "sortOrder",
   sortValueMap: { 
