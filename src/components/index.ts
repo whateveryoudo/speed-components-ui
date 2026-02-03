@@ -57,12 +57,13 @@ const components: Component[] = [
   ColorPicker,
 ];
 
-const THEME_FLAG = '__speed_components_theme_applied__'
-// 主题相关
-let themeInstance: ReturnType<typeof useAntdCssVars> | null = null;
+const THEME_INSTANCE_KEY = '__speed_components_theme_instance__';
 
-// 更新主题方法
-export const updateTheme = (config: ThemeConfig) => {
+// 主题相关
+
+// 更新主题方法(需要传入app实例)
+export const updateTheme = (app: App, config: ThemeConfig) => {
+  const themeInstance: ReturnType<typeof useAntdCssVars> | null = app.config.globalProperties[THEME_INSTANCE_KEY];
   if (themeInstance?.updateTheme) {
     themeInstance.updateTheme(config);
   }
@@ -92,13 +93,10 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
   }
   // 注入响应式配置
   app.provide(SPEED_COMPONENTS_CONFIG_TOKEN, currentConfig);
-  // 兼容旧版字符串 key
-  // app.provide("speed-components-config", currentConfig);
 
   // 使用 Ant Design Vue CSS 变量
-  if (!app.config.globalProperties[THEME_FLAG]) {
-    themeInstance = useAntdCssVars(config?.themeConfig)
-    app.config.globalProperties[THEME_FLAG] = true
+  if (!app.config.globalProperties[THEME_INSTANCE_KEY]) {
+    app.config.globalProperties[THEME_INSTANCE_KEY] = useAntdCssVars(config?.themeConfig)
   }
   // 注册一些指令
   directives.forEach(([name, dir]: any) => {
@@ -108,7 +106,7 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
   });
   // 在应用卸载时清理
   app.unmount = () => {
-    themeInstance?.cleanup?.();
+    app.config.globalProperties[THEME_INSTANCE_KEY]?.cleanup?.();
     app.unmount();
   };
 };
