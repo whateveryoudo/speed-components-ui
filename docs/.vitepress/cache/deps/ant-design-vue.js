@@ -1,4 +1,8 @@
 import {
+  _extends,
+  zh_CN_default
+} from "./chunk-TQIL43YH.js";
+import {
   ArrowLeftOutlined_default,
   ArrowRightOutlined_default,
   BarsOutlined_default,
@@ -59,13 +63,7 @@ import {
   generate,
   gold,
   presetPrimaryColors
-} from "./chunk-YUEARANG.js";
-import {
-  require_customParseFormat
-} from "./chunk-Q7RFSQVB.js";
-import {
-  require_dayjs_min
-} from "./chunk-FLV72MKY.js";
+} from "./chunk-B33O7A7Z.js";
 import {
   cloneDeep_default,
   debounce_default,
@@ -129,9 +127,11 @@ import {
   withModifiers
 } from "./chunk-2YTPUVVG.js";
 import {
-  _extends,
-  zh_CN_default
-} from "./chunk-TQIL43YH.js";
+  require_dayjs_min
+} from "./chunk-FLV72MKY.js";
+import {
+  require_customParseFormat
+} from "./chunk-Q7RFSQVB.js";
 import {
   __commonJS,
   __export,

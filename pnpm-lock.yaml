@@ -48,8 +48,8 @@ importers:
         specifier: ^14.1.0
         version: 14.1.0
       speed-components-ui:
-        specifier: ^0.1.16
-        version: 0.1.30(@algolia/client-search@5.43.0)(@types/node@20.19.25)(async-validator@4.2.5)(less@4.4.2)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.9.3)(vue@3.5.24(typescript@5.9.3))
+        specifier: ^0.1.40
+        version: 0.1.40(@algolia/client-search@5.43.0)(@types/node@20.19.25)(async-validator@4.2.5)(less@4.4.2)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.9.3)(vue@3.5.24(typescript@5.9.3))
       viewerjs:
         specifier: ^1.11.2
         version: 1.11.7
@@ -3463,8 +3463,8 @@ packages:
     resolution: {integrity: sha512-1POYv7uv2gXoyGFpBCmpDVSNV74IfsWlDW216UPjbWufNf+bSU6GdbDsxdcxtfwb4xlI3yxzOTKClUosxARYrQ==}
     engines: {node: '>=0.10.0'}
 
-  speed-components-ui@0.1.30:
-    resolution: {integrity: sha512-JAK4I2/96lVwNhr/X6OnPuXCUjAt5v8Kx5o8YKuoPFYkeARjhKErCi5Abb3ZknJPkehEsgDKG0wr7EB30JkGtA==}
+  speed-components-ui@0.1.40:
+    resolution: {integrity: sha512-/DK/db18FoGkSq/IwgpbH1TT9wToTaRdJ1Uk6tohhjUdX5P15uXWpwkm5uGkC1Kfy48TWXkxECK6hmYNOpQ7ww==}
     peerDependencies:
       vue: ^3.4.0
 
@@ -7595,7 +7595,7 @@ snapshots:
 
   speakingurl@14.0.1: {}
 
-  speed-components-ui@0.1.30(@algolia/client-search@5.43.0)(@types/node@20.19.25)(async-validator@4.2.5)(less@4.4.2)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.9.3)(vue@3.5.24(typescript@5.9.3)):
+  speed-components-ui@0.1.40(@algolia/client-search@5.43.0)(@types/node@20.19.25)(async-validator@4.2.5)(less@4.4.2)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.9.3)(vue@3.5.24(typescript@5.9.3)):
     dependencies:
       '@ant-design/icons-vue': 7.0.1(vue@3.5.24(typescript@5.9.3))
       '@highlightjs/vue-plugin': 2.1.2(highlight.js@11.11.1)(vue@3.5.24(typescript@5.9.3))

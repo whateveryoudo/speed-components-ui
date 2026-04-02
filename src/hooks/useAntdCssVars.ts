@@ -53,11 +53,13 @@ const generateCssVars = (themeConfig: ThemeConfig) => {
  */
 export const useAntdCssVars = (initialTheme: ThemeConfig = {}) => {
   const themeConfig = ref<ThemeConfig>(initialTheme);
-  let styleElement: HTMLStyleElement | null = document.getElementById('antd-css-vars') as HTMLStyleElement | null;
+  const isBrowser =
+    typeof window !== "undefined" && typeof document !== "undefined";
+  let styleElement: HTMLStyleElement | null = null;
 
   // 更新 CSS 变量的函数
   const updateCssVars = (config: ThemeConfig) => {
-    if (typeof window === 'undefined') return;
+    if (!isBrowser) return;
 
     const cssContent = generateCssVars(config);
     
@@ -72,7 +74,8 @@ export const useAntdCssVars = (initialTheme: ThemeConfig = {}) => {
   };
 
   // 初始化 CSS 变量
-  if (typeof window !== 'undefined') {
+  if (isBrowser) {
+    styleElement = document.getElementById("antd-css-vars") as HTMLStyleElement | null;
     updateCssVars(themeConfig.value);
   } else {
     // ssr 不支持
