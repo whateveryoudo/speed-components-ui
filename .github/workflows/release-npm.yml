@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  issues: write
+  id-token: write
 
 jobs:
   release:
@@ -32,11 +34,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Check NPM_TOKEN present
-        run: test -n "$NPM_TOKEN" && echo "NPM_TOKEN present" || (echo "NPM_TOKEN missing" && exit 1)
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          
+      # 发布前先构建，确保 dist 在包里
+      - name: Build library
+        run: pnpm build:lib
+
       - name: semantic-release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

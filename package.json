@@ -38,8 +38,7 @@
     "docs:preview": "vitepress preview docs",
     "test": "vitest",
     "lint": "eslint src example --ext .ts,.tsx,.vue",
-    "format": "prettier --write \"src/**/*.{ts,tsx,vue}\" \"example/**/*.{ts,tsx,vue}\"",
-    "prepare": "husky install"
+    "format": "prettier --write \"src/**/*.{ts,tsx,vue}\" \"example/**/*.{ts,tsx,vue}\""
   },
   "keywords": [
     "vue",
