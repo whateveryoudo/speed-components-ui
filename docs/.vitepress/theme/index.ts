@@ -4,8 +4,8 @@ import Antd from "ant-design-vue";
 import * as Icons from "@ant-design/icons-vue";
 import Demo from "./components/Demo.vue";
 import "ant-design-vue/dist/reset.css";
-import SpeedComs from "../../../dist/components.es.js";
-import "../../../dist/style.css";
+import SpeedComs from "speed-components-ui/components";
+import "speed-components-ui/style.css";
 import "uno.css";
 import "./style.css";
 import {
