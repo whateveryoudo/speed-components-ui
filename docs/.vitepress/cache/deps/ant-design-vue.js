@@ -1,8 +1,4 @@
 import {
-  _extends,
-  zh_CN_default
-} from "./chunk-TQIL43YH.js";
-import {
   ArrowLeftOutlined_default,
   ArrowRightOutlined_default,
   BarsOutlined_default,
@@ -64,6 +60,10 @@ import {
   gold,
   presetPrimaryColors
 } from "./chunk-B33O7A7Z.js";
+import {
+  _extends,
+  zh_CN_default
+} from "./chunk-TQIL43YH.js";
 import {
   cloneDeep_default,
   debounce_default,

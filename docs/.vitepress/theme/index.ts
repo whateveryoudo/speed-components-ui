@@ -4,8 +4,8 @@ import Antd from "ant-design-vue";
 import * as Icons from "@ant-design/icons-vue";
 import Demo from "./components/Demo.vue";
 import "ant-design-vue/dist/reset.css";
-import SpeedComs from "speed-components-ui/components";
-import "speed-components-ui/dist/style.css";
+import SpeedComs from "speed-components";
+// import "speed-components-ui/dist/style.css";
 import "uno.css";
 import "./style.css";
 import {
@@ -49,7 +49,7 @@ export default {
   ...DefaultTheme,
   async enhanceApp({ app }: { app: App }) {
     // 动态导入组件（github CI报错？？）
-    // const SpeedComs = (await import("../../../src/components")).default;
+    const SpeedComs = (await import("../../../src/components")).default;
     console.log(SpeedComs);
     // 保存 SpeedComs 实例
     speedComsInstance = SpeedComs;
