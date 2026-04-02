@@ -31,7 +31,7 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-        
+
       - name: Check NPM_TOKEN present
         run: test -n "$NPM_TOKEN" && echo "NPM_TOKEN present" || (echo "NPM_TOKEN missing" && exit 1)
         env:
@@ -41,4 +41,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: pnpm exec semantic-release
