@@ -174,6 +174,7 @@ export default defineConfig({
         "@": resolve(__dirname, "../../src"),
         "speed-components": resolve(__dirname, "../../src/components"),
         "@docs": resolve(__dirname, "../"),
+        "@sc": resolve(__dirname, "../../src"),
       },
     },
     optimizeDeps: {
@@ -182,6 +183,7 @@ export default defineConfig({
     ssr: {
       noExternal: ["ant-design-vue", "@ant-design/icons-vue"],
     },
+
     server: {
       port: 3001,
       proxy: {

@@ -64,6 +64,7 @@ export default defineComponent({
       SPEED_COMPONENTS_CONFIG_TOKEN,
       currentConfig as Ref<GlobalConfig>
     );
+    console.log(config.value);
     const mergedIconfonts = (
       Array.isArray(config?.value?.iconfontUrl)
         ? config?.value?.iconfontUrl
@@ -74,6 +75,7 @@ export default defineComponent({
       "//at.alicdn.com/t/c/font_4946230_7d6dp217fih.js",
       ...mergedIconfonts,
     ];
+    console.log(scriptUrls);
     const wrapStyleObj = computed(() => {
       const { size, color } = props;
       const fontSize = typeof size === "string" ? parseInt(size) : size;
