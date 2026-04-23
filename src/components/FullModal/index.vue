@@ -26,7 +26,7 @@ const props = withDefaults(
     maxHeight?: string;
     minHeight?: string;
     width?: number | string;
-    title?: string;
+    title?: string | null;
     allowFullScreen?: boolean;
     cancelText?: string;
     okText?: string;
@@ -213,7 +213,7 @@ watch(
       </div>
     </template>
     <!-- 这里完全使用title来控制顶部[这里支持3种:1.完全传入title自定义渲染，ps:关闭按钮也需要自行实现；2.title-left控制左侧渲染 3. title-right 控制右侧渲染] -->
-    <template #title>
+    <template #title v-if="title || $slots['title']">
       <slot name="title">
         <div ref="modalTitleRef"
           :class="['w-full flex justify-between items-center', { 'cursor-move': props.draggable }]">

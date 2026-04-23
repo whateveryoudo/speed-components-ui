@@ -345,6 +345,8 @@ export const useTable = (
 };
 // 加载更多
 const defaultLoadMoreOptions = {
+  pageKey: 'page',
+  pageSizekey: 'size',
   extraParams: {},
   hasPagination: true,
 };
