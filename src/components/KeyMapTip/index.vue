@@ -34,7 +34,7 @@ defineOptions({
 withDefaults(defineProps<{
   title: string | null;
   keyMap: string | null;
-  placement: TooltipPlacement;
+  placement?: TooltipPlacement;
 }>(), {
   title: '',
   keyMap: '',
