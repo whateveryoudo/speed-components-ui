@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/whateveryoudo/speed-components-ui/compare/v1.0.0...v1.1.0) (2026-05-09)
+
+
+### Features
+
+* update component imports and add scroll configuration to SimpleTable ([4d32197](https://github.com/whateveryoudo/speed-components-ui/commit/4d3219783b19c664faf0d1e8a3221e81ceac8297))
+
 # 1.0.0 (2026-04-02)
 
 
