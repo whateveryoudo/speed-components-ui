@@ -58,7 +58,6 @@ const components: Component[] = [
 ];
 
 const THEME_INSTANCE_KEY = '__speed_components_theme_instance__';
-
 // 主题相关
 
 // 更新主题方法(需要传入app实例)

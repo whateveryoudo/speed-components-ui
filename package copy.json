@@ -1,6 +1,6 @@
 {
   "name": "speed-components-ui",
-  "version": "0.1.40",
+  "version": "0.1.41",
   "description": "基于 Ant Design Vue 的组件库，封装了常用业务组件，可快速搭建应用",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
@@ -11,9 +11,17 @@
     },
     "./dist/style.css": "./dist/style.css",
     "./hooks": {
-      "import": "./src/hooks/index.ts"
+      "import": "./dist/hooks.es.js",
+      "types": "./dist/hooks/index.d.ts"
     },
     "./components": {
+      "import": "./dist/components.es.js",
+      "types": "./dist/components/index.d.ts"
+    },
+    "./debug/hooks": {
+      "import": "./src/hooks/index.ts"
+    },
+    "./debug": {
       "import": "./src/components/index.ts"
     }
   },

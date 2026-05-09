@@ -8,7 +8,7 @@ import {
   fieldTypeMap,
 } from "../QueryFilter/const";
 import { Flex, Table } from "ant-design-vue";
-import type { TablePaginationConfig } from "ant-design-vue";
+import type { ScrollProps, TablePaginationConfig } from "ant-design-vue";
 
 interface Props {
   /** 请求函数 */
@@ -41,10 +41,11 @@ interface Props {
   hasSelectedRows?: any[];
   /** 是否显示查询过滤 */
   needQueryFilter?: boolean;
+  /** 表格滚动配置 */
+  scroll?: ScrollProps;
 }
 const values = ref({});
 const emit = defineEmits(["update:hasSelectedRows"]);
-
 defineOptions({
   name: "SSimpleTable",
 });
@@ -115,6 +116,7 @@ const finalColumns = computed(() => {
       title: "序号",
       width: 60,
       align: "center",
+      fixed: "left",
       customRender: ({ index }: { index: number }) => {
         const { current = 1, pageSize = 10 } = pagination.value;
         return (current - 1) * pageSize + index + 1;
@@ -157,7 +159,6 @@ watch(
 );
 // 初始化加载数据
 getList();
-
 defineExpose({
   getList,
 });
@@ -191,6 +192,7 @@ defineExpose({
       :columns="finalColumns"
       :data-source="dataSource"
       :loading="loading"
+      :scroll="scroll"
       :pagination="hasPagination ? pagination : false"
       :row-key="rowKey"
       :bordered="bordered"
