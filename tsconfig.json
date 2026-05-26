@@ -8,9 +8,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false,
-    "declaration": true,
-    "declarationDir": "./dist",
+    "noEmit": true,
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "strict": true,
@@ -24,6 +22,6 @@
     },
     "types": ["node", "vite/client", "vitest/globals"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/global.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 } 

@@ -17,11 +17,15 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    dts({
-      tsconfigPath: './tsconfig.json',
-      processor: 'vue',
-      copyDtsFiles: true
-    }),
+    ...(process.env.BUILD_MODE === 'lib'
+      ? [
+          dts({
+            tsconfigPath: './tsconfig.build.json',
+            processor: 'vue',
+            outDirs: ['dist'],
+          }),
+        ]
+      : []),
     UnoCSS(),
   ],
   resolve: {

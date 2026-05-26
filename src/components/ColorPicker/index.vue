@@ -6,19 +6,21 @@ import { Input, Popover } from 'ant-design-vue'
 defineOptions({
     name: 'SColorPicker',
 })
-
 const props = withDefaults(defineProps<{
     color: string
     placeholder?: string
     placement?: 'left' | 'right' | 'top' | 'bottom'
     format?: 'hex' | 'rgb' | 'hsb'
+    /** 拾色器 Popover 挂载容器，默认 body */
+    getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement
 }>(), {
     placement: 'left',
-    format: 'hex'
+    format: 'hex',
 })
 
 const emits = defineEmits<{
     (e: 'update:color', color: typeof props.color): void
+    (e: 'openChange', open: boolean): void
 }>()
 
 const inputHandler = (color: string) => {
@@ -54,8 +56,10 @@ const inputHandler = (color: string) => {
         <Input v-if="!$slots.default" :value="color" class="addon-input" :placeholder="placeholder" :bordered="false"
             @input="emits('update:color', $event.target.value!)">
             <template #addonBefore>
-                <Popover :title="false" trigger="click" destroy-tooltip-on-hide
-                    overlay-class-name="color-picker-popover" :placement="placement">
+                <Popover :title="false" trigger="click"
+                    overlay-class-name="color-picker-popover" :placement="placement"
+                    :get-popup-container="getPopupContainer"
+                    @openChange="(open: boolean) => emits('openChange', open)">
                     <template #content>
                         <SketchPicker :model-value="color" @update:modelValue="inputHandler" />
                     </template>
@@ -63,8 +67,10 @@ const inputHandler = (color: string) => {
                 </Popover>
             </template>
         </Input>
-        <Popover v-else :title="false" trigger="click" destroy-tooltip-on-hide
-            overlay-class-name="color-picker-popover" :placement="placement">
+        <Popover v-else :title="false" trigger="click"
+            overlay-class-name="color-picker-popover" :placement="placement"
+            :get-popup-container="getPopupContainer"
+            @openChange="(open: boolean) => emits('openChange', open)">
             <template #content>
                 <SketchPicker :model-value="color" @update:modelValue="inputHandler" />
             </template>

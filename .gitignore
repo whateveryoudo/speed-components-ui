@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# 勿将构建产物声明文件提交到 src
+src/**/*.d.ts
+!src/global.d.ts
+src/**/*.d.ts.map
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -64,7 +64,7 @@ export default defineComponent({
       SPEED_COMPONENTS_CONFIG_TOKEN,
       currentConfig as Ref<GlobalConfig>
     );
-    console.log(config.value);
+    // console.log(config.value);
     const mergedIconfonts = (
       Array.isArray(config?.value?.iconfontUrl)
         ? config?.value?.iconfontUrl

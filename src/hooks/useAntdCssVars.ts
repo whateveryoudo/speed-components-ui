@@ -17,6 +17,20 @@ const camelToKebab = (str: string): string => {
   return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 };
 
+/** 无单位的 number token，注册为 CSS 变量时不追加 px */
+const UNITLESS_NUMBER_TOKEN_KEYS =
+  /^lineHeight|zIndex|fontWeight|opacity|sizeUnit|sizeStep|motion/i;
+
+/**
+ * antd algorithm 输出的 number 多为 px 尺寸；少数为比例/层级等无单位值。
+ * 字符串 token（颜色、0.2s 等）原样输出。
+ */
+export function formatAntdTokenCSSValue(key: string, value: string | number): string {
+  if (typeof value === 'string') return value;
+  if (UNITLESS_NUMBER_TOKEN_KEYS.test(key)) return String(value);
+  return `${value}px`;
+}
+
 /**
  * 生成 Ant Design Vue 的 CSS 变量
  * @param themeConfig 主题配置
@@ -39,7 +53,7 @@ const generateCssVars = (themeConfig: ThemeConfig) => {
     if (typeof value === 'string' || typeof value === 'number') {
       // 将驼峰命名转换为 kebab-case
       const kebabKey = camelToKebab(key);
-      cssVars.push(`--ant-${kebabKey}: ${value};`);
+      cssVars.push(`--ant-${kebabKey}: ${formatAntdTokenCSSValue(key, value)};`);
     }
   });
 
