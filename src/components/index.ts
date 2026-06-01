@@ -57,12 +57,17 @@ const components: Component[] = [
   ColorPicker,
 ];
 
-const THEME_INSTANCE_KEY = '__speed_components_theme_instance__';
-// 主题相关
+export const SPEED_COMPONENTS_THEME_KEY = '__speed_components_theme_instance__';
+
+/** 是否已在当前 app 上完成 SpeedComponents 安装（用于子包避免重复 app.use 触发 Vue 警告） */
+export function isSpeedComponentsInstalled(app: App): boolean {
+  return !!app.config.globalProperties[SPEED_COMPONENTS_THEME_KEY];
+}
 
 // 更新主题方法(需要传入app实例)
 export const updateTheme = (app: App, config: ThemeConfig) => {
-  const themeInstance: ReturnType<typeof useAntdCssVars> | null = app.config.globalProperties[THEME_INSTANCE_KEY];
+  const themeInstance: ReturnType<typeof useAntdCssVars> | null =
+    app.config.globalProperties[SPEED_COMPONENTS_THEME_KEY];
   if (themeInstance?.updateTheme) {
     themeInstance.updateTheme(config);
   }
@@ -75,7 +80,6 @@ const directives = [
   ["link-transform", vLinkTransform],
 ];
 const install = (app: App, config?: Partial<GlobalConfig>) => {
-  // 合并配置
   if (config) {
     setConfig(config);
   }
@@ -94,8 +98,8 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
   app.provide(SPEED_COMPONENTS_CONFIG_TOKEN, currentConfig);
 
   // 使用 Ant Design Vue CSS 变量
-  if (!app.config.globalProperties[THEME_INSTANCE_KEY]) {
-    app.config.globalProperties[THEME_INSTANCE_KEY] = useAntdCssVars(config?.themeConfig)
+  if (!app.config.globalProperties[SPEED_COMPONENTS_THEME_KEY]) {
+    app.config.globalProperties[SPEED_COMPONENTS_THEME_KEY] = useAntdCssVars(config?.themeConfig)
   }
   // 注册一些指令
   directives.forEach(([name, dir]: any) => {
@@ -105,10 +109,33 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
   });
   // 在应用卸载时清理
   app.unmount = () => {
-    app.config.globalProperties[THEME_INSTANCE_KEY]?.cleanup?.();
+    app.config.globalProperties[SPEED_COMPONENTS_THEME_KEY]?.cleanup?.();
     app.unmount();
   };
 };
+
+const SpeedComponentsPlugin = {
+  install,
+  setConfig,
+  updateTheme,
+  version: "0.1.16",
+};
+
+/**
+ * 宿主或子包均可调用：未安装则 app.use；已安装则仅 setConfig（避免 Plugin has already been applied）。
+ */
+export function ensureSpeedComponents(app: App, config?: Partial<GlobalConfig>): void {
+  if (isSpeedComponentsInstalled(app)) {
+    if (config) {
+      setConfig(config);
+      if (config.themeConfig) {
+        updateTheme(app, config.themeConfig);
+      }
+    }
+    return;
+  }
+  app.use(SpeedComponentsPlugin, config);
+}
 
 export { default as FullModal } from "./FullModal/index.vue";
 export { default as CollapseHz } from "./CollapseHz/index.vue";
@@ -132,9 +159,4 @@ export { setConfig } from "../config";
 export type { GlobalConfig } from "../config";
 export { SPEED_COMPONENTS_CONFIG_TOKEN } from "../tokens";
 
-export default {
-  install,
-  setConfig,
-  updateTheme,
-  version: "0.1.16",
-};
+export default SpeedComponentsPlugin;
