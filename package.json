@@ -14,7 +14,8 @@
       "import": "./src/hooks/index.ts"
     },
     "./components": {
-      "import": "./src/components/index.ts"
+      "import": "./dist/components.es.js",
+      "types": "./dist/components/index.d.ts"
     }
   },
   "files": [
