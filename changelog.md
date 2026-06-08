@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/whateveryoudo/speed-components-ui/compare/v1.1.0...v1.1.1) (2026-06-08)
+
+
+### Bug Fixes
+
+* 修正 components exports 指向 dist 构建产物 ([d7cc382](https://github.com/whateveryoudo/speed-components-ui/commit/d7cc3820f7bc6b81d641e730a2b230d35ffe9c99))
+
 # [1.1.0](https://github.com/whateveryoudo/speed-components-ui/compare/v1.0.0...v1.1.0) (2026-05-09)
 
 
