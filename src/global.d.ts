@@ -6,4 +6,3 @@ export type RequestResponse<T = unknown> = {
   [key: string]: any;
 };
 
-declare module '@wangeditor/editor-for-vue';

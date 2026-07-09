@@ -72,7 +72,6 @@ export default defineComponent({
     ).filter((i): i is string => typeof i === "string");
     // 这里加入内置的图标(兼容数组注入)
     let scriptUrls: string[] = [
-      "//at.alicdn.com/t/c/font_4946230_7d6dp217fih.js",
       ...mergedIconfonts,
     ];
     // console.log(scriptUrls);

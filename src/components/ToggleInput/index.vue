@@ -9,43 +9,17 @@
 <template>
   <div class="toggle-input-wrapper">
     <span v-if="state.flag">
-      <Input
-        v-model:value="state.text"
-        v-focus
-        :style="{ width: inputWidth }"
-        allow-clear
-        @blur="handleBlur"
-        @click.stop
-        @pressEnter="handleBlur"
-      />
+      <Input v-model:value="state.text" v-focus :style="{ width: inputWidth }" allow-clear @blur="handleBlur"
+        @click.stop @pressEnter="handleBlur" />
       <!-- 是否需要二次确认 -->
-      <span
-        v-if="needConfirm"
-        class="confirm-wrapper"
-      >
-        <s-icon-font
-          type="icon-check"
-          title="确认"
-          @click.stop="setTitle"
-        />
-        <s-icon-font
-          title="取消"
-          type="icon-close"
-          @click.stop="cancel"
-        />
+      <span v-if="needConfirm" class="confirm-wrapper">
+        <s-icon-font type="icon-check" title="确认" @click.stop="setTitle" />
+        <s-icon-font title="取消" type="icon-close" @click.stop="cancel" />
       </span>
     </span>
-    <slot
-      v-else
-      name="trigger"
-      :info="state"
-    >
+    <slot v-else name="trigger" :info="state">
       <span title="点击修改">{{ text }}
-        <s-icon-font
-          type="icon-caozuo-bianji"
-          style="margin-left: 5px"
-          @click.stop="state.flag = true"
-        />
+        <EditOutlined style="margin-left: 5px" @click.stop="state.flag = true" />
       </span>
     </slot>
   </div>
@@ -54,6 +28,7 @@
 <script lang="ts" setup>
 import { reactive, watch } from 'vue';
 import { Input } from 'ant-design-vue';
+import { EditOutlined } from '@ant-design/icons-vue';
 /*eslint no-undef: "off"*/
 defineOptions({
   name: 'SToggleInput',
@@ -69,7 +44,7 @@ const props = withDefaults(
     inputWidth: '200px',
     needConfirm: false,
     text: '未命名',
-    updateText: () => {},
+    updateText: () => { },
   }
 );
 const state = reactive({
@@ -117,8 +92,10 @@ watch(
 .toggle-input-wrapper {
   display: inline-flex;
   align-items: center;
+
   .confirm-wrapper {
     margin-left: 5px;
+
     span {
       margin: 0 5px;
     }

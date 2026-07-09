@@ -67,7 +67,6 @@ const props = withDefaults(
     overflowY: true, // 是默认开启最大滚动
   }
 );
-
 const isOpen = computed(() => {
   return props.open !== undefined ? props.open : props.visible;
 });
@@ -202,11 +201,10 @@ watch(
       ? height + 'px'
       : height
     ,
-    overflowY: (maxHeight === 'auto'|| !overflowY) ? 'initial' : 'auto', // 这里可能会出现不明滚动条
+    overflowY: (maxHeight === 'auto' || !overflowY) ? 'initial' : 'auto', // 这里可能会出现不明滚动条
   }" :open="isOpen" :keyboard="false" :destroy-on-close="destroyOnClose" :closable="false" :width="width"
     :mask-closable="maskClosable" @update:open="updateVisible" v-bind="footer ? $attrs : { ...$attrs, footer: null }">
     <slot />
-
     <template #modalRender="{ originVNode }">
       <div :style="transformStyle">
         <component :is="originVNode" />

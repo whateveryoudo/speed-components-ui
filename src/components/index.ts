@@ -20,11 +20,10 @@ import QueryFilter from "./QueryFilter/index.vue";
 import QuestionTip from "./QuestionTip/index.vue";
 import ApiSelect from "./ApiSelect/index.vue";
 import ToggleInput from "./ToggleInput/index.vue";
-import ContentEditor from "./ContentEditor/index.vue";
 import CustomUpload from "./CustomUpload/index.vue";
 import CustomTag from "./CustomTag/index.vue";
 import ColorPicker from "./ColorPicker/index.vue";
-import { useAntdCssVars, type ThemeConfig } from "../hooks/useAntdCssVars";
+import { hasThemeOverride, useAntdCssVars, type ThemeConfig } from "../hooks/useAntdCssVars";
 import { vFocus, vCopy, vView, vSelect, vLinkTransform } from "../directives";
 import {
   currentConfig,
@@ -50,7 +49,6 @@ const components: Component[] = [
   QueryFilter,
   ApiSelect,
   ToggleInput,
-  ContentEditor,
   QuestionTip,
   CustomTag,
   CustomUpload,
@@ -128,7 +126,7 @@ export function ensureSpeedComponents(app: App, config?: Partial<GlobalConfig>):
   if (isSpeedComponentsInstalled(app)) {
     if (config) {
       setConfig(config);
-      if (config.themeConfig) {
+      if (config.themeConfig && hasThemeOverride(config.themeConfig)) {
         updateTheme(app, config.themeConfig);
       }
     }
@@ -149,7 +147,6 @@ export { default as TagGroupSelect } from "./TagGroupSelect/index.vue";
 export { default as QueryFilter } from "./QueryFilter/index.vue";
 export { default as ApiSelect } from "./ApiSelect/index.vue";
 export { default as ToggleInput } from "./ToggleInput/index.vue";
-export { default as ContentEditor } from "./ContentEditor/index.vue";
 export { default as TextMore } from "./TextMore/index.vue";
 export { default as QuestionTip } from "./QuestionTip/index.vue";
 export { default as CustomUpload } from "./CustomUpload/index.vue";

@@ -8,6 +8,13 @@ export type ThemeConfig = {
   token?: Partial<typeof defaultSeed>;
 };
 
+/** 是否包含会改变 :root CSS 变量的有效 theme 配置（空 token / 空对象不视为 override） */
+export function hasThemeOverride(config: ThemeConfig = {}): boolean {
+  if (config.algorithm) return true;
+  const token = config.token;
+  return !!token && Object.keys(token).length > 0;
+}
+
 /**
  * 将驼峰命名转换为 kebab-case
  * @param str 驼峰命名的字符串
@@ -90,7 +97,13 @@ export const useAntdCssVars = (initialTheme: ThemeConfig = {}) => {
   // 初始化 CSS 变量
   if (isBrowser) {
     styleElement = document.getElementById("antd-css-vars") as HTMLStyleElement | null;
-    updateCssVars(themeConfig.value);
+    if (!styleElement) {
+      // 首个安装者：创建 #antd-css-vars（无 token 时用 defaultSeed）
+      updateCssVars(themeConfig.value);
+    } else if (hasThemeOverride(themeConfig.value)) {
+      // 已有全局 theme 时，仅显式传入 token/algorithm 才覆盖
+      updateCssVars(themeConfig.value);
+    }
   } else {
     // ssr 不支持
     return {}
@@ -99,6 +112,7 @@ export const useAntdCssVars = (initialTheme: ThemeConfig = {}) => {
   return {
     // 更新主题
     updateTheme: (config: ThemeConfig) => {
+      if (!hasThemeOverride(config)) return;
       themeConfig.value = config;
       updateCssVars(config);
     },
