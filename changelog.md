@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/whateveryoudo/speed-components-ui/compare/v1.1.3...v1.1.4) (2026-07-10)
+
+
+### Bug Fixes
+
+* 触发重新发版,修复了一些bug ([91eb5d8](https://github.com/whateveryoudo/speed-components-ui/commit/91eb5d852d5c0972f5744a2e1c9cf4fd0cb25255))
+
 ## [1.1.3](https://github.com/whateveryoudo/speed-components-ui/compare/v1.1.2...v1.1.3) (2026-06-08)
 
 
