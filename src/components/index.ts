@@ -105,10 +105,11 @@ const install = (app: App, config?: Partial<GlobalConfig>) => {
       app.directive(name, dir);
     }
   });
-  // 在应用卸载时清理
+  // 卸载时 cleanup（内部有引用计数，不会误删其它 app 仍在用的 #antd-css-vars）
+  const originalUnmount = app.unmount.bind(app);
   app.unmount = () => {
     app.config.globalProperties[SPEED_COMPONENTS_THEME_KEY]?.cleanup?.();
-    app.unmount();
+    originalUnmount();
   };
 };
 

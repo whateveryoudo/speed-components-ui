@@ -6,6 +6,7 @@ import type { RequestResponse } from "./global";
 type AjaxMethod = (params?: any) => Promise<any>;
 
 export interface GlobalConfig {
+  access_token?: string;
   iconfontUrl?: string[];
   themeConfig?: ThemeConfig;
   registerGlobal?: boolean; // 是否注册为全局组件

@@ -301,14 +301,14 @@ export const useTable = (
   };
   // 表格变化（分页，搜索，排序）
   const handleTableChange = (
-    page: { pageSize: number; current: number },
+    page: { pageSize?: number; current?: number },
     filters: any,
     sorter: any,
     extra: any
   ) => {
     console.log(page, filters, sorter, extra);
-    pagination.value.current = page.current;
-    pagination.value.pageSize = page.pageSize;
+    pagination.value.current = page.current || pagination.value.current;
+    pagination.value.pageSize = page.pageSize || pagination.value.pageSize;
     if (filters) {
       tableHeaderFilters.value = filters;
     }

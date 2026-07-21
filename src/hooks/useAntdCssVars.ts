@@ -67,6 +67,29 @@ const generateCssVars = (themeConfig: ThemeConfig) => {
   return `:root {\n  ${cssVars.join('\n  ')}\n}`;
 };
 
+const ANTD_CSS_VARS_STYLE_ID = 'antd-css-vars';
+
+/** 全局 #antd-css-vars 引用计数：多 app（主应用 + 离屏导出）共享同一 style，仅最后一次 cleanup 才移除 */
+let antdCssVarsRefCount = 0;
+let sharedStyleElement: HTMLStyleElement | null = null;
+
+function getOrCreateStyleElement(): HTMLStyleElement | null {
+  if (typeof document === 'undefined') return null;
+  if (sharedStyleElement && document.head.contains(sharedStyleElement)) {
+    return sharedStyleElement;
+  }
+  const existing = document.getElementById(ANTD_CSS_VARS_STYLE_ID) as HTMLStyleElement | null;
+  if (existing) {
+    sharedStyleElement = existing;
+    return existing;
+  }
+  const el = document.createElement('style');
+  el.id = ANTD_CSS_VARS_STYLE_ID;
+  document.head.appendChild(el);
+  sharedStyleElement = el;
+  return el;
+}
+
 /**
  * 使用 Ant Design Vue 的 CSS 变量
  * @param initialTheme 初始主题配置
@@ -76,29 +99,23 @@ export const useAntdCssVars = (initialTheme: ThemeConfig = {}) => {
   const themeConfig = ref<ThemeConfig>(initialTheme);
   const isBrowser =
     typeof window !== "undefined" && typeof document !== "undefined";
-  let styleElement: HTMLStyleElement | null = null;
+  let released = false;
 
   // 更新 CSS 变量的函数
   const updateCssVars = (config: ThemeConfig) => {
     if (!isBrowser) return;
 
-    const cssContent = generateCssVars(config);
-    
-    if (!styleElement) {
-      // 首次创建 style 标签
-      styleElement = document.createElement('style');
-      styleElement.id = 'antd-css-vars';
-      document.head.appendChild(styleElement);
-    }
-    
-    styleElement.textContent = cssContent;
+    const styleElement = getOrCreateStyleElement();
+    if (!styleElement) return;
+    styleElement.textContent = generateCssVars(config);
   };
 
   // 初始化 CSS 变量
   if (isBrowser) {
-    styleElement = document.getElementById("antd-css-vars") as HTMLStyleElement | null;
-    if (!styleElement) {
-      // 首个安装者：创建 #antd-css-vars（无 token 时用 defaultSeed）
+    antdCssVarsRefCount += 1;
+    const styleElement = getOrCreateStyleElement();
+    if (!styleElement?.textContent) {
+      // 首个安装者或空节点：写入 defaultSeed
       updateCssVars(themeConfig.value);
     } else if (hasThemeOverride(themeConfig.value)) {
       // 已有全局 theme 时，仅显式传入 token/algorithm 才覆盖
@@ -116,12 +133,16 @@ export const useAntdCssVars = (initialTheme: ThemeConfig = {}) => {
       themeConfig.value = config;
       updateCssVars(config);
     },
-    // 清理函数
+    // 清理：引用计数归零才移除全局 #antd-css-vars
     cleanup: () => {
-      if (styleElement && document.head.contains(styleElement)) {
-        document.head.removeChild(styleElement);
-        styleElement = null;
+      if (!isBrowser || released) return;
+      released = true;
+      antdCssVarsRefCount = Math.max(0, antdCssVarsRefCount - 1);
+      if (antdCssVarsRefCount > 0) return;
+      if (sharedStyleElement && document.head.contains(sharedStyleElement)) {
+        document.head.removeChild(sharedStyleElement);
       }
+      sharedStyleElement = null;
     }
   };
 }; 
