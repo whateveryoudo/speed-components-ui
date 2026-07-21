@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/whateveryoudo/speed-components-ui/compare/v1.1.4...v1.1.5) (2026-07-21)
+
+
+### Bug Fixes
+
+* 修复一些antd样式变量兜底策略,防止多app实例卸载导致style移除 ([1910196](https://github.com/whateveryoudo/speed-components-ui/commit/1910196a1dd00a76fe005652df1cea97927e8069))
+
 ## [1.1.4](https://github.com/whateveryoudo/speed-components-ui/compare/v1.1.3...v1.1.4) (2026-07-10)
 
 
