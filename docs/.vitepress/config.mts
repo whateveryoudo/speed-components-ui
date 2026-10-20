@@ -82,6 +82,10 @@ export default defineConfig({
               text: "QuestionTip 说明提示",
               link: "/components/question-tip/index",
             },
+            {
+              text: "ResizeHandles 8向缩放手柄",
+              link: "/components/resize-handles/index",
+            },
           ],
         },
         {

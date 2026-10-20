@@ -23,6 +23,7 @@ import ToggleInput from "./ToggleInput/index.vue";
 import CustomUpload from "./CustomUpload/index.vue";
 import CustomTag from "./CustomTag/index.vue";
 import ColorPicker from "./ColorPicker/index.vue";
+import ResizeHandles from "./ResizeHandles/index.vue";
 import { hasThemeOverride, useAntdCssVars, type ThemeConfig } from "../hooks/useAntdCssVars";
 import { vFocus, vCopy, vView, vSelect, vLinkTransform } from "../directives";
 import {
@@ -53,6 +54,7 @@ const components: Component[] = [
   CustomTag,
   CustomUpload,
   ColorPicker,
+  ResizeHandles,
 ];
 
 export const SPEED_COMPONENTS_THEME_KEY = '__speed_components_theme_instance__';
@@ -153,6 +155,8 @@ export { default as QuestionTip } from "./QuestionTip/index.vue";
 export { default as CustomUpload } from "./CustomUpload/index.vue";
 export { default as STag } from "./CustomTag/index.vue";
 export { default as ColorPicker } from "./ColorPicker/index.vue";
+export { default as ResizeHandles } from "./ResizeHandles/index.vue";
+export { default as SResizeHandles } from "./ResizeHandles/index.vue";
 export { setConfig } from "../config";
 export type { GlobalConfig } from "../config";
 export { SPEED_COMPONENTS_CONFIG_TOKEN } from "../tokens";

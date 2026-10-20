@@ -43,7 +43,9 @@ export default defineComponent({
       default: "",
     },
     size: {
-      type: [String, Number] as PropType<string | number>,
+      type: [String, Number, Array] as PropType<
+        string | number | [string | number, string | number]
+      >,
       default: 14,
     },
     scriptUrl: {
@@ -75,11 +77,21 @@ export default defineComponent({
       ...mergedIconfonts,
     ];
     // console.log(scriptUrls);
+    const parsedSize = computed(() => {
+      const { size } = props;
+      if (Array.isArray(size)) {
+        const w = typeof size[0] === "number" ? `${size[0]}px` : size[0];
+        const h = typeof size[1] === "number" ? `${size[1]}px` : size[1];
+        return { width: w, height: h, fontSize: h };
+      }
+      const s = typeof size === "number" ? `${size}px` : size;
+      return { width: s, height: s, fontSize: s };
+    });
+
     const wrapStyleObj = computed(() => {
-      const { size, color } = props;
-      const fontSize = typeof size === "string" ? parseInt(size) : size;
+      const { color } = props;
       return {
-        fontSize: fontSize + "px",
+        ...parsedSize.value,
         color,
       };
     });
@@ -87,7 +99,11 @@ export default defineComponent({
       return () => {
         return (
           <props.iconRender
-            style={{ color: props.color, fontSize: props.size + "px" }}
+            style={{
+              color: props.color,
+              ...parsedSize.value,
+              ...(attrs.style as any),
+            }}
           />
         );
       };
@@ -96,7 +112,15 @@ export default defineComponent({
     if (props.svgSprite) {
       return () => {
         return (
-          <svg aria-hidden="true" style={{ color: props.color, fontSize: props.size + "px" }} {...attrs}>
+          <svg
+            aria-hidden="true"
+            style={{
+              color: props.color,
+              ...parsedSize.value,
+              ...(attrs.style as any),
+            }}
+            {...attrs}
+          >
             <use xlinkHref={`#${props.type}`} />
           </svg>
         );
@@ -117,7 +141,11 @@ export default defineComponent({
       const { type, prefix, imgModule, imgStyle } = props;
       return imgModule ? (
         <img
-          style={{ ...unref(imgStyle), ...(attrs.style as any) }}
+          style={{
+            ...parsedSize.value,
+            ...unref(imgStyle),
+            ...(attrs.style as any),
+          }}
           src={imgModule}
         />
       ) : (
