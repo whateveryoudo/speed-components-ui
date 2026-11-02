@@ -1,6 +1,6 @@
 import { theme } from 'ant-design-vue';
 import { ref } from 'vue';
-
+import formatToken from 'ant-design-vue/es/theme/util/alias';
 const { defaultAlgorithm, darkAlgorithm, defaultSeed } = theme;
 
 export type ThemeConfig = {
@@ -53,7 +53,10 @@ const generateCssVars = (themeConfig: ThemeConfig) => {
     ...themeConfig.token
   };
   // 通过主题算法生成token
-  const token = algorithm(seed);
+  const mapToken = algorithm(seed);
+
+  // 将 MapToken 升阶为包含 boxShadowSecondary, paddingSM 等的完整 AliasToken (360+ 个 token)
+  const token = formatToken(mapToken as any);
   
   // 遍历 token 对象，生成 CSS 变量
   Object.entries(token).forEach(([key, value]) => {

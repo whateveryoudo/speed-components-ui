@@ -1,133 +1,110 @@
 <!--
  * @Author: ykx
  * @Date: 2022-12-16 17:30:55
- * @LastEditTime: 2026-10-26 20:45:00
+ * @LastEditTime: 2026-10-27 11:40:00
  * @LastEditors: ykx
  * @Description: 带有快捷键tip显示(支持title null传入不显示tip，点击子节点时自动收起气泡，防止遮挡下拉)
  * @FilePath: \speed-components\src\components\KeyMapTip\index.vue
 -->
-<script lang="ts">
-import {
-  defineComponent,
-  ref,
-  computed,
-  cloneVNode,
-  mergeProps,
-  Comment,
-  Fragment,
-  h,
-  type VNode,
-  type PropType
-} from 'vue'
+<template>
+  <span
+    class="s-keymap-tip-trigger"
+    @click.capture="handleClick"
+    @mouseleave="handleMouseLeave"
+  >
+    <Tooltip
+      v-if="title !== null"
+      v-bind="$attrs"
+      :open="resolvedOpen"
+      :placement="placement"
+      @open-change="handleOpenChange"
+    >
+      <template #title>
+        <div class="keymap-tip-wrapper">
+          <span v-if="title">{{ title }}</span>
+          <span v-if="keyMap" class="key-map">{{ keyMap }}</span>
+        </div>
+      </template>
+      <slot></slot>
+    </Tooltip>
+    <slot v-else></slot>
+  </span>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, useAttrs } from 'vue'
 import { Tooltip } from 'ant-design-vue'
 import type { TooltipPlacement } from 'ant-design-vue/es/tooltip'
 
-export default defineComponent({
+defineOptions({
   name: 'SKeymapTip',
-  inheritAttrs: false,
-  props: {
-    title: {
-      type: [String, null] as PropType<string | null>,
-      default: ''
-    },
-    keyMap: {
-      type: [String, null] as PropType<string | null>,
-      default: ''
-    },
-    placement: {
-      type: String as PropType<TooltipPlacement>,
-      default: 'bottom'
-    },
-    open: {
-      type: Boolean as PropType<boolean | undefined>,
-      default: undefined
-    }
-  },
-  emits: ['update:open', 'openChange'],
-  setup(props, { slots, attrs, emit }) {
-    // undefined 表示交由 Tooltip 内部 hover 控制；false 强制关闭
-    const innerVisible = ref<boolean | undefined>(undefined)
-
-    // 优先尊重外部受控传入的 open
-    const resolvedOpen = computed(() => {
-      if (props.open !== undefined) return props.open
-      if (attrs.open !== undefined) return attrs.open as boolean
-      return innerVisible.value
-    })
-
-    function handleOpenChange(visible: boolean) {
-      innerVisible.value = visible
-      emit('update:open', visible)
-      emit('openChange', visible)
-    }
-
-    function handleClick() {
-      // 点击后强制收起提示，防止遮挡展开的下拉菜单或弹层
-      innerVisible.value = false
-      emit('update:open', false)
-      emit('openChange', false)
-    }
-
-    function handleMouseLeave() {
-      // 鼠标离开后释放强制关闭状态，下次移入恢复正常的 hover 提示
-      innerVisible.value = undefined
-    }
-
-    // 递归为所有有效的真实节点使用 mergeProps 链式合并事件，绝不覆盖子节点原本的 onClick
-    function injectEvents(vnodes: VNode[]): VNode[] {
-      return vnodes.map((vnode) => {
-        if (!vnode || vnode.type === Comment) return vnode
-        if (vnode.type === Fragment && Array.isArray(vnode.children)) {
-          const cloned = cloneVNode(vnode)
-          cloned.children = injectEvents(vnode.children as VNode[])
-          return cloned
-        }
-        return cloneVNode(
-          vnode,
-          mergeProps(vnode.props || {}, {
-            onClick: handleClick,
-            onMouseleave: handleMouseLeave
-          })
-        )
-      })
-    }
-
-    return () => {
-      if (props.title === null) {
-        return slots.default?.()
-      }
-
-      const defaultChildren = slots.default?.()
-      const triggerVNodes = defaultChildren ? injectEvents(defaultChildren) : null
-
-      return h(
-        Tooltip,
-        {
-          ...attrs,
-          open: resolvedOpen.value,
-          placement: props.placement,
-          'onUpdate:open': handleOpenChange
-        },
-        {
-          title: () =>
-            h('div', { class: 'keymap-tip-wrapper' }, [
-              props.title ? h('span', props.title) : null,
-              props.keyMap ? h('span', { class: 'key-map' }, props.keyMap) : null
-            ]),
-          default: () => triggerVNodes
-        }
-      )
-    }
-  }
+  inheritAttrs: false
 })
+
+const props = withDefaults(
+  defineProps<{
+    title: string | null
+    keyMap?: string | null
+    placement?: TooltipPlacement
+    open?: boolean
+  }>(),
+  {
+    title: '',
+    keyMap: '',
+    placement: 'bottom',
+    open: undefined
+  }
+)
+
+const emit = defineEmits<{
+  (e: 'update:open', val: boolean): void
+  (e: 'openChange', val: boolean): void
+}>()
+
+const attrs = useAttrs()
+
+// undefined 表示交由 Tooltip 内部 hover 控制；false 强制关闭
+const innerVisible = ref<boolean | undefined>(undefined)
+
+const resolvedOpen = computed(() => {
+  if (props.open !== undefined) return props.open
+  if (attrs.open !== undefined) return attrs.open as boolean
+  return innerVisible.value
+})
+
+function handleOpenChange(visible: boolean) {
+  innerVisible.value = visible
+  emit('update:open', visible)
+  emit('openChange', visible)
+}
+
+function handleClick() {
+  // 在原生捕获阶段强制收起提示，防止遮挡弹层/下拉菜单，绝不拦截或破坏子节点本身的点击事件
+  innerVisible.value = false
+  emit('update:open', false)
+  emit('openChange', false)
+}
+
+function handleMouseLeave() {
+  // 鼠标移出后重置内部受控，下次 hover 恢复自主提示
+  innerVisible.value = undefined
+}
 </script>
 
 <style lang="less">
+.s-keymap-tip-trigger {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
 .keymap-tip-wrapper {
-  max-width: 200px;
+  max-width: 260px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  white-space: pre-line;
   color: #fff;
   .key-map {
     color: #8a8f8d;
