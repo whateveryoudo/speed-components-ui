@@ -40,13 +40,22 @@ export const currentConfig = computed(() => configRef.value);
 
 // 设置全局配置
 export const setConfig = (config: Partial<GlobalConfig>) => {
+  const toUrls = (val: unknown): string[] => {
+    if (!val) return [];
+    if (Array.isArray(val)) return val.filter((i): i is string => typeof i === "string" && Boolean(i));
+    if (typeof val === "string") return [val];
+    return [];
+  };
+
   configRef.value = {
     ...configRef.value,
     ...config,
-    // 整合iconfontUrl传入
+    // 整合iconfontUrl传入（保持多次注入追加合并，同时自动兼容字符串/数组并去重，杜绝字符串被拆成单字符）
     iconfontUrl: [
-      ...(configRef.value.iconfontUrl || []),
-      ...(config.iconfontUrl || []),
+      ...new Set([
+        ...toUrls(configRef.value.iconfontUrl),
+        ...toUrls(config.iconfontUrl),
+      ]),
     ],
   };
   return configRef.value;

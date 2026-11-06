@@ -3,5 +3,5 @@ import type { GlobalConfig } from "./config";
 
 export const SPEED_COMPONENTS_CONFIG_TOKEN: InjectionKey<
   Ref<GlobalConfig>
-> = Symbol("speed-components-config");
+> = Symbol.for("speed-components-config");
 
